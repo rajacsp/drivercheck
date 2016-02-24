@@ -1,9 +1,6 @@
 
 package org.driver.check.model;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
-
 import org.springframework.core.style.ToStringCreator;
 
 public class Client{

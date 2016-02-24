@@ -2,8 +2,8 @@ package org.driver.check.rest;
 
 import java.util.Collection;
 
-import org.driver.check.model.Employee;
-import org.driver.check.service.EmployeeService;
+import org.driver.check.model.Client;
+import org.driver.check.service.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -14,15 +14,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api")
 public class ClientRestController {
 
-    private final EmployeeService employeeService;
+    private final ClientService clientService;
 
     @Autowired
-    public ClientRestController(EmployeeService employeeService) {
-        this.employeeService = employeeService;
+    public ClientRestController(ClientService clientService) {
+        this.clientService = clientService;
     }
 
     @RequestMapping(value = "/clients", method = RequestMethod.GET)
-    public @ResponseBody Collection<Employee> findAll() {
-        return this.employeeService.findAll();
+    public @ResponseBody Collection<Client> findAll() {
+        return this.clientService.findAll();
     }
 }

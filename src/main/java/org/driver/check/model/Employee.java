@@ -2,15 +2,12 @@
 package org.driver.check.model;
 
 import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
 import javax.validation.constraints.Digits;
 
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.core.style.ToStringCreator;
 
-@Entity
-@Table(name = "employees")
+
 public class Employee extends Person {
     @Column(name = "address")
     @NotEmpty
@@ -24,6 +21,8 @@ public class Employee extends Person {
     @NotEmpty
     @Digits(fraction = 0, integer = 10)
     private String telephone;
+    
+    // client_id will be added later
 
     public String getAddress() {
         return this.address;
