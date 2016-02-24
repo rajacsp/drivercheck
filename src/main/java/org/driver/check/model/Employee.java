@@ -1,28 +1,26 @@
 
 package org.driver.check.model;
 
-import javax.persistence.Column;
-import javax.validation.constraints.Digits;
-
-import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.core.style.ToStringCreator;
 
-
 public class Employee extends Person {
-    @Column(name = "address")
-    @NotEmpty
-    private String address;
+	
+	/*
+	 * 
+	 * first_name
+	 * last_name
+	 * address
+	 * city
+	 * telephone
+	 */
+	
+	private String address;
 
-    @Column(name = "city")
-    @NotEmpty
     private String city;
 
-    @Column(name = "telephone")
-    @NotEmpty
-    @Digits(fraction = 0, integer = 10)
     private String telephone;
     
-    // client_id will be added later
+    // client_id will be added later   
 
     public String getAddress() {
         return this.address;
@@ -51,8 +49,7 @@ public class Employee extends Person {
     public Employee() {
 	}
     
-    public Employee(final int id, final String firstName, final String lastName, final String address, final String city, final String telephone) {
-    	this.id = id;
+    public Employee(final String firstName, final String lastName, final String address, final String city, final String telephone) {    	
     	this.firstName = firstName;
     	this.lastName = lastName;
     	this.address = address;
@@ -62,9 +59,7 @@ public class Employee extends Person {
 
     @Override
     public String toString() {
-        return new ToStringCreator(this)
-
-                .append("id", this.getId())
+        return new ToStringCreator(this)                
                 .append("new", this.isNew())
                 .append("lastName", this.getLastName())
                 .append("firstName", this.getFirstName())

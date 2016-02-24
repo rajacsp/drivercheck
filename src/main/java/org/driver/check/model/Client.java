@@ -4,8 +4,14 @@ package org.driver.check.model;
 import org.springframework.core.style.ToStringCreator;
 
 public class Client{
+	/*
+	 * id
+	 * name
+	 * address
+	 * city
+	 */
 	
-	private int id;
+	private Object id;
 	
     private String name;
     
@@ -16,11 +22,11 @@ public class Client{
     public Client() {
 	}
     
-	public int getId() {
+	public Object getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Object id) {
 		this.id = id;
 	}
 
@@ -48,19 +54,19 @@ public class Client{
 		this.city = city;
 	}   
     
-    public Client(final int id, final String name, final String address, final String city) {
-    	this.id = id;
+    public Client(final String name, final String address, final String city) {    	
     	this.name = name;
     	this.address = address;
     	this.city = city;
     }
 
+    // this method is not working properly in Json print
     @Override
     public String toString() {
         return new ToStringCreator(this)
-                .append("id", this.id)
+                //.append("id", this.id) //bson id is not necessary
                 .append("name", this.name)
-                .append("address", this.address)
+                .append("address1", this.address)
                 .append("city", this.city)
                 .toString();
     }

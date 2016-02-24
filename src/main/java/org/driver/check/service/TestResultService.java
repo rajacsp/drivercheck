@@ -7,7 +7,5 @@ import org.springframework.dao.DataAccessException;
 
 public interface TestResultService {
     
-	TestResult findClientById(int id) throws DataAccessException;
-    
     Collection<TestResult> findAll() throws DataAccessException;
 }
