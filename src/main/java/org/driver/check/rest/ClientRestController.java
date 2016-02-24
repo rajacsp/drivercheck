@@ -12,16 +12,16 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api")
-public class EmployeeRestController {
+public class ClientRestController {
 
     private final EmployeeService employeeService;
 
     @Autowired
-    public EmployeeRestController(EmployeeService employeeService) {
+    public ClientRestController(EmployeeService employeeService) {
         this.employeeService = employeeService;
     }
 
-    @RequestMapping(value = "/employees", method = RequestMethod.GET)
+    @RequestMapping(value = "/clients", method = RequestMethod.GET)
     public @ResponseBody Collection<Employee> findAll() {
         return this.employeeService.findAll();
     }

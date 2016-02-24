@@ -6,7 +6,7 @@ import java.util.Map;
 import javax.validation.Valid;
 
 import org.driver.check.model.Employee;
-import org.driver.check.service.ClinicService;
+import org.driver.check.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,12 +25,12 @@ import org.springframework.web.servlet.ModelAndView;
 @SessionAttributes(types = Employee.class)
 public class EmployeeController {
 
-    private final ClinicService clinicService;
+    private final EmployeeService employeeService;
 
 
     @Autowired
-    public EmployeeController(ClinicService clinicService) {
-        this.clinicService = clinicService;
+    public EmployeeController(EmployeeService employeeService) {
+        this.employeeService = employeeService;
     }
 
     @InitBinder
@@ -48,7 +48,7 @@ public class EmployeeController {
         }
 
         // find employees by last name
-        Collection<Employee> results = this.clinicService.findEmployeeByLastName(employee.getLastName());
+        Collection<Employee> results = this.employeeService.findEmployeeByLastName(employee.getLastName());
         if (results.size() < 1) {
             // no employees found
             result.rejectValue("lastName", "notFound", "not found");

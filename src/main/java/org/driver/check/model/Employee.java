@@ -48,6 +48,18 @@ public class Employee extends Person {
     public void setTelephone(String telephone) {
         this.telephone = telephone;
     }
+    
+    public Employee() {
+	}
+    
+    public Employee(final int id, final String firstName, final String lastName, final String address, final String city, final String telephone) {
+    	this.id = id;
+    	this.firstName = firstName;
+    	this.lastName = lastName;
+    	this.address = address;
+    	this.city = city;
+    	this.telephone = telephone;
+    }
 
     @Override
     public String toString() {
