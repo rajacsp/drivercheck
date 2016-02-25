@@ -3,7 +3,10 @@ package org.driver.check.model;
 import java.util.Date;
 
 import org.springframework.core.style.ToStringCreator;
+import org.springframework.data.annotation.TypeAlias;
+import org.springframework.data.mongodb.core.mapping.Document;
 
+@Document
 public class TestResult extends BaseEntity{
 	
 	/*
