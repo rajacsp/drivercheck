@@ -89,4 +89,18 @@ public class EmployeeServiceImpl implements EmployeeService {
 		Employee p = mongoOps.findOne(query(where("empId").is(empId)), Employee.class);
 		_log.info("{updateEmployee} Updated : "+p);
     }
+    
+    @Override
+    public List<Employee> findByFirstName(String firstName){
+    	MongoOperations mongoOps = new MongoTemplate(new SimpleMongoDbFactory(new Mongo(), "test"));
+    	List<Employee> EmployeeList =  mongoOps.find(query(where("firstName").is(firstName)), Employee.class);		
+		return EmployeeList;
+    }
+    
+    @Override
+    public List<Employee> findByLastName(String lastName){
+    	MongoOperations mongoOps = new MongoTemplate(new SimpleMongoDbFactory(new Mongo(), "test"));
+    	List<Employee> EmployeeList =  mongoOps.find(query(where("lastName").is(lastName)), Employee.class);		
+		return EmployeeList;
+    }
 }

@@ -30,6 +30,19 @@ public class EmployeeRestController {
         return this.employeeService.findAll();
     }
     
+    // TEST REQUIREMENT: Add an option to search employees by name
+    // case sensitive
+    @RequestMapping(value = "/employees/first_name/{first_name}", method = RequestMethod.GET)
+    public @ResponseBody Collection<Employee> findByFirstName(@PathVariable("first_name") String firstName) {
+        return this.employeeService.findByFirstName(firstName);
+    }
+    
+    // case sensitive
+    @RequestMapping(value = "/employees/last_name/{last_name}", method = RequestMethod.GET)
+    public @ResponseBody Collection<Employee> findByLastName(@PathVariable("last_name") String lastName) {
+       return this.employeeService.findByLastName(lastName);
+    }
+    
     // delete [Method = GET]
     @RequestMapping(value = "/employee/delete/{empId}", method = RequestMethod.GET)
     public @ResponseBody Map<String, String> deleteClientByClientId(@PathVariable("empId") Integer empId) {
@@ -92,10 +105,9 @@ public class EmployeeRestController {
     	return map;
     }
     
-    // Add an option to search employees by name
+    
     @RequestMapping(value = "/employee", method = RequestMethod.DELETE)
     public @ResponseBody Collection<Employee> findByName(@PathVariable("name") Integer name) {
-    	// will be provided later
     	return null;
     }
 }
