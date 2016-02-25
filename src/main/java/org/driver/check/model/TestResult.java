@@ -4,7 +4,7 @@ import java.util.Date;
 
 import org.springframework.core.style.ToStringCreator;
 
-public class TestResult{
+public class TestResult extends BaseEntity{
 	
 	/*
 	 * 
@@ -15,15 +15,9 @@ public class TestResult{
 	 * 
 	 */
 	
-	private String id;
-	
 	private int testId;
 	
     private Date testTakenDate;
-    
-    public String getId() {
-		return id;
-	}
     
 	public Date getTestTakenDate(){
 		return testTakenDate;

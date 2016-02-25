@@ -1,8 +1,9 @@
 
 package org.driver.check.model;
 
-import org.springframework.core.style.ToStringCreator;
+import org.springframework.data.mongodb.core.mapping.Document;
 
+@Document
 public class Employee extends Person {
 	
 	/*
@@ -14,8 +15,6 @@ public class Employee extends Person {
 	 * telephone
 	 */
 	
-	private String id;
-	
 	private int empId;
 	
 	private String address;
@@ -25,10 +24,6 @@ public class Employee extends Person {
     private String telephone;
     
     // client_id will be added later
-    
-    public String getId(){
-    	return id;
-    }
     
     public int getEmpId(){
     	return empId;
@@ -72,17 +67,5 @@ public class Employee extends Person {
     	this.address = address;
     	this.city = city;
     	this.telephone = telephone;
-    }
-
-    @Override
-    public String toString() {
-        return new ToStringCreator(this)
-        		.append("empId", empId)	
-                .append("lastName", lastName)
-                .append("firstName", firstName)
-                .append("address", this.address)
-                .append("city", this.city)
-                .append("telephone", this.telephone)
-                .toString();
     }
 }

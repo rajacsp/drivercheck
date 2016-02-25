@@ -29,22 +29,6 @@ public class EmployeeServiceImpl implements EmployeeService, Const {
 
     @Override
     @Transactional(readOnly = true)
-    public Collection<Employee> findEmployeeByLastName(String lastName) throws DataAccessException {
-    	List<Employee> employeeList = getDummyEmployees();
-    	
-    	List<Employee> filteredList = new LinkedList<Employee>();
-    	for (Employee employee : employeeList) {
-			if(employee == null) continue;
-			
-			if(employee.getLastName() != null && employee.getLastName().equalsIgnoreCase(lastName)){
-				filteredList.add(employee);
-			}				
-		}
-        return filteredList;
-    }
-    
-    @Override
-    @Transactional(readOnly = true)
     public Collection<Employee> findAll() throws DataAccessException {  
     	MongoOperations mongoOps = new MongoTemplate(new SimpleMongoDbFactory(new Mongo(), MONGO_DB_NAME));
     	return mongoOps.findAll(Employee.class);
@@ -92,6 +76,7 @@ public class EmployeeServiceImpl implements EmployeeService, Const {
     }
     
     @Override
+    @Transactional(readOnly = true)
     public List<Employee> findByFirstName(String firstName){
     	MongoOperations mongoOps = new MongoTemplate(new SimpleMongoDbFactory(new Mongo(), MONGO_DB_NAME));
     	List<Employee> EmployeeList =  mongoOps.find(query(where("firstName").is(firstName)), Employee.class);		
@@ -99,6 +84,7 @@ public class EmployeeServiceImpl implements EmployeeService, Const {
     }
     
     @Override
+    @Transactional(readOnly = true)
     public List<Employee> findByLastName(String lastName){
     	MongoOperations mongoOps = new MongoTemplate(new SimpleMongoDbFactory(new Mongo(), MONGO_DB_NAME));
     	List<Employee> EmployeeList =  mongoOps.find(query(where("lastName").is(lastName)), Employee.class);		

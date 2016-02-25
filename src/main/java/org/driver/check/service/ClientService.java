@@ -7,8 +7,6 @@ import org.springframework.dao.DataAccessException;
 
 public interface ClientService {
     
-	Client findClientByName(final String name) throws DataAccessException;
-    
     Collection<Client> findAll() throws DataAccessException;
     
     void deleteClientByClientId(final int clientId);

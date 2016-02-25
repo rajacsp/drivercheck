@@ -26,21 +26,6 @@ import com.mongodb.Mongo;
 public class ClientServiceImpl implements ClientService, Const {
 	
 	private static Logger _log = LoggerFactory.getLogger(ClientServiceImpl.class);
-
-    @Override
-    @Transactional(readOnly = true)
-    public Client findClientByName(final String name) throws DataAccessException {
-    	List<Client> clientList = getDummyClients();
-    	
-    	for (Client client : clientList) {
-			if(client == null) continue;
-			
-			if(client.getName() != null && client.getName().equalsIgnoreCase(name))
-				return client;
-		}
-    	
-		return null;
-    }
     
     @Override
     @Transactional(readOnly = true)

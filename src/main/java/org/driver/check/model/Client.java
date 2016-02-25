@@ -1,7 +1,11 @@
 
 package org.driver.check.model;
 
-public class Client{
+import org.springframework.data.mongodb.core.mapping.Document;
+
+@Document
+public class Client extends BaseEntity{
+	
 	/*
 	 * id
 	 * client_id
@@ -9,8 +13,6 @@ public class Client{
 	 * address
 	 * city
 	 */
-	
-	private String id;
 	
 	private int clientId; //should be made as unique
 	
@@ -20,13 +22,8 @@ public class Client{
 
     private String city;
 
-    public Client() {
-	}
     
-    public String getId() {
-		return id;
-	}
-	
+    
 	public int getClientId(){
 		return clientId;
 	}
@@ -57,7 +54,10 @@ public class Client{
 
 	public void setCity(String city) {
 		this.city = city;
-	}   
+	} 
+	
+	public Client() {
+	}
     
     public Client(final int clientId, final String name, final String address, final String city) {
     	this.clientId = clientId;
@@ -65,20 +65,6 @@ public class Client{
     	this.address = address;
     	this.city = city;
     }
-
-    /*
-    // this method is not working properly in Json print
-    @Override
-    public String toString() {
-        return new ToStringCreator(this)
-                //.append("id", this.id) //bson id is not necessary
-        		.append("name", this.name)
-                .append("name", this.name)
-                .append("address", this.address)
-                .append("city", this.city)
-                .toString();
-    }
-    */
     
     @Override
 	public String toString() {
