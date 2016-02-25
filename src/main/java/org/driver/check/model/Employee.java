@@ -6,7 +6,7 @@ import org.springframework.core.style.ToStringCreator;
 public class Employee extends Person {
 	
 	/*
-	 * 
+	 * empId
 	 * first_name
 	 * last_name
 	 * address
@@ -14,13 +14,29 @@ public class Employee extends Person {
 	 * telephone
 	 */
 	
+	private String id;
+	
+	private int empId;
+	
 	private String address;
 
     private String city;
 
     private String telephone;
     
-    // client_id will be added later   
+    // client_id will be added later
+    
+    public String getId(){
+    	return id;
+    }
+    
+    public int getEmpId(){
+    	return empId;
+    }
+    
+    public void setEmpId(int empId){
+    	this.empId = empId;
+    }
 
     public String getAddress() {
         return this.address;
@@ -49,7 +65,8 @@ public class Employee extends Person {
     public Employee() {
 	}
     
-    public Employee(final String firstName, final String lastName, final String address, final String city, final String telephone) {    	
+    public Employee(final int empId, final String firstName, final String lastName, final String address, final String city, final String telephone) {    	
+    	this.empId = empId;
     	this.firstName = firstName;
     	this.lastName = lastName;
     	this.address = address;
@@ -59,10 +76,10 @@ public class Employee extends Person {
 
     @Override
     public String toString() {
-        return new ToStringCreator(this)                
-                .append("new", this.isNew())
-                .append("lastName", this.getLastName())
-                .append("firstName", this.getFirstName())
+        return new ToStringCreator(this)
+        		.append("empId", empId)	
+                .append("lastName", lastName)
+                .append("firstName", firstName)
                 .append("address", this.address)
                 .append("city", this.city)
                 .append("telephone", this.telephone)

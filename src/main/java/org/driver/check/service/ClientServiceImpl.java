@@ -1,5 +1,10 @@
 package org.driver.check.service;
 
+
+import static org.springframework.data.mongodb.core.query.Query.query;
+import static org.springframework.data.mongodb.core.query.Criteria.where;
+import static org.springframework.data.mongodb.core.query.Update.update;
+
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
@@ -14,13 +19,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.mongodb.Mongo;
 
-
 @Service
 public class ClientServiceImpl implements ClientService {
 
     @Override
     @Transactional(readOnly = true)
-    public Client findClientByName(String name) throws DataAccessException {
+    public Client findClientByName(final String name) throws DataAccessException {
     	List<Client> clientList = getDummyClients();
     	
     	for (Client client : clientList) {
@@ -40,12 +44,38 @@ public class ClientServiceImpl implements ClientService {
     	return mongoOps.findAll(Client.class);
     }
     
+    @Override
+    public void deleteClientByClientId(final int clientId) {	
+    	MongoOperations mongoOps = new MongoTemplate(new SimpleMongoDbFactory(new Mongo(), "test"));
+		Client p = mongoOps.findOne(query(where("clientId").is(clientId)), Client.class);
+		System.out.println("{deleteClientByClientId} p "+p);
+		mongoOps.remove(p);
+	}
+    
+    @Override
+    public void addClient(final int clientId, final String name, final String address, final String city){
+    	MongoOperations mongoOps = new MongoTemplate(new SimpleMongoDbFactory(new Mongo(), "test"));
+    	Client p = new Client(clientId, name, address, city);
+		mongoOps.insert(p);		
+    }
+    
+    @Override
+    public void updateClient(final int clientId, final String name, final String address, final String city){
+    	MongoOperations mongoOps = new MongoTemplate(new SimpleMongoDbFactory(new Mongo(), "test"));
+    	mongoOps.updateFirst(query(where("clientId").is(clientId)), update("address", address), Client.class);
+    	mongoOps.updateFirst(query(where("clientId").is(clientId)), update("name", name), Client.class);
+    	mongoOps.updateFirst(query(where("clientId").is(clientId)), update("city", city), Client.class);    	
+		
+		Client p = mongoOps.findOne(query(where("clientId").is(clientId)), Client.class);
+		System.out.println("Updated: " + p);
+    }
+    
     // dummy clients
     private List<Client> getDummyClients(){
     	// id, name, street, city
-    	Client client1 = new Client("Driver Check", "11, Street", "Toronto");
-    	Client client2 = new Client("SmileGate", "12, Street", "Toronto");
-    	Client client3 = new Client("GTECH", "13, Street", "Toronto");
+    	Client client1 = new Client(103, "Driver Check", "11, Street", "Toronto");
+    	Client client2 = new Client(104, "SmileGate", "12, Street", "Toronto");
+    	Client client3 = new Client(104, "GTECH", "13, Street", "Toronto");
     	
     	List<Client> clientList = new LinkedList<Client>();
     	clientList.add(client1);

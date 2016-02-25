@@ -1,5 +1,9 @@
 package org.driver.check.service;
 
+import static org.springframework.data.mongodb.core.query.Criteria.where;
+import static org.springframework.data.mongodb.core.query.Query.query;
+import static org.springframework.data.mongodb.core.query.Update.update;
+
 import java.util.Collection;
 import java.util.Date;
 import java.util.LinkedList;
@@ -25,16 +29,40 @@ public class TestResultServiceImpl implements TestResultService {
     	return mongoOps.findAll(TestResult.class);
     }
     
+    @Override
+    public void deleteTestByTestId(final int testId) {	
+    	MongoOperations mongoOps = new MongoTemplate(new SimpleMongoDbFactory(new Mongo(), "test"));
+		TestResult p = mongoOps.findOne(query(where("testId").is(testId)), TestResult.class);
+		System.out.println("{deleteTestByTestId} p "+p);
+		mongoOps.remove(p);
+	}
+    
+    @Override
+    public void addTest(final int testId, final Date testTakenDate){
+    	MongoOperations mongoOps = new MongoTemplate(new SimpleMongoDbFactory(new Mongo(), "test"));
+    	TestResult p = new TestResult(testId, testTakenDate);
+		mongoOps.insert(p);
+		System.out.println("{addTest}: " + p);
+    }
+    
+    @Override
+    public void updateTest(final int testId, final Date testTakenDate){
+    	MongoOperations mongoOps = new MongoTemplate(new SimpleMongoDbFactory(new Mongo(), "test"));
+    	mongoOps.updateFirst(query(where("testId").is(testId)), update("testTakenDate", testTakenDate), TestResult.class);		
+		TestResult p = mongoOps.findOne(query(where("testId").is(testId)), TestResult.class);
+		System.out.println("{updateTest}: " + p);
+    }
+    
     // dummy test results
     private List<TestResult> getDummyTestResults(){
-    	// id, test_taken_date
+    	// testId, test_taken_date
     	
     	// deprecated Date is used just for testing purpose
-    	TestResult test1 = new TestResult(new Date());
-    	TestResult test2 = new TestResult(new Date()); 
-    	TestResult test3 = new TestResult(new Date()); 
-    	TestResult test4 = new TestResult(new Date()); 
-    	TestResult test5 = new TestResult(new Date()); 
+    	TestResult test1 = new TestResult(1, new Date());
+    	TestResult test2 = new TestResult(2, new Date()); 
+    	TestResult test3 = new TestResult(3, new Date()); 
+    	TestResult test4 = new TestResult(4, new Date()); 
+    	TestResult test5 = new TestResult(5, new Date()); 
     	
     	List<TestResult> testResultList = new LinkedList<TestResult>();
     	testResultList.add(test1);

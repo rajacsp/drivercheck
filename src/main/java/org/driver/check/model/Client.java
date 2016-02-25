@@ -1,17 +1,18 @@
 
 package org.driver.check.model;
 
-import org.springframework.core.style.ToStringCreator;
-
 public class Client{
 	/*
 	 * id
+	 * client_id
 	 * name
 	 * address
 	 * city
 	 */
 	
-	private Object id;
+	private String id;
+	
+	private int clientId; //should be made as unique
 	
     private String name;
     
@@ -22,12 +23,16 @@ public class Client{
     public Client() {
 	}
     
-	public Object getId() {
+    public String getId() {
 		return id;
 	}
-
-	public void setId(Object id) {
-		this.id = id;
+	
+	public int getClientId(){
+		return clientId;
+	}
+	
+	public void setClientId(int clientId){
+		this.clientId = clientId;
 	}
 
 	public String getName() {
@@ -54,21 +59,30 @@ public class Client{
 		this.city = city;
 	}   
     
-    public Client(final String name, final String address, final String city) {    	
+    public Client(final int clientId, final String name, final String address, final String city) {
+    	this.clientId = clientId;
     	this.name = name;
     	this.address = address;
     	this.city = city;
     }
 
+    /*
     // this method is not working properly in Json print
     @Override
     public String toString() {
         return new ToStringCreator(this)
                 //.append("id", this.id) //bson id is not necessary
+        		.append("name", this.name)
                 .append("name", this.name)
-                .append("address1", this.address)
+                .append("address", this.address)
                 .append("city", this.city)
                 .toString();
     }
+    */
+    
+    @Override
+	public String toString() {
+		return "Client [id=" + id + ", cliend_id="+clientId+" name=" + name + ", address=" + address + ", city="+city+"]";
+	}
 
 }

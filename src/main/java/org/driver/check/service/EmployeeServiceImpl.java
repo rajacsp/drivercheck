@@ -1,5 +1,9 @@
 package org.driver.check.service;
 
+import static org.springframework.data.mongodb.core.query.Criteria.where;
+import static org.springframework.data.mongodb.core.query.Query.query;
+import static org.springframework.data.mongodb.core.query.Update.update;
+
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
@@ -44,13 +48,41 @@ public class EmployeeServiceImpl implements EmployeeService {
     // dummy employees for data-fill up
     private List<Employee> getDummyEmployees(){
     	// id, first_name, last_name, street, city, phone
-    	Employee employee1 = new Employee("Raja", "Raman", "Balliol Street", "Toronot", "3632636363");
-    	Employee employee2 = new Employee("Chris", "Brown", "Hello Street", "Toronto", "474646464");
+    	Employee employee1 = new Employee(1, "Raja", "Raman", "Balliol Street", "Toronot", "3632636363");
+    	Employee employee2 = new Employee(2, "Chris", "Brown", "Hello Street", "Toronto", "474646464");
     	
     	List<Employee> employeeList = new LinkedList<Employee>();
     	employeeList.add(employee1);
     	employeeList.add(employee2);
     	
     	return employeeList;
+    }
+    
+    @Override
+    public void deleteEmployeeByEmpId(final int empId){
+    	MongoOperations mongoOps = new MongoTemplate(new SimpleMongoDbFactory(new Mongo(), "test"));
+		Employee p = mongoOps.findOne(query(where("empId").is(empId)), Employee.class);
+		System.out.println("{deleteEmployeeByEmpId} p "+p);
+		mongoOps.remove(p);
+    }
+    
+    @Override
+    public void addEmployee(final int empId, final String firstName, final String lastName, final String address, final String city, final String telephone){
+    	MongoOperations mongoOps = new MongoTemplate(new SimpleMongoDbFactory(new Mongo(), "test"));
+    	Employee p = new Employee(empId, firstName, lastName, address, city, telephone);
+		mongoOps.insert(p);
+		System.out.println("{addEmployee}: " + p);
+    }
+    
+    @Override
+    public void updateEmployee(final int empId, final String firstName, final String lastName, final String address, final String city, final String telephone){
+    	MongoOperations mongoOps = new MongoTemplate(new SimpleMongoDbFactory(new Mongo(), "test"));
+    	mongoOps.updateFirst(query(where("empId").is(empId)), update("firstName", firstName), Employee.class);
+		mongoOps.updateFirst(query(where("empId").is(empId)), update("lastName", lastName), Employee.class);
+		mongoOps.updateFirst(query(where("empId").is(empId)), update("address", address), Employee.class);
+		mongoOps.updateFirst(query(where("empId").is(empId)), update("city", city), Employee.class);
+		mongoOps.updateFirst(query(where("empId").is(empId)), update("telephone", telephone), Employee.class);
+		Employee p = mongoOps.findOne(query(where("empId").is(empId)), Employee.class);
+		System.out.println("Updated: " + p);
     }
 }
