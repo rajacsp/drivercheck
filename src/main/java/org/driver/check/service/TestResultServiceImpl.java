@@ -13,9 +13,11 @@ import org.driver.check.model.TestResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataAccessException;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.SimpleMongoDbFactory;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -31,6 +33,28 @@ public class TestResultServiceImpl implements TestResultService {
     public Collection<TestResult> findAll() throws DataAccessException {
     	MongoOperations mongoOps = new MongoTemplate(new SimpleMongoDbFactory(new Mongo(), "test"));
     	return mongoOps.findAll(TestResult.class);
+    }    
+    
+    @Override
+    @Transactional(readOnly = true)
+    public Collection<TestResult> findNewest() throws DataAccessException {
+    	MongoOperations mongoOps = new MongoTemplate(new SimpleMongoDbFactory(new Mongo(), "test"));
+    	
+    	Query query = new Query();
+    	//query.limit(10); //limit is not needed in this case; will be figured out later
+    	query.with(new Sort(Sort.Direction.DESC, "testTakenDate"));    	
+    	return mongoOps.find(query, TestResult.class);
+    }
+    
+    @Override
+    @Transactional(readOnly = true)
+    public Collection<TestResult> findOldest() throws DataAccessException {
+    	MongoOperations mongoOps = new MongoTemplate(new SimpleMongoDbFactory(new Mongo(), "test"));
+    	
+    	Query query = new Query();
+    	//query.limit(10); //limit is not needed in this case; will be figured out later
+    	query.with(new Sort(Sort.Direction.ASC, "testTakenDate"));    	
+    	return mongoOps.find(query, TestResult.class);
     }
     
     @Override

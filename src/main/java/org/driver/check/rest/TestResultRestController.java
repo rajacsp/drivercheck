@@ -85,9 +85,20 @@ public class TestResultRestController {
     	return map;
     }
     
-    // Add an option to calculate the "pass" rate per client (% of passed tests)
-    
     // Sort tests by newest/oldest
+    // newest
+    @RequestMapping(value = "/tests/newest", method = RequestMethod.GET)
+    public @ResponseBody Collection<TestResult> findNewest() {    	
+        return this.testResultService.findNewest();
+    }
+    
+    // oldest
+    @RequestMapping(value = "/tests/oldest", method = RequestMethod.GET)
+    public @ResponseBody Collection<TestResult> findOldest() {    	
+        return this.testResultService.findOldest();
+    }
+    
+    // Add an option to calculate the "pass" rate per client (% of passed tests)
     
     // Filter global tests by date range
 }

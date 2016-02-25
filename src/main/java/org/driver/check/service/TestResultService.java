@@ -10,6 +10,10 @@ public interface TestResultService {
     
     Collection<TestResult> findAll() throws DataAccessException;
     
+    Collection<TestResult> findNewest() throws DataAccessException;
+    
+    Collection<TestResult> findOldest() throws DataAccessException;
+    
     void deleteTestByTestId(final int testId);
     
     void addTest(final int testId, final Date testTakenDate);
