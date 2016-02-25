@@ -9,6 +9,7 @@ import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.driver.check.business.constants.Const;
 import org.driver.check.model.Client;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,7 +23,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.mongodb.Mongo;
 
 @Service
-public class ClientServiceImpl implements ClientService {
+public class ClientServiceImpl implements ClientService, Const {
 	
 	private static Logger _log = LoggerFactory.getLogger(ClientServiceImpl.class);
 
@@ -44,13 +45,13 @@ public class ClientServiceImpl implements ClientService {
     @Override
     @Transactional(readOnly = true)
     public Collection<Client> findAll() throws DataAccessException {
-    	MongoOperations mongoOps = new MongoTemplate(new SimpleMongoDbFactory(new Mongo(), "test"));    	
+    	MongoOperations mongoOps = new MongoTemplate(new SimpleMongoDbFactory(new Mongo(), MONGO_DB_NAME));    	
     	return mongoOps.findAll(Client.class);
     }
     
     @Override
     public void deleteClientByClientId(final int clientId) {	
-    	MongoOperations mongoOps = new MongoTemplate(new SimpleMongoDbFactory(new Mongo(), "test"));
+    	MongoOperations mongoOps = new MongoTemplate(new SimpleMongoDbFactory(new Mongo(), MONGO_DB_NAME));
 		Client p = mongoOps.findOne(query(where("clientId").is(clientId)), Client.class);
 		_log.info("{deleteClientByClientId} p "+p);		
 		mongoOps.remove(p);
@@ -58,14 +59,14 @@ public class ClientServiceImpl implements ClientService {
     
     @Override
     public void addClient(final int clientId, final String name, final String address, final String city){
-    	MongoOperations mongoOps = new MongoTemplate(new SimpleMongoDbFactory(new Mongo(), "test"));
+    	MongoOperations mongoOps = new MongoTemplate(new SimpleMongoDbFactory(new Mongo(), MONGO_DB_NAME));
     	Client p = new Client(clientId, name, address, city);
 		mongoOps.insert(p);		
     }
     
     @Override
     public void updateClient(final int clientId, final String name, final String address, final String city){
-    	MongoOperations mongoOps = new MongoTemplate(new SimpleMongoDbFactory(new Mongo(), "test"));
+    	MongoOperations mongoOps = new MongoTemplate(new SimpleMongoDbFactory(new Mongo(), MONGO_DB_NAME));
     	mongoOps.updateFirst(query(where("clientId").is(clientId)), update("address", address), Client.class);
     	mongoOps.updateFirst(query(where("clientId").is(clientId)), update("name", name), Client.class);
     	mongoOps.updateFirst(query(where("clientId").is(clientId)), update("city", city), Client.class);    	

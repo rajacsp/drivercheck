@@ -9,6 +9,7 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.driver.check.business.constants.Const;
 import org.driver.check.model.TestResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,21 +25,21 @@ import org.springframework.transaction.annotation.Transactional;
 import com.mongodb.Mongo;
 
 @Service
-public class TestResultServiceImpl implements TestResultService {
+public class TestResultServiceImpl implements TestResultService, Const {
 	
 	private static Logger _log = LoggerFactory.getLogger(TestResultServiceImpl.class);
     
     @Override
     @Transactional(readOnly = true)
     public Collection<TestResult> findAll() throws DataAccessException {
-    	MongoOperations mongoOps = new MongoTemplate(new SimpleMongoDbFactory(new Mongo(), "test"));
+    	MongoOperations mongoOps = new MongoTemplate(new SimpleMongoDbFactory(new Mongo(), MONGO_DB_NAME));
     	return mongoOps.findAll(TestResult.class);
     }    
     
     @Override
     @Transactional(readOnly = true)
     public Collection<TestResult> findNewest() throws DataAccessException {
-    	MongoOperations mongoOps = new MongoTemplate(new SimpleMongoDbFactory(new Mongo(), "test"));
+    	MongoOperations mongoOps = new MongoTemplate(new SimpleMongoDbFactory(new Mongo(), MONGO_DB_NAME));
     	
     	Query query = new Query();
     	//query.limit(10); //limit is not needed in this case; will be figured out later
@@ -49,7 +50,7 @@ public class TestResultServiceImpl implements TestResultService {
     @Override
     @Transactional(readOnly = true)
     public Collection<TestResult> findOldest() throws DataAccessException {
-    	MongoOperations mongoOps = new MongoTemplate(new SimpleMongoDbFactory(new Mongo(), "test"));
+    	MongoOperations mongoOps = new MongoTemplate(new SimpleMongoDbFactory(new Mongo(), MONGO_DB_NAME));
     	
     	Query query = new Query();
     	//query.limit(10); //limit is not needed in this case; will be figured out later
@@ -59,7 +60,7 @@ public class TestResultServiceImpl implements TestResultService {
     
     @Override
     public void deleteTestByTestId(final int testId) {	
-    	MongoOperations mongoOps = new MongoTemplate(new SimpleMongoDbFactory(new Mongo(), "test"));
+    	MongoOperations mongoOps = new MongoTemplate(new SimpleMongoDbFactory(new Mongo(), MONGO_DB_NAME));
 		TestResult p = mongoOps.findOne(query(where("testId").is(testId)), TestResult.class);
 		_log.info("{deleteTestByTestId} p "+p);
 		mongoOps.remove(p);
@@ -67,7 +68,7 @@ public class TestResultServiceImpl implements TestResultService {
     
     @Override
     public void addTest(final int testId, final Date testTakenDate){
-    	MongoOperations mongoOps = new MongoTemplate(new SimpleMongoDbFactory(new Mongo(), "test"));
+    	MongoOperations mongoOps = new MongoTemplate(new SimpleMongoDbFactory(new Mongo(), MONGO_DB_NAME));
     	TestResult p = new TestResult(testId, testTakenDate);
 		mongoOps.insert(p);
 		_log.info("{addTest}: " + p);
@@ -75,7 +76,7 @@ public class TestResultServiceImpl implements TestResultService {
     
     @Override
     public void updateTest(final int testId, final Date testTakenDate){
-    	MongoOperations mongoOps = new MongoTemplate(new SimpleMongoDbFactory(new Mongo(), "test"));
+    	MongoOperations mongoOps = new MongoTemplate(new SimpleMongoDbFactory(new Mongo(), MONGO_DB_NAME));
     	mongoOps.updateFirst(query(where("testId").is(testId)), update("testTakenDate", testTakenDate), TestResult.class);		
 		TestResult p = mongoOps.findOne(query(where("testId").is(testId)), TestResult.class);
 		_log.info("{updateTest}: " + p);
