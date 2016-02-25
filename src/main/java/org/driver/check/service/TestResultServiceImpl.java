@@ -10,6 +10,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.driver.check.model.TestResult;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -21,6 +23,8 @@ import com.mongodb.Mongo;
 
 @Service
 public class TestResultServiceImpl implements TestResultService {
+	
+	private static Logger _log = LoggerFactory.getLogger(TestResultServiceImpl.class);
     
     @Override
     @Transactional(readOnly = true)
@@ -33,7 +37,7 @@ public class TestResultServiceImpl implements TestResultService {
     public void deleteTestByTestId(final int testId) {	
     	MongoOperations mongoOps = new MongoTemplate(new SimpleMongoDbFactory(new Mongo(), "test"));
 		TestResult p = mongoOps.findOne(query(where("testId").is(testId)), TestResult.class);
-		System.out.println("{deleteTestByTestId} p "+p);
+		_log.info("{deleteTestByTestId} p "+p);
 		mongoOps.remove(p);
 	}
     
@@ -42,7 +46,7 @@ public class TestResultServiceImpl implements TestResultService {
     	MongoOperations mongoOps = new MongoTemplate(new SimpleMongoDbFactory(new Mongo(), "test"));
     	TestResult p = new TestResult(testId, testTakenDate);
 		mongoOps.insert(p);
-		System.out.println("{addTest}: " + p);
+		_log.info("{addTest}: " + p);
     }
     
     @Override
@@ -50,7 +54,7 @@ public class TestResultServiceImpl implements TestResultService {
     	MongoOperations mongoOps = new MongoTemplate(new SimpleMongoDbFactory(new Mongo(), "test"));
     	mongoOps.updateFirst(query(where("testId").is(testId)), update("testTakenDate", testTakenDate), TestResult.class);		
 		TestResult p = mongoOps.findOne(query(where("testId").is(testId)), TestResult.class);
-		System.out.println("{updateTest}: " + p);
+		_log.info("{updateTest}: " + p);
     }
     
     // dummy test results

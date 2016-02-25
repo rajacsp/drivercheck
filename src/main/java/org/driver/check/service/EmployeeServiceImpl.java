@@ -9,6 +9,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.driver.check.model.Employee;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -21,6 +23,8 @@ import com.mongodb.Mongo;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
+	
+	private static Logger _log = LoggerFactory.getLogger(EmployeeServiceImpl.class);
 
     @Override
     @Transactional(readOnly = true)
@@ -62,7 +66,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     public void deleteEmployeeByEmpId(final int empId){
     	MongoOperations mongoOps = new MongoTemplate(new SimpleMongoDbFactory(new Mongo(), "test"));
 		Employee p = mongoOps.findOne(query(where("empId").is(empId)), Employee.class);
-		System.out.println("{deleteEmployeeByEmpId} p "+p);
+		_log.info("{deleteEmployeeByEmpId} p "+p);
 		mongoOps.remove(p);
     }
     
@@ -71,7 +75,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     	MongoOperations mongoOps = new MongoTemplate(new SimpleMongoDbFactory(new Mongo(), "test"));
     	Employee p = new Employee(empId, firstName, lastName, address, city, telephone);
 		mongoOps.insert(p);
-		System.out.println("{addEmployee}: " + p);
+		_log.info("{addEmployee}: " + p);
     }
     
     @Override
@@ -83,6 +87,6 @@ public class EmployeeServiceImpl implements EmployeeService {
 		mongoOps.updateFirst(query(where("empId").is(empId)), update("city", city), Employee.class);
 		mongoOps.updateFirst(query(where("empId").is(empId)), update("telephone", telephone), Employee.class);
 		Employee p = mongoOps.findOne(query(where("empId").is(empId)), Employee.class);
-		System.out.println("Updated: " + p);
+		_log.info("{updateEmployee} Updated : "+p);
     }
 }

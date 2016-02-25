@@ -1,8 +1,8 @@
 package org.driver.check.service;
 
 
-import static org.springframework.data.mongodb.core.query.Query.query;
 import static org.springframework.data.mongodb.core.query.Criteria.where;
+import static org.springframework.data.mongodb.core.query.Query.query;
 import static org.springframework.data.mongodb.core.query.Update.update;
 
 import java.util.Collection;
@@ -10,6 +10,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.driver.check.model.Client;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -21,6 +23,8 @@ import com.mongodb.Mongo;
 
 @Service
 public class ClientServiceImpl implements ClientService {
+	
+	private static Logger _log = LoggerFactory.getLogger(ClientServiceImpl.class);
 
     @Override
     @Transactional(readOnly = true)
@@ -40,7 +44,7 @@ public class ClientServiceImpl implements ClientService {
     @Override
     @Transactional(readOnly = true)
     public Collection<Client> findAll() throws DataAccessException {
-    	MongoOperations mongoOps = new MongoTemplate(new SimpleMongoDbFactory(new Mongo(), "test"));
+    	MongoOperations mongoOps = new MongoTemplate(new SimpleMongoDbFactory(new Mongo(), "test"));    	
     	return mongoOps.findAll(Client.class);
     }
     
@@ -48,7 +52,7 @@ public class ClientServiceImpl implements ClientService {
     public void deleteClientByClientId(final int clientId) {	
     	MongoOperations mongoOps = new MongoTemplate(new SimpleMongoDbFactory(new Mongo(), "test"));
 		Client p = mongoOps.findOne(query(where("clientId").is(clientId)), Client.class);
-		System.out.println("{deleteClientByClientId} p "+p);
+		_log.info("{deleteClientByClientId} p "+p);		
 		mongoOps.remove(p);
 	}
     
@@ -67,7 +71,8 @@ public class ClientServiceImpl implements ClientService {
     	mongoOps.updateFirst(query(where("clientId").is(clientId)), update("city", city), Client.class);    	
 		
 		Client p = mongoOps.findOne(query(where("clientId").is(clientId)), Client.class);
-		System.out.println("Updated: " + p);
+		
+		_log.info("{updateClient}: " + p);		
     }
     
     // dummy clients
