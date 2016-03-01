@@ -1,22 +1,26 @@
 <!doctype html>
-<html ng-app>
-	<head>
-		<title>Hello AngularJS</title>
-		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script>
-    	<script src="js/hello.js"></script>
-	</head>
-
-	<body>
-		
-		<div ng-controller="clients">
-			<p>The Name is {{client[0].clientId}}</p>
-			<p>The Name is {{client[0].name}}</p>
-			<p>The Name is {{client.address}}</p>
-			<p>The Name is {{client.city}}</p>						
-		</div>
-	
-	
-		
-		
-	</body>
+<html ng-app="plunker">
+<head>
+<meta charset="utf-8">
+<title>AngularJS Plunker</title>
+<script>
+	document.write('<base href="' + document.location + '" />');
+</script>
+<script src="http://code.angularjs.org/1.1.4/angular.js"></script>
+<script src="js/test.js"></script>
+</head>
+<body ng-controller="MainCtrl">
+	<ul ng-repeat="client in clients.clients">
+		<li>
+			{{ client.name }}
+			<ul ng-repeat="employee in client.employees">
+				<li>{{ employee.firstName}}</li>
+				<ul ng-repeat="test in employee.tests">
+					<li>{{ test.testId}}</li>
+				</ul>
+			</ul>	
+		</li>		
+		</tr>
+		</table>
+</body>
 </html>
