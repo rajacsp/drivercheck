@@ -87,4 +87,16 @@ public class ClientRestController {
     	
     	return map;
     }
+    
+    // test API
+    @RequestMapping(value = "/client/test", method = RequestMethod.GET)
+    public @ResponseBody Map<String, String> testAPI() {
+    	
+    	Map<String, String> map = new LinkedHashMap<String, String>();
+    	map.put("id", "230");
+    	map.put("name", "Nothing Decided");
+    	map.put("city", "Toronto");
+    	
+    	return map;
+    }
 }

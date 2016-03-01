@@ -1,0 +1,22 @@
+<!doctype html>
+<html ng-app>
+	<head>
+		<title>Hello AngularJS</title>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script>
+    	<script src="js/hello.js"></script>
+	</head>
+
+	<body>
+		
+		<div ng-controller="clients">
+			<p>The Name is {{client[0].clientId}}</p>
+			<p>The Name is {{client[0].name}}</p>
+			<p>The Name is {{client.address}}</p>
+			<p>The Name is {{client.city}}</p>						
+		</div>
+	
+	
+		
+		
+	</body>
+</html>
