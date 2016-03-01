@@ -69,6 +69,16 @@ public class ClientServiceImpl implements ClientService, Const {
 		_log.info("{updateClient}: " + p);		
     }
     
+    @Override
+    public void updateEmployees(final int clientId, List<Employee> employees){
+    	MongoOperations mongoOps = new MongoTemplate(new SimpleMongoDbFactory(new Mongo(), MONGO_DB_NAME));
+    	mongoOps.updateFirst(query(where("clientId").is(clientId)), update("employees", employees), Client.class);    	    	
+		
+		Client p = mongoOps.findOne(query(where("clientId").is(clientId)), Client.class);
+		
+		_log.info("{updateEmployees}: " + p);		
+    }
+    
     // dummy clients
     private List<Client> getDummyClients(){
     	// id, name, street, city
@@ -83,4 +93,10 @@ public class ClientServiceImpl implements ClientService, Const {
     	
     	return clientList;
     }
+
+	@Override
+	public void updateClient(int clientId, String name, String address, String city, List<Employee> employees) {
+		// TODO Auto-generated method stub
+		
+	}
 }

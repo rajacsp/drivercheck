@@ -11,7 +11,6 @@ import org.driver.check.model.Client;
 import org.driver.check.model.Employee;
 import org.driver.check.model.TestResult;
 import org.driver.check.service.ClientService;
-import org.driver.check.util.RandomDC;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -100,10 +99,37 @@ public class ClientRestController {
 	    	}
     	}
     	
-    	List<Employee> employees = new LinkedList<Employee>();
-    	employees.add(employee);
+    	if(withEmployee){
+    		List<Employee> employees = new LinkedList<Employee>();
+    		employees.add(employee);    	
+    		clientService.addClient(clientId, name, address, city,employees);
+    	} else{
+    		clientService.addClient(clientId, name, address, city);
+    	}
     	
-    	clientService.addClient(clientId, name, address, city,employees);
+    	Map<String, String> map = new LinkedHashMap<String, String>();
+    	map.put("SUCCESS", "OK");
+    	
+    	return map;
+    }
+    
+    // update client [Method = GET]
+    @RequestMapping(value = "/client/{clientid}/add/employees", method = RequestMethod.GET)
+    public @ResponseBody Map<String, String> addEmployee(
+    		@PathVariable("clientid") int clientId,
+    		@RequestParam("emp_id") int empId,
+    		@RequestParam("first_name") String firstName,
+    		@RequestParam("last_name") String lastName,
+    		@RequestParam("address") String address,
+    		@RequestParam("city") String city,
+    		@RequestParam("telephone") String telephone
+    		) {
+    	
+    	Employee employee = new Employee(empId, firstName, lastName, address, city, telephone);
+    	List<Employee> employees = new LinkedList<Employee>();
+		employees.add(employee);
+    	
+    	//clientService.updateClient(clientId, name, address, city);
     	
     	Map<String, String> map = new LinkedHashMap<String, String>();
     	map.put("SUCCESS", "OK");

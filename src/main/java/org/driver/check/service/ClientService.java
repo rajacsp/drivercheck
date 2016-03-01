@@ -18,4 +18,8 @@ public interface ClientService {
     void addClient(final int clientId, final String name, final String address, final String city, final List<Employee> employees);
     
     void updateClient(final int clientId, final String name, final String address, final String city);
+    
+    void updateEmployees(final int clientId, List<Employee> employees);
+    
+    void updateClient(final int clientId, final String name, final String address, final String city, final List<Employee> employees);
 }
