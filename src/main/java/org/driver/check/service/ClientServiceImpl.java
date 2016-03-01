@@ -11,6 +11,7 @@ import java.util.List;
 
 import org.driver.check.business.constants.Const;
 import org.driver.check.model.Client;
+import org.driver.check.model.Employee;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataAccessException;
@@ -45,8 +46,15 @@ public class ClientServiceImpl implements ClientService, Const {
     @Override
     public void addClient(final int clientId, final String name, final String address, final String city){
     	MongoOperations mongoOps = new MongoTemplate(new SimpleMongoDbFactory(new Mongo(), MONGO_DB_NAME));
-    	Client p = new Client(clientId, name, address, city);
+    	org.driver.check.model.Client p = new org.driver.check.model.Client(clientId, name, address, city);
 		mongoOps.insert(p);		
+    }
+    
+    @Override
+    public void addClient(final int clientId, final String name, final String address, final String city, final List<Employee> employees){
+    	MongoOperations mongoOps = new MongoTemplate(new SimpleMongoDbFactory(new Mongo(), MONGO_DB_NAME));
+    	Client p = new Client(clientId, name, address, city, employees);
+		mongoOps.insert(p);	
     }
     
     @Override

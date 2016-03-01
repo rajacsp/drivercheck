@@ -1,6 +1,8 @@
 
 package org.driver.check.model;
 
+import java.util.List;
+
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document
@@ -21,8 +23,8 @@ public class Client extends BaseEntity{
     private String address;
 
     private String city;
-
     
+    private List<Employee> employees;    
     
 	public int getClientId(){
 		return clientId;
@@ -54,7 +56,15 @@ public class Client extends BaseEntity{
 
 	public void setCity(String city) {
 		this.city = city;
-	} 
+	}
+	
+	public List<Employee> getEmployees(){
+		return employees;
+	}
+	
+	public void setEmployees(List<Employee> employees){
+		this.employees = employees;
+	}
 	
 	public Client() {
 	}
@@ -64,6 +74,14 @@ public class Client extends BaseEntity{
     	this.name = name;
     	this.address = address;
     	this.city = city;
+    }
+    
+    public Client(final int clientId, final String name, final String address, final String city, final List<Employee> employees) {
+    	this.clientId = clientId;
+    	this.name = name;
+    	this.address = address;
+    	this.city = city;
+    	this.employees = employees;
     }
     
     @Override

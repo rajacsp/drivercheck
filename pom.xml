@@ -377,6 +377,13 @@
 			<version>1.11.4.RELEASE</version>
 		</dependency>
 
+
+		<!-- Lombok -->
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>0.11.8</version>
+		</dependency>
 	</dependencies>
 
 	<dependencyManagement>
