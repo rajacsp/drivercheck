@@ -1,12 +1,14 @@
 
 package org.driver.check.model;
 
+import java.io.Serializable;
 import java.util.List;
 
-import org.springframework.data.mongodb.core.mapping.Document;
+import javax.persistence.Column;
 
-@Document
-public class Employee extends Person {
+import org.hibernate.validator.constraints.NotEmpty;
+
+public class Employee implements Serializable {
 	
 	/*
 	 * empId
@@ -16,6 +18,32 @@ public class Employee extends Person {
 	 * city
 	 * telephone
 	 */
+	
+	private static final long serialVersionUID = 6835048307189804448L;
+
+	@Column(name = "first_name")
+    @NotEmpty
+    protected String firstName;
+
+    @Column(name = "last_name")
+    @NotEmpty
+    protected String lastName;
+
+	public String getFirstName() {
+        return this.firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return this.lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
 	
 	private int empId;
 	
@@ -90,4 +118,10 @@ public class Employee extends Person {
     	this.telephone = telephone;
     	this.tests = tests;
     }
+    
+    @Override
+	public String toString() {
+		return "Employee [firstName=" + firstName + ", lastName=" + lastName + ", empId=" + empId + ", address="
+				+ address + ", city=" + city + ", telephone=" + telephone + ", tests=" + tests + "]";
+	}
 }

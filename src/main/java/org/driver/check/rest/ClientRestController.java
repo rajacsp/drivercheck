@@ -1,7 +1,10 @@
 package org.driver.check.rest;
 
+import static org.driver.check.util.Names.getRandomFirstName;
+import static org.driver.check.util.Names.getRandomPhoneNumber;
+import static org.driver.check.util.RandomDC.getRandomInt;
+
 import java.util.Collection;
-import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -19,10 +22,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import static org.driver.check.util.Names.getRandomFirstName;
-import static org.driver.check.util.Names.getRandomPhoneNumber;
-import static org.driver.check.util.RandomDC.getRandomInt;
-
 @RestController
 @RequestMapping("/api")
 public class ClientRestController {
@@ -39,11 +38,31 @@ public class ClientRestController {
         return this.clientService.findAll();
     }
     
+    @RequestMapping(value = "/clients/find", method = RequestMethod.GET)
+    public @ResponseBody Collection<Client> findByName(
+    		@RequestParam("name") String name
+    		) {
+        return clientService.findByName(name);
+    }
+    
     // delete [Method = GET]
     @RequestMapping(value = "/client/delete/{cid}", method = RequestMethod.GET)
     public @ResponseBody Map<String, String> deleteClientByClientId(@PathVariable("cid") Integer clientId) {
     	
     	clientService.deleteClientByClientId(clientId);
+    	
+    	Map<String, String> map = new LinkedHashMap<String, String>();
+    	map.put("SUCCESS", "OK");
+    	
+    	return map;
+    }
+    
+    // delete all
+    @RequestMapping(value = "/client/delete/all", method = RequestMethod.GET)
+    public @ResponseBody Map<String, String> deleteAllClients() {
+    	
+    	// delete all method should be provided
+    	//clientService.deleteClientByClientId(clientId);
     	
     	Map<String, String> map = new LinkedHashMap<String, String>();
     	map.put("SUCCESS", "OK");
@@ -71,15 +90,18 @@ public class ClientRestController {
     		@RequestParam("address") String address,
     		@RequestParam("city") String city,
     		
-    		@RequestParam(value = "addDummy", required = false, defaultValue="false") Boolean addDummyValues,
+    		// if dummy values needed, use this parameter
+    		@RequestParam(value = "dummy", required = false, defaultValue="false") boolean addDummyValues,
     		
-    		@RequestParam(value = "withEmployee", required = false, defaultValue="false") Boolean withEmployee,
-    		@RequestParam(value = "employee_id", required = false) Integer empId,
-    		@RequestParam(value = "employee_firstname", required = false) String empFirstName,
-    		@RequestParam(value = "employee_lastname", required = false) String empLasName,
-    		@RequestParam(value = "employee_address", required = false) String EmployeeAddress,
-    		@RequestParam(value = "employee_city", required = false) String employeeCity,
-    		@RequestParam(value = "employee_telephone", required = false) String telephone,
+    		// add client with or without employee
+    		@RequestParam(value = "withEmployee", required = false, defaultValue="false") Boolean withEmployee,    		
+    		
+    		@RequestParam(value = "emp_id", required = false) Integer empId,
+    		@RequestParam(value = "emp_firstname", required = false) String empFirstName,
+    		@RequestParam(value = "emp_lastname", required = false) String empLasName,
+    		@RequestParam(value = "emp_address", required = false) String EmployeeAddress,
+    		@RequestParam(value = "emp_city", required = false) String employeeCity,
+    		@RequestParam(value = "emp_telephone", required = false) String telephone,
     		
     		@RequestParam(value = "withTest", required = false) Boolean withTest,
     		@RequestParam(value = "test_id", required = false) Integer testId    		
@@ -90,7 +112,8 @@ public class ClientRestController {
     	if(addDummyValues){    		
         	List<TestResult> tests = TestResult.getRandomTests();        	
     		employee = new Employee(401, getRandomFirstName(), getRandomFirstName(), getRandomInt(1, 100)+", Street", "Toronto", getRandomPhoneNumber(), tests);
-    	}else{    	
+    	}else{
+    		/*
 	    	if(withTest){
 	    		
 	    		TestResult test = new TestResult(testId, new Date());
@@ -98,18 +121,20 @@ public class ClientRestController {
 	        	tests.add(test);
 	        	
 	    		employee = new Employee(empId, empFirstName, empLasName, address, city, telephone, tests);
-	    	} else if(withEmployee){
+	    	} else
+	    	*/
+	    	 if(withEmployee){
 	    		employee = new Employee(empId, empFirstName, empLasName, address, city, telephone);
 	    	}
     	}
     	
-    	if(withEmployee != null){
-    		List<Employee> employees = new LinkedList<Employee>();
-    		employees.add(employee);    	
-    		clientService.addClient(clientId, name, address, city,employees);
-    	} else{
-    		clientService.addClient(clientId, name, address, city);
-    	}
+    	if(employee != null){
+     		List<Employee> employees = new LinkedList<Employee>();
+     		employees.add(employee);    	
+     		clientService.addClient(clientId, name, address, city,employees);
+     	} else{ //assume its plain call (witout employee,test) 
+     		clientService.addClient(clientId, name, address, city);
+     	}    	
     	
     	Map<String, String> map = new LinkedHashMap<String, String>();
     	map.put("SUCCESS", "OK");
@@ -118,22 +143,36 @@ public class ClientRestController {
     }
     
     // update client [Method = GET]
-    @RequestMapping(value = "/client/{clientid}/add/employees", method = RequestMethod.GET)
+    /*
+     * 
+     * mongo plain query:
+     * 	db.clients.update({"_id": 2},  {$addToSet : { "employees" : [ {"name"  : "jay", "position" : "senior dev"}, {"name"  : "heejun", "position" : "manager"}] }});
+     */
+    @RequestMapping(value = "/client/{clientid}/add/employee", method = RequestMethod.GET)
     public @ResponseBody Map<String, String> addEmployee(
-    		@PathVariable("clientid") int clientId,
-    		@RequestParam("emp_id") int empId,
-    		@RequestParam("first_name") String firstName,
-    		@RequestParam("last_name") String lastName,
-    		@RequestParam("address") String address,
-    		@RequestParam("city") String city,
-    		@RequestParam("telephone") String telephone
+    		@PathVariable(value = "clientid") int clientId,
+    		@RequestParam(value = "dummy", required = false) boolean addDummyValues,
+    		
+    		// pass original values
+    		@RequestParam(value = "emp_id", required = false) Integer empId,
+    		@RequestParam(value = "first_name", required = false) String firstName,
+    		@RequestParam(value = "last_name", required = false) String lastName,
+    		@RequestParam(value = "address", required = false) String address,
+    		@RequestParam(value = "city", required = false) String city,
+    		@RequestParam(value = "telephone", required = false) String telephone
     		) {
     	
-    	Employee employee = new Employee(empId, firstName, lastName, address, city, telephone);
-    	List<Employee> employees = new LinkedList<Employee>();
-		employees.add(employee);
+    	Employee employee = null;
+    	if(addDummyValues){    		
+    		employee = new Employee(getRandomInt(401, 500), getRandomFirstName(), getRandomFirstName(), getRandomInt(1, 100)+", Street", "Toronto", getRandomPhoneNumber());
+    	} else {    	
+    		employee = new Employee(empId, firstName, lastName, address, city, telephone);
+    		List<Employee> employees = new LinkedList<Employee>();
+    		employees.add(employee);
+    	}
     	
-    	//clientService.updateClient(clientId, name, address, city);
+    	clientService.addEmployee(clientId, employee);   	
+    	
     	
     	Map<String, String> map = new LinkedHashMap<String, String>();
     	map.put("SUCCESS", "OK");
@@ -144,10 +183,10 @@ public class ClientRestController {
     // update client [Method = GET]
     @RequestMapping(value = "/client/update", method = RequestMethod.GET)
     public @ResponseBody Map<String, String> updateClient(    		
-    		@RequestParam("client_id") int clientId,
-    		@RequestParam("name") String name,
-    		@RequestParam("address") String address,
-    		@RequestParam("city") String city
+    		@RequestParam(value = "client_id") int clientId,
+    		@RequestParam(value = "name", required = false) String name,
+    		@RequestParam(value = "address", required = false) String address,
+    		@RequestParam(value = "city", required = false) String city
     		) {
     	
     	clientService.updateClient(clientId, name, address, city);
@@ -166,6 +205,17 @@ public class ClientRestController {
     	map.put("id", "230");
     	map.put("name", "Nothing Decided");
     	map.put("city", "Toronto");
+    	
+    	return map;
+    }
+    
+    @RequestMapping(value = "/client/customer/add", method = RequestMethod.GET)
+    public @ResponseBody Map<String, String> addCustomer() {
+	
+    	clientService.addCustomer();
+    	
+    	Map<String, String> map = new LinkedHashMap<String, String>();
+    	map.put("SUCCESS", "OK");
     	
     	return map;
     }

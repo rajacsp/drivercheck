@@ -1,12 +1,13 @@
 
 package org.driver.check.model;
 
+import java.io.Serializable;
 import java.util.List;
 
-import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.annotation.Id;
 
-@Document
-public class Client extends BaseEntity{
+
+public class Client implements Serializable {
 	
 	/*
 	 * id
@@ -15,6 +16,15 @@ public class Client extends BaseEntity{
 	 * address
 	 * city
 	 */
+	
+	private static final long serialVersionUID = -191439285713860309L;
+
+	@Id
+	protected String id;
+	
+	public String getId(){
+    	return id;
+    }
 	
 	private int clientId; //should be made as unique
 	
@@ -86,7 +96,7 @@ public class Client extends BaseEntity{
     
     @Override
 	public String toString() {
-		return "Client [id=" + id + ", cliend_id="+clientId+" name=" + name + ", address=" + address + ", city="+city+"]";
+		return "Client [id=" + id + ", clientId=" + clientId + ", name=" + name + ", address=" + address + ", city="
+				+ city + ", employees=" + employees + "]";
 	}
-
 }

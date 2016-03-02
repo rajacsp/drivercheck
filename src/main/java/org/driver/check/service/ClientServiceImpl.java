@@ -9,9 +9,17 @@ import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
+import javax.annotation.Resource;
+
 import org.driver.check.business.constants.Const;
 import org.driver.check.model.Client;
+import org.driver.check.model.Customer;
 import org.driver.check.model.Employee;
+import org.driver.check.repository.ClientRepository;
+import org.driver.check.repository.ClientRepositoryCustom;
+import org.driver.check.repository.CustomerRepository;
+import org.driver.check.util.Names;
+import org.driver.check.util.RandomDC;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataAccessException;
@@ -21,18 +29,35 @@ import org.springframework.data.mongodb.core.SimpleMongoDbFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.mongodb.BasicDBObject;
+import com.mongodb.DB;
+import com.mongodb.DBCollection;
 import com.mongodb.Mongo;
 
-@Service
+@Service("clientService")
 public class ClientServiceImpl implements ClientService, Const {
 	
 	private static Logger _log = LoggerFactory.getLogger(ClientServiceImpl.class);
+	
+	@Resource
+	private CustomerRepository customerRepository;
+	
+	@Resource
+	private ClientRepository clientRepository;
+	
+	//@Resource //not working because of missing bean
+	//private ClientRepositoryCustom clientRepositoryCustom;
     
     @Override
     @Transactional(readOnly = true)
-    public Collection<Client> findAll() throws DataAccessException {
-    	MongoOperations mongoOps = new MongoTemplate(new SimpleMongoDbFactory(new Mongo(), MONGO_DB_NAME));    	
-    	return mongoOps.findAll(Client.class);
+    public Collection<Client> findAll() throws DataAccessException {    	
+    	return clientRepository.findAll();
+    }
+    
+    @Override
+    @Transactional(readOnly = true)
+    public Collection<Client> findByName(String name) throws DataAccessException{
+    	return clientRepository.findByName(name);
     }
     
     @Override
@@ -45,9 +70,39 @@ public class ClientServiceImpl implements ClientService, Const {
     
     @Override
     public void addClient(final int clientId, final String name, final String address, final String city){
+    	
+    	/*
+    	 * set 1
     	MongoOperations mongoOps = new MongoTemplate(new SimpleMongoDbFactory(new Mongo(), MONGO_DB_NAME));
     	org.driver.check.model.Client p = new org.driver.check.model.Client(clientId, name, address, city);
-		mongoOps.insert(p);		
+		mongoOps.insert(p);	
+		*/
+    	
+    	/* set 2
+    	Mongo mongo = new Mongo("localhost", 27017);
+    	DB db = mongo.getDB("test");
+    	DBCollection collection = db.getCollection("client");
+    	
+    	Client client = new Client(clientId, name, address, city);
+    	BasicDBObject basicDBObject = new BasicDBObject();
+    	basicDBObject.put("clients", client);
+
+    	collection.save(basicDBObject);
+    	*/
+    	
+    	Client client = new Client(clientId, name, address, city);
+    	Employee emp = new Employee(RandomDC.getRandomInt(400, 500), Names.getRandomFirstName(), Names.getRandomLasstName(), RandomDC.getRandomInt(400, 500)+" Street", "Toronto", Names.getRandomPhoneNumber());
+    	Employee emp1 = new Employee(RandomDC.getRandomInt(400, 500), Names.getRandomFirstName(), Names.getRandomLasstName(), RandomDC.getRandomInt(400, 500)+" Street", "Toronto", Names.getRandomPhoneNumber());
+    	
+    	List<Employee> emps = new LinkedList<Employee>();
+    	emps.add(emp);
+    	emps.add(emp1);
+    	
+    	client.setEmployees(emps);
+    	
+    	_log.info("{addClient} client : "+client);
+    	
+    	clientRepository.save(client);		
     }
     
     @Override
@@ -67,14 +122,61 @@ public class ClientServiceImpl implements ClientService, Const {
      */
     @Override
     public void updateClient(final int clientId, final String name, final String address, final String city){
-    	MongoOperations mongoOps = new MongoTemplate(new SimpleMongoDbFactory(new Mongo(), MONGO_DB_NAME));
-    	mongoOps.updateFirst(query(where("clientId").is(clientId)), update("address", address), Client.class);
-    	mongoOps.updateFirst(query(where("clientId").is(clientId)), update("name", name), Client.class);
-    	mongoOps.updateFirst(query(where("clientId").is(clientId)), update("city", city), Client.class);    	
+    	
+    	// this formula should be removed
+    	Mongo mongo = new Mongo("localhost", 27017);
+  	  	DB db = mongo.getDB("test");  	  	
+    	DBCollection collection = db.getCollection("client");
+    	
+		BasicDBObject newDocument = new BasicDBObject();
+		newDocument.append("$set", new BasicDBObject().append("address", address));
+		if(name != null)
+			newDocument.append("$set", new BasicDBObject().append("name", name));
+		if(city != null)
+			newDocument.append("$set", new BasicDBObject().append("city", city));
 		
-		Client p = mongoOps.findOne(query(where("clientId").is(clientId)), Client.class);
+		BasicDBObject searchQuery = new BasicDBObject().append("clientId", clientId);		
+		collection.update(searchQuery, newDocument);
+    }
+    /*
+     * 
+     * (non-Javadoc)
+     * @see org.driver.check.service.ClientService#addEmployee(int, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String)
+     * 
+     * plain query:
+     * 	db.clients.update({"_id": 1},  {$addToSet : { "employees" : [ {"name"  : "Feli", "position" : "Director"}, {"name"  : "Salma", "position" : "Tester"}] }});
+     */
+    @Override
+    public void addEmployee(final int clientId, final Integer empId, final String firstName, final String lastName, final String address, final String city, final String telephone){
+    	
+    	
+    	Mongo mongo = new Mongo("localhost", 27017);
+  	  	DB db = mongo.getDB("test");  	  	
+    	DBCollection collection = db.getCollection("client");
+    	
+		BasicDBObject newDocument = new BasicDBObject();
 		
-		_log.info("{updateClient}: " + p);		
+		Employee employee = new Employee(empId, firstName, lastName, address, city, telephone);
+		
+		newDocument.append("$addToSet", new BasicDBObject().append("employees", employee));	
+		
+		BasicDBObject searchQuery = new BasicDBObject().append("clientId", clientId);		
+		collection.update(searchQuery, newDocument);
+		
+    }    
+    
+    @Override
+    public void addEmployee(final int clientId, final Employee employee){
+    	Mongo mongo = new Mongo("localhost", 27017);
+  	  	DB db = mongo.getDB("test");  	  	
+    	DBCollection collection = db.getCollection("client");
+    	
+		BasicDBObject newDocument = new BasicDBObject();
+		
+		newDocument.append("$addToSet", new BasicDBObject().append("employees", employee));	
+		
+		BasicDBObject searchQuery = new BasicDBObject().append("clientId", clientId);		
+		collection.update(searchQuery, newDocument);
     }
     
     @Override
@@ -106,5 +208,15 @@ public class ClientServiceImpl implements ClientService, Const {
 	public void updateClient(int clientId, String name, String address, String city, List<Employee> employees) {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	
+	
+	@Override
+	public void addCustomer() {
+		//repository.deleteAll();
+		
+		customerRepository.save(new Customer("Alice", "Smith"));
+		customerRepository.save(new Customer("Bob", "Smith"));
 	}
 }

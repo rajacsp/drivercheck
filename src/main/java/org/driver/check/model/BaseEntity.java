@@ -1,15 +1,14 @@
 
 package org.driver.check.model;
 
-import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 
 public class BaseEntity {    
 
 	@Id
-	protected ObjectId id;
+	protected String id;
 	
-	public ObjectId getId(){
+	public String getId(){
     	return id;
     }
 }
