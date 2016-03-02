@@ -57,6 +57,14 @@ public class ClientServiceImpl implements ClientService, Const {
 		mongoOps.insert(p);	
     }
     
+    /*
+     * 
+     * (non-Javadoc)
+     * @see org.driver.check.service.ClientService#updateClient(int, java.lang.String, java.lang.String, java.lang.String)
+     * 
+     * sample mongo query:
+     * db.clients.update({_id: 2}, {$set : {"name" : "SmileGateWest"} });
+     */
     @Override
     public void updateClient(final int clientId, final String name, final String address, final String city){
     	MongoOperations mongoOps = new MongoTemplate(new SimpleMongoDbFactory(new Mongo(), MONGO_DB_NAME));

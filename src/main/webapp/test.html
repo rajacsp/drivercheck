@@ -10,7 +10,7 @@
 <script src="js/test.js"></script>
 </head>
 <body ng-controller="MainCtrl">
-	<ul ng-repeat="client in clients.clients">
+	<ul ng-repeat="client in clients">
 		<li>
 			{{ client.name }}
 			<ul ng-repeat="employee in client.employees">

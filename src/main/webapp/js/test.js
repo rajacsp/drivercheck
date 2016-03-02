@@ -1,12 +1,19 @@
 var app = angular.module('drivercheck', []);
 
-app.controller('MainCtrl', function($scope) { 
+app.controller('MainCtrl', function($scope, $http) { 
+	
+	$http.get('http://localhost:3030/drivercheck/api/clients').
+    success(function(data) {
+        $scope.clients = data; //remove wrapper parent
+    });
+	
+	/*
 	var json = {
 			"clients" : 
 				[ 			 
 					{					    
 					    "clientId": 102,
-					    "name": "GTECH",
+					    "name": "GTEsdfsdCH",
 					    "address": "23 street",
 					    "city": "Toronto",
 					    
@@ -130,8 +137,8 @@ app.controller('MainCtrl', function($scope) {
 					}			  	
 	            ]
 		};	
-  
-  $scope.clients = json;
+  */
+  //$scope.clients = json;
   
   
 });

@@ -19,6 +19,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import static org.driver.check.util.Names.getRandomFirstName;
+import static org.driver.check.util.Names.getRandomPhoneNumber;
+import static org.driver.check.util.RandomDC.getRandomInt;
+
 @RestController
 @RequestMapping("/api")
 public class ClientRestController {
@@ -67,9 +71,9 @@ public class ClientRestController {
     		@RequestParam("address") String address,
     		@RequestParam("city") String city,
     		
-    		@RequestParam(value = "addDummy", required = false) Boolean addDummyValues,
+    		@RequestParam(value = "addDummy", required = false, defaultValue="false") Boolean addDummyValues,
     		
-    		@RequestParam(value = "withEmployee", required = false) Boolean withEmployee,
+    		@RequestParam(value = "withEmployee", required = false, defaultValue="false") Boolean withEmployee,
     		@RequestParam(value = "employee_id", required = false) Integer empId,
     		@RequestParam(value = "employee_firstname", required = false) String empFirstName,
     		@RequestParam(value = "employee_lastname", required = false) String empLasName,
@@ -85,7 +89,7 @@ public class ClientRestController {
     	
     	if(addDummyValues){    		
         	List<TestResult> tests = TestResult.getRandomTests();        	
-    		employee = new Employee(401, "Raja", "Raman", "12, Street", "Toronto", "4444444444", tests);
+    		employee = new Employee(401, getRandomFirstName(), getRandomFirstName(), getRandomInt(1, 100)+", Street", "Toronto", getRandomPhoneNumber(), tests);
     	}else{    	
 	    	if(withTest){
 	    		
@@ -99,7 +103,7 @@ public class ClientRestController {
 	    	}
     	}
     	
-    	if(withEmployee){
+    	if(withEmployee != null){
     		List<Employee> employees = new LinkedList<Employee>();
     		employees.add(employee);    	
     		clientService.addClient(clientId, name, address, city,employees);
