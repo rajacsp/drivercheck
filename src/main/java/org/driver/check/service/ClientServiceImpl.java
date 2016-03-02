@@ -22,6 +22,8 @@ import org.driver.check.util.Names;
 import org.driver.check.util.RandomDC;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -45,8 +47,9 @@ public class ClientServiceImpl implements ClientService, Const {
 	@Resource
 	private ClientRepository clientRepository;
 	
-	//@Resource //not working because of missing bean
-	//private ClientRepositoryCustom clientRepositoryCustom;
+	@Autowired //not working because of missing bean
+	@Qualifier("ClientRepositoryCustomImpl")
+	private ClientRepositoryCustom clientRepositoryCustom;
     
     @Override
     @Transactional(readOnly = true)

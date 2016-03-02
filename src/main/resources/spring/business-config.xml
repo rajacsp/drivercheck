@@ -76,5 +76,6 @@
 	</bean>
 
   	<mongo:repositories base-package="org.driver.check.repository" />
+  	
      
 </beans>
