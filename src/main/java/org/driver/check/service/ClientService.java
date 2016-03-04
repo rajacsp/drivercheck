@@ -6,6 +6,7 @@ import java.util.List;
 import org.driver.check.model.Client;
 import org.driver.check.model.Employee;
 import org.springframework.dao.DataAccessException;
+import org.springframework.data.mongodb.core.MongoOperations;
 
 public interface ClientService {
     
@@ -27,7 +28,12 @@ public interface ClientService {
     
     void addEmployee(final int clientId, final Employee employee);
     
+    void updateEmployee(final int clientId, final Integer empId, final String firstName, final String lastName, 
+  			final String address, final String city, final String telephone);
+    
     void updateEmployees(final int clientId, List<Employee> employees);
+    
+    void removeEmployee(final int empId);
     
     void updateClient(final int clientId, final String name, final String address, final String city, final List<Employee> employees);
     

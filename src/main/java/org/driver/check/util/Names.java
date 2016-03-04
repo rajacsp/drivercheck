@@ -75,14 +75,14 @@ public class Names {
 	}
 	
 	public static String getRandomFirstName(){
-		return firstNames[RandomDC.getRandomInt(20)];
+		return firstNames[RandomDC.getRandomInt(firstNames.length-1)];
 	}
 	
 	public static String getRandomLasstName(){
-		return lastNames[RandomDC.getRandomInt(20)];
+		return lastNames[RandomDC.getRandomInt(lastNames.length-1)];
 	}
 	
 	public static String getRandomPhoneNumber(){
-		return phoneNumbers[RandomDC.getRandomInt(20)];
+		return phoneNumbers[RandomDC.getRandomInt(phoneNumbers.length-1)];
 	}
 }

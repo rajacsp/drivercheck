@@ -28,16 +28,31 @@ public class ClientRestController {
 
     private final ClientService clientService;
 
+    /*
+	 * possible url:
+	 * 		http://localhost:3030/drivercheck/api/client/
+	 * 		http://localhost:3030/drivercheck/api/client/
+	 */
     @Autowired
     public ClientRestController(ClientService clientService) {
         this.clientService = clientService;
     }
 
+    /*
+	 * possible url:
+	 * 		http://localhost:3030/drivercheck/api/client/
+	 * 		http://localhost:3030/drivercheck/api/client/
+	 */
     @RequestMapping(value = "/clients", method = RequestMethod.GET)
     public @ResponseBody Collection<Client> findAll() {
         return this.clientService.findAll();
     }
     
+    /*
+	 * possible url:
+	 * 		http://localhost:3030/drivercheck/api/client/
+	 * 		http://localhost:3030/drivercheck/api/client/
+	 */
     @RequestMapping(value = "/clients/find", method = RequestMethod.GET)
     public @ResponseBody Collection<Client> findByName(
     		@RequestParam("name") String name
@@ -45,7 +60,13 @@ public class ClientRestController {
         return clientService.findByName(name);
     }
     
-    // delete [Method = GET]
+    /*
+     * delete [Method = GET]
+	 * 
+	 * possible url:
+	 * 		http://localhost:3030/drivercheck/api/client/
+	 * 		http://localhost:3030/drivercheck/api/client/
+	 */
     @RequestMapping(value = "/client/delete/{cid}", method = RequestMethod.GET)
     public @ResponseBody Map<String, String> deleteClientByClientId(@PathVariable("cid") Integer clientId) {
     	
@@ -57,7 +78,13 @@ public class ClientRestController {
     	return map;
     }
     
-    // delete all
+    /*
+     * delete all
+	 * 
+	 * possible url:
+	 * 		http://localhost:3030/drivercheck/api/client/
+	 * 		http://localhost:3030/drivercheck/api/client/
+	 */
     @RequestMapping(value = "/client/delete/all", method = RequestMethod.GET)
     public @ResponseBody Map<String, String> deleteAllClients() {
     	
@@ -70,7 +97,13 @@ public class ClientRestController {
     	return map;
     }
     
-    // delete [Method = DELETE]
+    /*
+     * delete [Method = DELETE]
+	 * 
+	 * possible url:
+	 * 		http://localhost:3030/drivercheck/api/client/
+	 * 		http://localhost:3030/drivercheck/api/client/
+	 */
     @RequestMapping(value = "/client/{cid}", method = RequestMethod.DELETE)
     public @ResponseBody Map<String, String> deleteClientByClientId1(@PathVariable("cid") Integer clientId) {
     	
@@ -81,12 +114,11 @@ public class ClientRestController {
     	
     	return map;
     }
-    
-    // add client [Method = GET]
+
     /*
+     * add client [Method = GET]
 	 * 
 	 * possible url:
-	 * 		http://localhost:3030/drivercheck/api/client/add
 	 * 		http://localhost:3030/drivercheck/api/client/add
 	 * 		http://localhost:3030/drivercheck/api/client/add?client_id=103&name=AV&address=13_street&city=Toronto
 	 */
@@ -148,13 +180,17 @@ public class ClientRestController {
     	
     	return map;
     }
-    
-    // update client [Method = GET]
+
     /*
+     * update client; add employee [Method = GET]
      * 
      * mongo plain query:
      * 	db.clients.update({"_id": 2},  {$addToSet : { "employees" : [ {"name"  : "jay", "position" : "senior dev"}, {"name"  : "heejun", "position" : "manager"}] }});
-     */
+	 * 
+	 * possible url:
+	 * 		http://localhost:3030/drivercheck/api/client/
+	 * 		
+	 */
     @RequestMapping(value = "/client/{clientid}/add/employee", method = RequestMethod.GET)
     public @ResponseBody Map<String, String> addEmployee(
     		@PathVariable(value = "clientid") int clientId,
@@ -178,8 +214,7 @@ public class ClientRestController {
     		employees.add(employee);
     	}
     	
-    	clientService.addEmployee(clientId, employee);   	
-    	
+    	clientService.addEmployee(clientId, empId, firstName, lastName, address, city, telephone);    	
     	
     	Map<String, String> map = new LinkedHashMap<String, String>();
     	map.put("SUCCESS", "OK");
@@ -187,7 +222,71 @@ public class ClientRestController {
     	return map;
     }
     
-    // update client [Method = GET]
+    /*
+     * update employee [Method = GET]
+     * 
+     * mongo plain query:
+     * 	db.clients.update({"_id": 2},  {$addToSet : { "employees" : [ {"name"  : "jay", "position" : "senior dev"}, {"name"  : "heejun", "position" : "manager"}] }});
+	 * 
+	 * possible url:
+	 * 		http://localhost:3030/drivercheck/api/client/
+	 * 		
+	 */
+    @RequestMapping(value = "/client/{clientid}/update/employee", method = RequestMethod.GET)
+    public @ResponseBody Map<String, String> updateEmployee(
+    		@PathVariable(value = "clientid") int clientId,
+    		
+    		// pass original values
+    		@RequestParam(value = "emp_id", required = false) Integer empId,
+    		@RequestParam(value = "first_name", required = false) String firstName,
+    		@RequestParam(value = "last_name", required = false) String lastName,
+    		@RequestParam(value = "address", required = false) String address,
+    		@RequestParam(value = "city", required = false) String city,
+    		@RequestParam(value = "telephone", required = false) String telephone
+    		) {
+    	
+    	Employee employee = new Employee(empId, firstName, lastName, address, city, telephone);
+		List<Employee> employees = new LinkedList<Employee>();
+		employees.add(employee);    	
+    	
+    	clientService.updateEmployee(clientId, empId, firstName, lastName, address, city, telephone);    	
+    	
+    	Map<String, String> map = new LinkedHashMap<String, String>();
+    	map.put("SUCCESS", "OK");
+    	
+    	return map;
+    }
+    
+    /*
+	 * 
+	 * possible url:
+	 * 		http://localhost:3030/drivercheck/api/client/{clientid}/remove/employee?empId={emp_id}
+	 * 		
+	 * 		
+	 */
+    @RequestMapping(value = "/client/{clientid}/remove/employee", method = RequestMethod.GET)
+    public @ResponseBody Map<String, String> removeEmployee(
+    		@PathVariable(value = "clientid") int clientId,
+    		@RequestParam(value = "emp_id", required = false) Integer empId
+    		) {
+    	
+    	System.out.println("{removeEmployee} empId : "+empId);
+    	
+    	clientService.removeEmployee(empId);  	
+    	
+    	Map<String, String> map = new LinkedHashMap<String, String>();
+    	map.put("SUCCESS", "OK");
+    	
+    	return map;
+    }
+    
+    /*
+     * update client [Method = GET]
+	 * 
+	 * possible url:
+	 * 		http://localhost:3030/drivercheck/api/client/update
+	 * 		
+	 */
     @RequestMapping(value = "/client/update", method = RequestMethod.GET)
     public @ResponseBody Map<String, String> updateClient(    		
     		@RequestParam(value = "client_id") int clientId,
@@ -204,7 +303,13 @@ public class ClientRestController {
     	return map;
     }
     
-    // test API
+    /*
+     * test API
+	 * 
+	 * possible url:
+	 * 		http://localhost:3030/drivercheck/api/client/
+	 * 		
+	 */
     @RequestMapping(value = "/client/test", method = RequestMethod.GET)
     public @ResponseBody Map<String, String> testAPI() {
     	
@@ -216,6 +321,12 @@ public class ClientRestController {
     	return map;
     }
     
+    /*
+	 * 
+	 * possible url:
+	 * 		http://localhost:3030/drivercheck/api/client/
+	 * 		
+	 */
     @RequestMapping(value = "/client/customer/add", method = RequestMethod.GET)
     public @ResponseBody Map<String, String> addCustomer() {
 	

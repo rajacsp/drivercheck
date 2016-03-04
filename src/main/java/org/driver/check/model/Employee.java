@@ -1,14 +1,13 @@
 
 package org.driver.check.model;
 
-import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.Column;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
-public class Employee implements Serializable {
+public class Employee {
 	
 	/*
 	 * empId
@@ -19,8 +18,7 @@ public class Employee implements Serializable {
 	 * telephone
 	 */
 	
-	private static final long serialVersionUID = 6835048307189804448L;
-
+	
 	@Column(name = "first_name")
     @NotEmpty
     protected String firstName;
