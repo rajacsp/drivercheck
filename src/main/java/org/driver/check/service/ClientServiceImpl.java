@@ -47,9 +47,9 @@ public class ClientServiceImpl implements ClientService, Const {
 	@Resource
 	private ClientRepository clientRepository;
 	
-	@Autowired //not working because of missing bean
-	@Qualifier("ClientRepositoryCustomImpl")
-	private ClientRepositoryCustom clientRepositoryCustom;
+	//@Autowired //not working because of missing bean
+	//@Qualifier("ClientRepositoryCustomImpl")
+	//private ClientRepositoryCustom clientRepositoryCustom;
     
     @Override
     @Transactional(readOnly = true)
@@ -70,6 +70,12 @@ public class ClientServiceImpl implements ClientService, Const {
 		_log.info("{deleteClientByClientId} p "+p);		
 		mongoOps.remove(p);
 	}
+    
+    @Override
+    public void deleteClientAll(){
+    	MongoOperations mongoOps = new MongoTemplate(new SimpleMongoDbFactory(new Mongo(), MONGO_DB_NAME));
+		// remove all
+    }
     
     @Override
     public void addClient(final int clientId, final String name, final String address, final String city){
@@ -219,7 +225,7 @@ public class ClientServiceImpl implements ClientService, Const {
 	public void addCustomer() {
 		//repository.deleteAll();
 		
-		customerRepository.save(new Customer("Alice", "Smith"));
-		customerRepository.save(new Customer("Bob", "Smith"));
+		//customerRepository.save(new Customer("Alice", "Smith"));
+		//customerRepository.save(new Customer("Bob", "Smith"));
 	}
 }

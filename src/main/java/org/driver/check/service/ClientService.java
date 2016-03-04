@@ -15,6 +15,8 @@ public interface ClientService {
     
     void deleteClientByClientId(final int clientId);
     
+    void deleteClientAll();
+    
     void addClient(final int clientId, final String name, final String address, final String city);
     
     void addClient(final int clientId, final String name, final String address, final String city, final List<Employee> employees);

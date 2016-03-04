@@ -62,7 +62,7 @@ public class ClientRestController {
     public @ResponseBody Map<String, String> deleteAllClients() {
     	
     	// delete all method should be provided
-    	//clientService.deleteClientByClientId(clientId);
+    	clientService.deleteClientAll();
     	
     	Map<String, String> map = new LinkedHashMap<String, String>();
     	map.put("SUCCESS", "OK");
@@ -83,6 +83,13 @@ public class ClientRestController {
     }
     
     // add client [Method = GET]
+    /*
+	 * 
+	 * possible url:
+	 * 		http://localhost:3030/drivercheck/api/client/add
+	 * 		http://localhost:3030/drivercheck/api/client/add
+	 * 		http://localhost:3030/drivercheck/api/client/add?client_id=103&name=AV&address=13_street&city=Toronto
+	 */
     @RequestMapping(value = "/client/add", method = RequestMethod.GET)
     public @ResponseBody Map<String, String> addClient(    		
     		@RequestParam("client_id") int clientId,

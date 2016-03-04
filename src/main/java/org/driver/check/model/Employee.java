@@ -53,7 +53,7 @@ public class Employee implements Serializable {
 
     private String telephone;
     
-    private List<TestResult> tests;
+    
     
     // client_id will be added later
     
@@ -89,6 +89,9 @@ public class Employee implements Serializable {
         this.telephone = telephone;
     }
     
+    /*
+    private List<TestResult> tests;
+    
     public List<TestResult> getTests(){
 		return tests;
 	}
@@ -96,6 +99,7 @@ public class Employee implements Serializable {
 	public void setTests(List<TestResult> tests){
 		this.tests = tests;
 	}
+	*/
     
     public Employee() {
 	}
@@ -116,12 +120,12 @@ public class Employee implements Serializable {
     	this.address = address;
     	this.city = city;
     	this.telephone = telephone;
-    	this.tests = tests;
+    	//this.tests = tests;
     }
     
     @Override
 	public String toString() {
 		return "Employee [firstName=" + firstName + ", lastName=" + lastName + ", empId=" + empId + ", address="
-				+ address + ", city=" + city + ", telephone=" + telephone + ", tests=" + tests + "]";
+				+ address + ", city=" + city + ", telephone=" + telephone + ", ]";
 	}
 }
