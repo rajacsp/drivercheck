@@ -178,23 +178,42 @@ public class ClientServiceImpl implements ClientService, Const {
 		collection.update(searchQuery, newDocument);
     }
     
+    @Override
   	public void updateEmployee(final int clientId, final Integer empId, final String firstName, final String lastName, 
   			final String address, final String city, final String telephone) {
   		
-  		Mongo mongo = new Mongo("localhost", 27017);
-  		DB db = mongo.getDB(MONGO_DB_NAME);
-  		DBCollection collection = db.getCollection(COLLECTION_BASE);
-  		
-  		_log.info("{updateEmployee} city : "+city+", empId : "+empId);
-  		
-  		DBObject query = new BasicDBObject("empId", empId);
-  		DBObject update = new BasicDBObject();
-  		update.put("$set", new BasicDBObject("employees.city", city));
-      
-  		WriteResult result = collection.update(query, update);
-  		System.out.println(result);
-          
-        mongo.close();
+		MongoClient mongo = new MongoClient("localhost", 27017);
+        DB db = mongo.getDB(MONGO_DB_NAME);
+         
+        DBCollection col = db.getCollection(COLLECTION_BASE);
+         
+        //Update sub-document in a single document
+        DBObject query = new BasicDBObject("employees.empId", empId);
+        DBObject update = new BasicDBObject();
+        BasicDBObject bObject = new BasicDBObject("employees.$.empId", empId);
+        
+        if(firstName != null)
+        	bObject.append("employees.$.firstName", firstName);
+        if(lastName != null)
+        	bObject.append("employees.$.lastName", lastName);
+        
+        if(empId != null)
+        	bObject.append("employees.$.empId", empId);
+        
+        if(address != null)
+        	bObject.append("employees.$.address", address);
+        
+        if(city != null)
+        	bObject.append("employees.$.city", city);
+        
+        if(telephone != null)
+        	bObject.append("employees.$.telephone", telephone);
+        		
+        update.put("$set", bObject);
+         
+        WriteResult result = col.update(query, update);      
+         
+        mongo.close();  		
   	}
   	
     @Override
@@ -213,8 +232,7 @@ public class ClientServiceImpl implements ClientService, Const {
         WriteResult result = col.update(query, update);
          
         mongo.close();
-    }
-    
+    }   
 
     
     @Override
