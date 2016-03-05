@@ -14,8 +14,10 @@ import org.driver.check.model.Client;
 import org.driver.check.model.Employee;
 import org.driver.check.model.TestResult;
 import org.driver.check.service.ClientService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -59,6 +61,24 @@ public class ClientRestController {
         if(collection != null && collection.size() > 0)
         	return (Client) collection.toArray()[0];
         return null;
+    }
+    
+    /*
+	 * possible url:
+	 * 		http://localhost:3030/drivercheck/api/clients/{clientid}/update
+	 * 		http://localhost:3030/drivercheck/api/clients/{clientid}/update
+	 */
+    @RequestMapping(value = "/clients", method = RequestMethod.POST)
+    public @ResponseBody Client create(@RequestBody Client client) {
+    	if(client.getClientId() > 0){
+    		Collection<Client> clients = clientService.findByClientId(client.getClientId());
+    		Client existingClient =  (Client) clients.toArray()[0];
+    		BeanUtils.copyProperties(client, existingClient, "pets", "id");
+    		clientService.addClient(client);
+    	} else{
+    		clientService.addClient(client);
+    	}    	
+    	return client;
     }
     
     /*

@@ -14,7 +14,9 @@ var Test = ['$resource','context', function($resource, context) {
 	return $resource(context + '/api/tests/:testId');
 }];
 
+/*
 var EmployeeType = ['$resource','context', function($resource, context) {
 	return $resource(context + '/api/employees/types');
 }];
+*/
 

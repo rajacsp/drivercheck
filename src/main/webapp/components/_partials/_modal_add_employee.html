@@ -1,0 +1,120 @@
+<!-- This partial include Add/Edit Employee and Success Modals -->
+
+<!-- Employee Details Modal -->
+<div class="modal modal-owner fade" id="employeeModal" tabindex="-1" data-ng-controller="EmployeeDetailsController">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+        <div class="container">
+          <div class="row">
+            <div class="col-md-4 col-md-offset-4">
+              <h1 class="sub-header" data-ng-bind="employeeFormHeader"></h1>
+              <em class="text-muted">Fill up employee basic information</em>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-body">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-4 col-md-offset-4">
+              <div class="form-group">
+                <label for="firstName">Owner</label>
+                <input type="text" class="form-control" id="firstName" data-ng-value="currentOwner.firstName + ' ' + currentOwner.lastName" readonly>
+              </div>
+              <div class="form-group">
+                <label for="employeeName">Employee Name</label>
+                <input type="text" class="form-control" id="employeeName" data-ng-model="currentEmployee.name">
+              </div>
+              <div class="form-group">
+                <label for="employeeProfileImg">Employee Photo</label>
+                <input type="file" class="form-control-file" id="employeeProfileImg" data-ng-src="images/employee-default.jpg">
+              </div>
+              <div class="form-group">
+                <label for="birthDate">Birth Date</label>
+                <input type="text" class="form-control" id="birthDate" data-ng-model="currentEmployee.birthDate" readonly>
+              </div>
+               <div class="form-group">
+                <label for="type">Type</label>
+                <select class="form-control" id="type" data-ng-model="currentEmployee.type.id">
+                  <option data-ng-repeat="type in employeeTypes" data-ng-value="type.id" data-ng-bind="type.name" ng-selected="currentEmployee.type.id == type.id"></option>
+                </select>
+              </div>
+              <div class="form-group form-group-action">
+                <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#addEmployeeSuccessModal" data-dismiss="modal" aria-label="Close" data-ng-click="save()">Save</button>
+                <button class="btn btn-link" class="close" data-dismiss="modal" aria-label="Close">Cancel</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Add New Employee Success Modal -->
+<div class="modal modal-owner fade" id="addEmployeeSuccessModal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+        <div class="container">
+          <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+              <h1 class="sub-header">Employee added successfully!</h1>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-body">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+              <div class="alert alert-success" role="alert">
+                Well done! You've successfully added a employee.
+              </div>
+              <div class="form-group form-group-action">
+                <button class="btn btn-primary" data-toggle="modal" data-target="#addEmployeeVisitModal" data-dismiss="modal" aria-label="Close">Add New Visit</button>
+                <button class="btn btn-link" data-dismiss="modal" aria-label="Close">Not Now</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Edit Employee Success Modal -->
+<div class="modal modal-owner fade" id="editEmployeeSuccessModal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+        <div class="container">
+          <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+              <h1 class="sub-header">Employee update successfully!</h1>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-body">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+              <div class="alert alert-success" role="alert">
+                Well done! You've successfully update a employee.
+              </div>
+              <div class="form-group form-group-action">
+                <a href="owner_details.html" class="btn btn-primary">View owner's employees</a>
+                <button class="btn btn-link" data-dismiss="modal" aria-label="Close">Close</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

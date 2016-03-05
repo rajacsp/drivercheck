@@ -105,6 +105,21 @@ public class ClientServiceImpl implements ClientService, Const {
     }
     
     @Override
+    public void addClient(final Client client){
+    	
+    	Employee emp = new Employee(RandomDC.getRandomInt(400, 500), Names.getRandomFirstName(), Names.getRandomLasstName(), RandomDC.getRandomInt(400, 500)+" Street", "Toronto", Names.getRandomPhoneNumber());
+    	
+    	List<Employee> emps = new LinkedList<Employee>();
+    	emps.add(emp);
+    	
+    	client.setEmployees(emps);
+    	
+    	_log.info("{addClient} client : "+client);
+    	
+    	clientRepository.save(client);		
+    }
+    
+    @Override
     public void addClient(final int clientId, final String name, final String address, final String city, final List<Employee> employees){
     	MongoOperations mongoOps = new MongoTemplate(new SimpleMongoDbFactory(new Mongo(), MONGO_DB_NAME));
     	Client p = new Client(clientId, name, address, city, employees);
