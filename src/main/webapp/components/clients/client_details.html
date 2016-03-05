@@ -8,15 +8,18 @@
         <div class="pull-right stats stats-md">
           <ul>
             <li>{{currentClient.employees.length || 0}}<span>Employees</span></li>
-            <li>{{currentClient.visits.length || 0}}<span>Visits</span></li>
+            <li>{{currentClient.tests.length || 0}}<span>Tests</span></li>
           </ul>
         </div>
         <h1 class="h3" data-ng-bind="currentClient.firstName + ' ' + currentClient.lastName"></h1>
-        <p data-ng-bind="currentClient.description">Maria Escobito</p>
-        <p><span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span> <span data-ng-bind="currentClient.address">345 Maple St.</span>, <span data-ng-bind="currentClient.city">Madison</span></p>
+        <p data-ng-bind="currentClient.description"></p>
+        <p>
+        	<span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>
+        	<span data-ng-bind="currentClient.address"></span>, 
+        	<span data-ng-bind="currentClient.city"></span>
+        </p>
         <div class="btn-group">
-          <a href="#" class="btn btn-link"><span class="glyphicon glyphicon-phone-alt" aria-hidden="true"></span> Call</a>
-          <a href="#" class="btn btn-link"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span> Message</a>
+          <a href="#" class="btn btn-link"><span class="glyphicon glyphicon-phone-alt" aria-hidden="true"></span> Call</a>          
         </div>
       </div>
     </div>
@@ -30,48 +33,32 @@
       <div class="col-md-9 col-border-right">
         <div class="section-inner-padding">
           <button class="btn btn-primary pull-right" data-toggle="modal" data-target="#editClientModal"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Edit Client</button>
-          <h2 class="h3 sub-header">Client Information</h2>
+          <h2 class="h3 sub-header">Client Information1</h2>
           <form class="form-inline form-inline-display">
             <div class="form-group">
               <p>First Name</p>
-              <p class="h5" data-ng-bind="currentClient.firstName">Maria</p>
+              <p class="h5" data-ng-bind="currentClient.name"></p>
             </div>
             <div class="form-group">
               <p>Last Name</p>
-              <p class="h5" data-ng-bind="currentClient.lastName">Rodriguez</p>
+              <p class="h5" data-ng-bind="currentClient.lastName"></p>
             </div>
             <div class="form-group">
               <p>Address</p>
-              <p class="h5" data-ng-bind="currentClient.address">345 Maple St.</p>
+              <p class="h5" data-ng-bind="currentClient.address"></p>
             </div>
             <div class="form-group">
               <p>City</p>
-              <p class="h5" data-ng-bind="currentClient.city">Madison</p>
+              <p class="h5" data-ng-bind="currentClient.city"></p>
             </div>
             <div class="form-group">
               <p>Contact Number</p>
-              <p class="h5" data-ng-bind="currentClient.telephone">6085557683</p>
+              <p class="h5" data-ng-bind="currentClient.telephone"></p>
             </div>
           </form>
         </div>
       </div>
-      <div class="col-md-3">
-        <div class="section-inner-padding">
-          <h2 class="h3 sub-header">Client Activities</h2>
-          <!-- List group -->
-          <ul class="list-group">
-            <li class="list-group-item">
-              <span class="glyphicon glyphicon-retweet" aria-hidden="true"></span>
-              <strong>Next Appointment:</strong> None</li>
-            <li class="list-group-item">
-              <span class="glyphicon glyphicon-road" aria-hidden="true"></span>
-              <strong>Last Visited:</strong> 02 Feb 2015</li>
-            <li class="list-group-item">
-              <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
-              <strong>Due Date:</strong> 14 Mar 2015</li>
-          </ul>
-        </div>
-      </div>
+      
     </div>
   </div>
 </section>
@@ -98,20 +85,16 @@
     <h2 class="sub-header">Client's Employees</h2>
     <div class="row thumbnail-wrapper">
       <div data-ng-repeat="employee in currentClient.employees" class="col-md-3">
-        <div class="thumbnail">
-          <img data-ng-src="images/employees/employee{{employee.id % 10 + 1}}.jpg" class="img-circle" alt="Generic placeholder image">
+        <div class="thumbnail">          
           <div class="caption">
-            <h3 class="caption-heading" data-ng-bind="employee.name">Basil</h3>
-            <p class="caption-meta" data-ng-bind="employee.birthdate">08 August 2012</p>
-            <p class="caption-meta"><span class="caption-label" data-ng-bind="employee.type.name">Hamster</span></p>
+            <h3 class="caption-heading" data-ng-bind="employee.name"></h3>
+            <p class="caption-meta" data-ng-bind="employee.birthdate"></p>
+            <p class="caption-meta"><span class="caption-label" data-ng-bind="employee.type.name"></span></p>
           </div>
           <div class="action-bar">
             <button class="btn btn-default" data-toggle="modal" data-target="#employeeModal" data-ng-click="editEmployee(employee.id)">
               <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Edit Employee
-            </button>
-            <button class="btn btn-default" data-toggle="modal" data-target="#addEmployeeVisitModal">
-              <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> Add Visit
-            </button>
+            </button>            
           </div>
         </div>
       </div>
@@ -133,8 +116,9 @@
 </section>
 
 <!-- Add Client modal -->
-<data-ng-include src="'components/_partials/_modal_add_client.html'"></data-ng-include>
+<!-- 
+<data-ng-include src="'components/_partials/_modal_add_client.html'"></data-ng-include> -->
 <!-- Add Employee modal -->
+<!-- 
 <data-ng-include src="'components/_partials/_modal_add_employee.html'"></data-ng-include>
-<!-- Add Employee Visit modal -->
-<data-ng-include src="'components/_partials/_modal_add_employee_visit.html'"></data-ng-include>
+ -->

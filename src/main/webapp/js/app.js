@@ -62,14 +62,13 @@ app.controller('ClientController', ClientController);
 app.controller('ClientDetailsController', ClientDetailsController);
 
 app.controller('AddClientController', AddClientController);
-app.controller('VisitController', VisitController);
+
 
 /** Services **/
 app.factory('Client', Client);
 app.factory('Employee', Employee);
 app.factory('ClientEmployee', ClientEmployee);
 app.factory('Test', Test);
-app.factory('Visit', Visit);
 app.factory('EmployeeType', EmployeeType);
 
 /** Directives **/

@@ -50,6 +50,19 @@ public class ClientRestController {
     
     /*
 	 * possible url:
+	 * 		http://localhost:3030/drivercheck/api/clients/
+	 * 		http://localhost:3030/drivercheck/api/clients/
+	 */
+    @RequestMapping(value = "/clients/{clientid}", method = RequestMethod.GET)
+    public @ResponseBody Client findClientByClientId(@PathVariable("clientid") int clientId) {
+        Collection<Client> collection = this.clientService.findByClientId(clientId);
+        if(collection != null && collection.size() > 0)
+        	return (Client) collection.toArray()[0];
+        return null;
+    }
+    
+    /*
+	 * possible url:
 	 * 		http://localhost:3030/drivercheck/api/clients/find/by/name?name={name}
 	 */
     @RequestMapping(value = "/clients/find/by/name", method = RequestMethod.GET)
@@ -70,18 +83,6 @@ public class ClientRestController {
     		@RequestParam("name") String name
     		) {
         return clientService.findClientByEmployeeFirstName(name);
-    }  
-    
-    
-    /*
-	 * possible url: 		
-	 * 		http://localhost:3030/drivercheck/api/clients/find/by/clientId/{client_id}
-	 */
-    @RequestMapping(value = "/clients/find/by/clientId/{client_id}", method = RequestMethod.GET)
-    public @ResponseBody Collection<Client> findByClientId(
-    		@PathVariable("client_id") int clientId
-    		) {
-        return clientService.findByClientId(clientId);
     }
     
     /*
