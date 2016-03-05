@@ -33,7 +33,7 @@
       <div class="col-md-9 col-border-right">
         <div class="section-inner-padding">
           <button class="btn btn-primary pull-right" data-toggle="modal" data-target="#editClientModal"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Edit Client</button>
-          <h2 class="h3 sub-header">Client Information1</h2>
+          <h2 class="h3 sub-header">Client Information</h2>
           <form class="form-inline form-inline-display">
             <div class="form-group">
               <p>First Name</p>
@@ -69,27 +69,20 @@
     <div class="action-wrappers pull-right">
       <button class="btn btn-primary pull-right action-item" data-toggle="modal" data-target="#employeeModal" data-ng-click="addEmployee()">
         <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> Add New Employee
-      </button>
-      <div class="pull-right action-item">
-        View as
-        <div class="btn-group">
-          <a class="btn btn-default">
-            <span class="glyphicon glyphicon-th" aria-hidden="true"></span>
-          </a>
-          <a class="btn btn-default">
-            <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
-          </a>
-        </div>
-      </div>
+      </button>      
     </div>
     <h2 class="sub-header">Client's Employees</h2>
     <div class="row thumbnail-wrapper">
       <div data-ng-repeat="employee in currentClient.employees" class="col-md-3">
         <div class="thumbnail">          
           <div class="caption">
-            <h3 class="caption-heading" data-ng-bind="employee.name"></h3>
-            <p class="caption-meta" data-ng-bind="employee.birthdate"></p>
-            <p class="caption-meta"><span class="caption-label" data-ng-bind="employee.type.name"></span></p>
+            <h3 class="caption-heading" data-ng-bind="employee.firstName + ' ' + employee.lastName"></h3>            
+            <p>
+            	<span data-ng-bind="employee.empId"></span>
+            	<span data-ng-bind="employee.address"></span>            	
+            </p>
+            <p><span data-ng-bind="employee.city"></span></p>
+            <p><span data-ng-bind="employee.telephone"></span></p>
           </div>
           <div class="action-bar">
             <button class="btn btn-default" data-toggle="modal" data-target="#employeeModal" data-ng-click="editEmployee(employee.id)">
