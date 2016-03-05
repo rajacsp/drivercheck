@@ -1,10 +1,31 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html ng-app="drivercheck">
 <head>
-<meta charset="ISO-8859-1">
-<title>Insert title here</title>
+<meta charset="utf-8">
+<title>AngularJS Plunker</title>
+<script>
+	document.write('<base href="' + document.location + '" />');
+</script>
+<script src="http://code.angularjs.org/1.1.4/angular.js"></script>
+<script src="js/test.js"></script>
 </head>
-<body>
-	Index File
+<body ng-controller="MainCtrl">
+	<ul ng-repeat="client in clients">
+		<li>
+			
+			<a href="client.html">
+				{{ client.name }}
+			</a>
+			<!-- 
+			<ul ng-repeat="employee in client.employees">
+				<li>{{ employee.firstName}}</li>
+				<ul ng-repeat="test in employee.tests">
+					<li>{{ test.testId}}</li>
+				</ul>
+			</ul>	
+			-->
+		</li>
+	</ul>			
+		
 </body>
 </html>
