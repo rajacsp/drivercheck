@@ -36,6 +36,7 @@ import com.mongodb.DBCollection;
 import com.mongodb.DBObject;
 import com.mongodb.Mongo;
 import com.mongodb.MongoClient;
+import com.mongodb.QueryBuilder;
 import com.mongodb.WriteResult;
 
 @Service("clientService")
@@ -63,6 +64,12 @@ public class ClientServiceImpl implements ClientService, Const {
     @Transactional(readOnly = true)
     public Collection<Client> findByName(String name) throws DataAccessException{
     	return clientRepository.findByName(name);
+    }
+    
+    @Override
+    @Transactional(readOnly = true)
+    public Collection<Client> findByClientId(int clientId) throws DataAccessException{
+    	return clientRepository.findByClientId(clientId);
     }
     
     @Override
@@ -223,7 +230,19 @@ public class ClientServiceImpl implements ClientService, Const {
 		Client p = mongoOps.findOne(query(where("clientId").is(clientId)), Client.class);
 		
 		_log.info("{updateEmployees}: " + p);		
-    }    
+    }
+    
+    @Override
+    public <T> T findClientByEmployeeFirstName(String employeeName) {
+    	DBObject dbObject = QueryBuilder.start("employees.firstName").is(employeeName).get();
+		
+    	DBObject or2 = QueryBuilder.start().or(dbObject).get();
+
+		Mongo mongo = new Mongo("localhost", 27017);
+		DB db = mongo.getDB(MONGO_DB_NAME);
+		DBCollection collection = db.getCollection(COLLECTION_BASE);
+		return (T) collection.find(or2).getCollection();
+	}
     
     // dummy clients
     private List<Client> getDummyClients(){

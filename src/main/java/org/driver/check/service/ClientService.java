@@ -6,13 +6,14 @@ import java.util.List;
 import org.driver.check.model.Client;
 import org.driver.check.model.Employee;
 import org.springframework.dao.DataAccessException;
-import org.springframework.data.mongodb.core.MongoOperations;
 
 public interface ClientService {
     
     Collection<Client> findAll() throws DataAccessException;
     
-    Collection<Client> findByName(String name) throws DataAccessException;    
+    Collection<Client> findByName(String name) throws DataAccessException;
+    
+    Collection<Client> findByClientId(int clientId) throws DataAccessException;
     
     void deleteClientByClientId(final int clientId);
     
@@ -36,6 +37,8 @@ public interface ClientService {
     void removeEmployee(final int empId);
     
     void updateClient(final int clientId, final String name, final String address, final String city, final List<Employee> employees);
+    
+    <T> T findClientByEmployeeFirstName(String employeeName); //buggy
     
     // test method
     void addCustomer();

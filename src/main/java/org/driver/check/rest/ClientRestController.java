@@ -40,8 +40,8 @@ public class ClientRestController {
 
     /*
 	 * possible url:
-	 * 		http://localhost:3030/drivercheck/api/client/
-	 * 		http://localhost:3030/drivercheck/api/client/
+	 * 		http://localhost:3030/drivercheck/api/clients/
+	 * 		http://localhost:3030/drivercheck/api/clients/
 	 */
     @RequestMapping(value = "/clients", method = RequestMethod.GET)
     public @ResponseBody Collection<Client> findAll() {
@@ -50,14 +50,38 @@ public class ClientRestController {
     
     /*
 	 * possible url:
-	 * 		http://localhost:3030/drivercheck/api/client/
-	 * 		http://localhost:3030/drivercheck/api/client/
+	 * 		http://localhost:3030/drivercheck/api/clients/find/by/name?name={name}
 	 */
-    @RequestMapping(value = "/clients/find", method = RequestMethod.GET)
+    @RequestMapping(value = "/clients/find/by/name", method = RequestMethod.GET)
     public @ResponseBody Collection<Client> findByName(
     		@RequestParam("name") String name
     		) {
         return clientService.findByName(name);
+    }
+    
+    /*
+	 * possible url:
+	 * 		http://localhost:3030/drivercheck/api/clients/find/by/employee/first_name?name=Heejun
+	 * 
+	 * note: buggy; has to be fixed
+	 */
+    @RequestMapping(value = "/clients/find/by/employee/first_name", method = RequestMethod.GET)
+    public @ResponseBody <T> T findClientByEmployeeFirstName(
+    		@RequestParam("name") String name
+    		) {
+        return clientService.findClientByEmployeeFirstName(name);
+    }  
+    
+    
+    /*
+	 * possible url: 		
+	 * 		http://localhost:3030/drivercheck/api/clients/find/by/clientId/{client_id}
+	 */
+    @RequestMapping(value = "/clients/find/by/clientId/{client_id}", method = RequestMethod.GET)
+    public @ResponseBody Collection<Client> findByClientId(
+    		@PathVariable("client_id") int clientId
+    		) {
+        return clientService.findByClientId(clientId);
     }
     
     /*
@@ -261,7 +285,6 @@ public class ClientRestController {
 	 * 
 	 * possible url:
 	 * 		http://localhost:3030/drivercheck/api/client/{clientid}/remove/employee?empId={emp_id}
-	 * 		
 	 * 		
 	 */
     @RequestMapping(value = "/client/{clientid}/remove/employee", method = RequestMethod.GET)
