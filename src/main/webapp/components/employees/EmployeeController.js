@@ -10,11 +10,11 @@ var EmployeeController = ['$scope', 'Employee', function($scope, Employee) {
 
 }];
 
-var EmployeeDetailsController = ['$scope','EmployeeType','OwnerEmployee',function($scope,EmployeeType,OwnerEmployee,Employee) {
+var EmployeeDetailsController = ['$scope','EmployeeType','ClientEmployee',function($scope,EmployeeType,ClientEmployee,Employee) {
 	$scope.employeeTypes = EmployeeType.query();
 	
 	$scope.save = function(){
-		currentOwnerId = $scope.currentOwner.id;
+		currentClientId = $scope.currentClient.id;
 
 		for (i=0; i<$scope.employeeTypes.length; i++){
 			if ($scope.employeeTypes[i].id == $scope.currentEmployee.type.id){
@@ -23,17 +23,17 @@ var EmployeeDetailsController = ['$scope','EmployeeType','OwnerEmployee',functio
 			}
 		}
 		
-		OwnerEmployee.save({ownerId:currentOwnerId},$scope.currentEmployee,function(employee) {
+		ClientEmployee.save({clientId:currentClientId},$scope.currentEmployee,function(employee) {
 			var newEmployee = true;
-			for (i=0;i<$scope.currentOwner.employees.length;i++) {
-				if($scope.currentOwner.employees[i].id == employee.id) {
-					$scope.currentOwner.employees[i] == employee;
+			for (i=0;i<$scope.currentClient.employees.length;i++) {
+				if($scope.currentClient.employees[i].id == employee.id) {
+					$scope.currentClient.employees[i] == employee;
 					newEmployee = false;
 					break;
 				}
 			}
 			if(newEmployee) {
-				$scope.currentOwner.employees.push(employee);
+				$scope.currentClient.employees.push(employee);
 			}
 		});
 	};

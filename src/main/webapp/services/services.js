@@ -1,9 +1,9 @@
-var Owner = ['$resource','context', function($resource, context) {
+var Client = ['$resource','context', function($resource, context) {
 	return $resource(context + '/api/clients/:id');
 }];
 
-var OwnerEmployee = ['$resource','context', function($resource, context) {
-	return $resource(context + '/api/clients/:ownerId/employees', {ownerId : '@ownerId'});
+var ClientEmployee = ['$resource','context', function($resource, context) {
+	return $resource(context + '/api/clients/:clientId/employees', {clientId : '@clientId'});
 }];
 
 var Employee = ['$resource','context', function($resource, context) {

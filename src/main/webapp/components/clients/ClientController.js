@@ -1,26 +1,26 @@
-var ClientController = ['$scope','$state','Owner',function($scope,$state,Owner) {
+var ClientController = ['$scope','$state','Client',function($scope,$state,Client) {
 	$scope.$on('$viewContentLoaded', function(event){
 		$('html, body').animate({
 		    scrollTop: $("#clients").offset().top
 		}, 1000);
 	});
 
-	$scope.clients = Owner.query();
+	$scope.clients = Client.query();
 }];
 
-var ClientDetailsController = ['$scope','$rootScope','$stateParams','Owner', function($scope,$rootScope,$stateParams,Owner) {
+var ClientDetailsController = ['$scope','$rootScope','$stateParams','Client', function($scope,$rootScope,$stateParams,Client) {
 
 	var currentId = $stateParams.id;
 	var nextId = parseInt($stateParams.id) + 1;
 	var prevId = parseInt($stateParams.id) - 1;
 
-	$scope.prevOwner = Owner.get({id:prevId});
-	$scope.nextOwner = Owner.get({id:nextId});
-	$scope.currentOwner = Owner.get($stateParams);
+	$scope.prevClient = Client.get({id:prevId});
+	$scope.nextClient = Client.get({id:nextId});
+	$scope.currentClient = Client.get($stateParams);
 
-	$scope.saveOwner = function(){
-		owner = $scope.currentOwner;
-		Owner.save(owner);
+	$scope.saveClient = function(){
+		client = $scope.currentClient;
+		Client.save(client);
 	}
 	
 	$scope.addEmployee = function() {
@@ -30,9 +30,9 @@ var ClientDetailsController = ['$scope','$rootScope','$stateParams','Owner', fun
 	
 	$scope.editEmployee = function(id) {
 		$scope.employeeFormHeader = "Edit Employee";
-		for(i = 0;i < $scope.currentOwner.employees.length; i++) {
-			if($scope.currentOwner.employees[i].id == id) {
-				$scope.currentEmployee = $scope.currentOwner.employees[i];
+		for(i = 0;i < $scope.currentClient.employees.length; i++) {
+			if($scope.currentClient.employees[i].id == id) {
+				$scope.currentEmployee = $scope.currentClient.employees[i];
 				break;
 			}
 		}
@@ -40,11 +40,11 @@ var ClientDetailsController = ['$scope','$rootScope','$stateParams','Owner', fun
 
 }];
 
-var AddOwnerController = ['$scope','Owner', function($scope,Owner) {
+var AddClientController = ['$scope','Client', function($scope,Client) {
 
-	$scope.owner={id:0,employees:[]};
+	$scope.client={id:0,employees:[]};
 
-	$scope.addOwner = function(){
-		Owner.save($scope.owner);
+	$scope.addClient = function(){
+		Client.save($scope.client);
 	}
 }];

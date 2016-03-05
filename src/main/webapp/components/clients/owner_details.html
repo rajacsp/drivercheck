@@ -7,13 +7,13 @@
       <div class="media-body">
         <div class="pull-right stats stats-md">
           <ul>
-            <li>{{currentOwner.employees.length || 0}}<span>Employees</span></li>
-            <li>{{currentOwner.visits.length || 0}}<span>Visits</span></li>
+            <li>{{currentClient.employees.length || 0}}<span>Employees</span></li>
+            <li>{{currentClient.visits.length || 0}}<span>Visits</span></li>
           </ul>
         </div>
-        <h1 class="h3" data-ng-bind="currentOwner.firstName + ' ' + currentOwner.lastName"></h1>
-        <p data-ng-bind="currentOwner.description">Maria Escobito</p>
-        <p><span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span> <span data-ng-bind="currentOwner.address">345 Maple St.</span>, <span data-ng-bind="currentOwner.city">Madison</span></p>
+        <h1 class="h3" data-ng-bind="currentClient.firstName + ' ' + currentClient.lastName"></h1>
+        <p data-ng-bind="currentClient.description">Maria Escobito</p>
+        <p><span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span> <span data-ng-bind="currentClient.address">345 Maple St.</span>, <span data-ng-bind="currentClient.city">Madison</span></p>
         <div class="btn-group">
           <a href="#" class="btn btn-link"><span class="glyphicon glyphicon-phone-alt" aria-hidden="true"></span> Call</a>
           <a href="#" class="btn btn-link"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span> Message</a>
@@ -29,35 +29,35 @@
     <div class="row">
       <div class="col-md-9 col-border-right">
         <div class="section-inner-padding">
-          <button class="btn btn-primary pull-right" data-toggle="modal" data-target="#editOwnerModal"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Edit Owner</button>
-          <h2 class="h3 sub-header">Owner Information</h2>
+          <button class="btn btn-primary pull-right" data-toggle="modal" data-target="#editClientModal"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Edit Client</button>
+          <h2 class="h3 sub-header">Client Information</h2>
           <form class="form-inline form-inline-display">
             <div class="form-group">
               <p>First Name</p>
-              <p class="h5" data-ng-bind="currentOwner.firstName">Maria</p>
+              <p class="h5" data-ng-bind="currentClient.firstName">Maria</p>
             </div>
             <div class="form-group">
               <p>Last Name</p>
-              <p class="h5" data-ng-bind="currentOwner.lastName">Rodriguez</p>
+              <p class="h5" data-ng-bind="currentClient.lastName">Rodriguez</p>
             </div>
             <div class="form-group">
               <p>Address</p>
-              <p class="h5" data-ng-bind="currentOwner.address">345 Maple St.</p>
+              <p class="h5" data-ng-bind="currentClient.address">345 Maple St.</p>
             </div>
             <div class="form-group">
               <p>City</p>
-              <p class="h5" data-ng-bind="currentOwner.city">Madison</p>
+              <p class="h5" data-ng-bind="currentClient.city">Madison</p>
             </div>
             <div class="form-group">
               <p>Contact Number</p>
-              <p class="h5" data-ng-bind="currentOwner.telephone">6085557683</p>
+              <p class="h5" data-ng-bind="currentClient.telephone">6085557683</p>
             </div>
           </form>
         </div>
       </div>
       <div class="col-md-3">
         <div class="section-inner-padding">
-          <h2 class="h3 sub-header">Owner Activities</h2>
+          <h2 class="h3 sub-header">Client Activities</h2>
           <!-- List group -->
           <ul class="list-group">
             <li class="list-group-item">
@@ -95,9 +95,9 @@
         </div>
       </div>
     </div>
-    <h2 class="sub-header">Owner's Employees</h2>
+    <h2 class="sub-header">Client's Employees</h2>
     <div class="row thumbnail-wrapper">
-      <div data-ng-repeat="employee in currentOwner.employees" class="col-md-3">
+      <div data-ng-repeat="employee in currentClient.employees" class="col-md-3">
         <div class="thumbnail">
           <img data-ng-src="images/employees/employee{{employee.id % 10 + 1}}.jpg" class="img-circle" alt="Generic placeholder image">
           <div class="caption">
@@ -126,14 +126,14 @@
       <li><a data-ui-sref="clients"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> Back to Clients List</a></li>
     </ul>
     <ul class="pager pager-link pull-right">
-      <li><a data-ui-sref="clientDetails({id:prevOwner.id})"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span> {{prevOwner.firstName + ' ' + prevOwner.lastName}}</a></li>
-      <li><a data-ui-sref="clientDetails({id:nextOwner.id})">{{nextOwner.firstName + ' ' + nextOwner.lastName}}<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a></li>
+      <li><a data-ui-sref="clientDetails({id:prevClient.id})"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span> {{prevClient.firstName + ' ' + prevClient.lastName}}</a></li>
+      <li><a data-ui-sref="clientDetails({id:nextClient.id})">{{nextClient.firstName + ' ' + nextClient.lastName}}<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a></li>
     </ul>
   </div>
 </section>
 
-<!-- Add Owner modal -->
-<data-ng-include src="'components/_partials/_modal_add_owner.html'"></data-ng-include>
+<!-- Add Client modal -->
+<data-ng-include src="'components/_partials/_modal_add_client.html'"></data-ng-include>
 <!-- Add Employee modal -->
 <data-ng-include src="'components/_partials/_modal_add_employee.html'"></data-ng-include>
 <!-- Add Employee Visit modal -->
