@@ -5,7 +5,6 @@ import static org.springframework.data.mongodb.core.query.Criteria.where;
 import static org.springframework.data.mongodb.core.query.Query.query;
 import static org.springframework.data.mongodb.core.query.Update.update;
 
-import java.net.UnknownHostException;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
@@ -15,7 +14,6 @@ import javax.annotation.Resource;
 import org.driver.check.business.constants.Const;
 import org.driver.check.model.Client;
 import org.driver.check.model.Employee;
-import org.driver.check.model.Employee1;
 import org.driver.check.repository.ClientRepository;
 import org.driver.check.repository.CustomerRepository;
 import org.driver.check.util.Names;
@@ -82,26 +80,7 @@ public class ClientServiceImpl implements ClientService, Const {
     }
     
     @Override
-    public void addClient(final int clientId, final String name, final String address, final String city){
-    	
-    	/*
-    	 * set 1
-    	MongoOperations mongoOps = new MongoTemplate(new SimpleMongoDbFactory(new Mongo(), MONGO_DB_NAME));
-    	org.driver.check.model.Client p = new org.driver.check.model.Client(clientId, name, address, city);
-		mongoOps.insert(p);	
-		*/
-    	
-    	/* set 2
-    	Mongo mongo = new Mongo("localhost", 27017);
-    	DB db = mongo.getDB(MONGO_DB_NAME);
-    	DBCollection collection = db.getCollection(COLLECTION_BASE);
-    	
-    	Client client = new Client(clientId, name, address, city);
-    	BasicDBObject basicDBObject = new BasicDBObject();
-    	basicDBObject.put("clients", client);
-
-    	collection.save(basicDBObject);
-    	*/
+    public void addClient(final int clientId, final String name, final String address, final String city){   	
     	
     	Client client = new Client(clientId, name, address, city);
     	Employee emp = new Employee(RandomDC.getRandomInt(400, 500), Names.getRandomFirstName(), Names.getRandomLasstName(), RandomDC.getRandomInt(400, 500)+" Street", "Toronto", Names.getRandomPhoneNumber());
@@ -139,18 +118,20 @@ public class ClientServiceImpl implements ClientService, Const {
     	// this formula should be removed
     	Mongo mongo = new Mongo("localhost", 27017);
   	  	DB db = mongo.getDB(MONGO_DB_NAME);  	  	
-    	DBCollection collection = db.getCollection(COLLECTION_BASE);
-    	
-		BasicDBObject newDocument = new BasicDBObject();
-		newDocument.append("$set", new BasicDBObject().append("address", address));
-		if(name != null)
-			newDocument.append("$set", new BasicDBObject().append("name", name));
-		if(city != null)
-			newDocument.append("$set", new BasicDBObject().append("city", city));
+    	DBCollection collection = db.getCollection(COLLECTION_BASE);   		
 		
-		BasicDBObject searchQuery = new BasicDBObject().append("clientId", clientId);		
-		collection.update(searchQuery, newDocument);
-    }    
+		DBObject query = new BasicDBObject("clientId", clientId);
+        DBObject update = new BasicDBObject();
+        BasicDBObject bObject = new BasicDBObject("clientId", clientId);
+        
+        	bObject.append("name", name);
+        	bObject.append("address", address);        
+        	bObject.append("city", city);
+        		
+        update.put("$set", bObject);
+         
+        WriteResult result = collection.update(query, update);  
+    }
     
     public void addEmployee(final int clientId, final Integer empId, final String firstName, final String lastName, final String address, final String city, final String telephone) {
     	MongoOperations mongoOps = new MongoTemplate(new SimpleMongoDbFactory(new Mongo(), MONGO_DB_NAME)); 
@@ -185,7 +166,7 @@ public class ClientServiceImpl implements ClientService, Const {
 		MongoClient mongo = new MongoClient("localhost", 27017);
         DB db = mongo.getDB(MONGO_DB_NAME);
          
-        DBCollection col = db.getCollection(COLLECTION_BASE);
+        DBCollection collection = db.getCollection(COLLECTION_BASE);
          
         //Update sub-document in a single document
         DBObject query = new BasicDBObject("employees.empId", empId);
@@ -211,7 +192,7 @@ public class ClientServiceImpl implements ClientService, Const {
         		
         update.put("$set", bObject);
          
-        WriteResult result = col.update(query, update);      
+        WriteResult result = collection.update(query, update);      
          
         mongo.close();  		
   	}
@@ -221,7 +202,7 @@ public class ClientServiceImpl implements ClientService, Const {
     	MongoClient mongo = new MongoClient("localhost", 27017);
         DB db = mongo.getDB(MONGO_DB_NAME);
          
-        DBCollection col = db.getCollection(COLLECTION_BASE);
+        DBCollection collection = db.getCollection(COLLECTION_BASE);
          
         //Update sub-document in a single document
         // remove employee by name
@@ -229,11 +210,10 @@ public class ClientServiceImpl implements ClientService, Const {
         DBObject update = new BasicDBObject();
         update.put("$unset", new BasicDBObject("employees.$",""));
          
-        WriteResult result = col.update(query, update);
+        WriteResult result = collection.update(query, update);
          
         mongo.close();
-    }   
-
+    }
     
     @Override
     public void updateEmployees(final int clientId, List<Employee> employees){
@@ -243,8 +223,7 @@ public class ClientServiceImpl implements ClientService, Const {
 		Client p = mongoOps.findOne(query(where("clientId").is(clientId)), Client.class);
 		
 		_log.info("{updateEmployees}: " + p);		
-    }
-    
+    }    
     
     // dummy clients
     private List<Client> getDummyClients(){
@@ -263,11 +242,7 @@ public class ClientServiceImpl implements ClientService, Const {
 
 	@Override
 	public void updateClient(int clientId, String name, String address, String city, List<Employee> employees) {
-		// TODO Auto-generated method stub
-		
 	}
-	
-	
 	
 	@Override
 	public void addCustomer() {
