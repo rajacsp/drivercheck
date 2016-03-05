@@ -1,0 +1,18 @@
+<section id="tests" class="sections sections-narrow" data-ng-controller="TestController">
+  <div class="container">
+    <a class="btn btn-primary pull-right" href="#" data-ui-sref="tests">See All Tests <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a>
+    <h2 class="sub-header">Tests</h2>
+    <div class="row thumbnail-wrapper">
+      <div class="col-md-3" data-ng-repeat="test in tests | limitTo : 8">
+        <div class="thumbnail">
+          <img data-ng-src="images/tests/test{{test.id%4 + 1}}.jpg" class="img-circle" alt="Generic placeholder image">
+          <div class="caption">
+            <h3 class="caption-heading" data-ng-bind="'Dr. ' + test.firstName + ' ' + test.lastName"></h3>
+            <p class="caption-meta"><span class="glyphicon glyphicon-phone-alt"></span> +6085558763</p>
+            <p class="caption-meta"><span class="caption-label" data-ng-repeat="specialty in test.specialties"><span data-ng-bind="specialty.name">Surgery</span></span></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -12,13 +12,18 @@
 <body ng-controller="MainCtrl">
 	<ul ng-repeat="client in clients">
 		<li>
-			{{ client.name }}
+			
+			<a href="client.html">
+				{{ client.name }}
+			</a>
+			<!-- 
 			<ul ng-repeat="employee in client.employees">
 				<li>{{ employee.firstName}}</li>
 				<ul ng-repeat="test in employee.tests">
 					<li>{{ test.testId}}</li>
 				</ul>
 			</ul>	
+			-->
 		</li>
 	</ul>			
 		

@@ -1,0 +1,42 @@
+<section id="clients" class="sections sections-narrow" data-ng-controller="ClientController">
+  <div class="container">
+    <a class="btn btn-primary pull-right" href="#" data-ui-sref="clients">See All clients <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a>
+    <h2 class="sub-header">clients</h2>
+    <div class="row thumbnail-wrapper">
+      <div class="col-md-3" data-ng-repeat="client in clients | limitTo : 8">
+        <div class="thumbnail">
+          <a data-ui-sref="clientDetails({id: client.clientId})">
+          	Details          	
+          </a>
+          <div class="caption">
+            <h3 class="caption-heading">
+            	<a data-ui-sref="clientDetails({id: client.clientId})" data-ng-bind="client.name"></a>
+            </h3>
+            <p class="caption-meta" data-ng-bind="client.city"></p>
+            <p class="caption-meta">
+            	<span class="glyphicon glyphicon-phone-alt">
+            	</span>
+            	<span data-ng-bind="client.telephone">
+            		sadfas
+            	</span>
+            </p>
+          </div>
+          <div class="action-bar">
+            <ul>
+              <li>
+                <a data-ui-sref="clientDetails({id: client.clientId})">
+                	Add Employee
+                </a>
+              </li>
+              <li>
+                <a data-ui-sref="cilentDetails({id: client.clientId})" class="btn-add-employee">
+                	<span class="glyphicon glyphicon-plus"></span>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

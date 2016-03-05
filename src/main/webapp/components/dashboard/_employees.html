@@ -1,0 +1,18 @@
+<section id="employees" class="sections sections-narrow" data-ng-controller="EmployeeController">
+  <div class="container">
+    <a class="btn btn-primary pull-right" href="#" data-ui-sref="employees">See All Employees <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a>
+    <h2 class="sub-header">Employees</h2>
+    <div class="row thumbnail-wrapper">
+      <div class="col-md-3" ng-repeat="employee in employees | limitTo : 4">
+        <div class="thumbnail">
+          <img data-ng-src="images/employees/employee1.jpg" class="img-circle" alt="Generic placeholder image">
+          <div class="caption">
+            <h3 class="caption-heading" data-ng-bind="employee.name"></h3>
+            <p class="caption-meta">08 August 2012</p>
+            <p class="caption-meta"><span class="caption-label" data-ng-bind="employee.type.name"></span></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
