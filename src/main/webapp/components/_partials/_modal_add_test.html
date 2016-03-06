@@ -1,0 +1,169 @@
+<!-- This partial include Add/Edit Test and Success Modals -->
+
+<!-- Test Details Modal -->
+<div class="modal modal-owner fade" id="testModal" tabindex="-1" data-ng-controller="TestDetailsController">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+        <div class="container">
+          <div class="row">
+            <div class="col-md-4 col-md-offset-4">
+              <h1 class="sub-header" data-ng-bind="testFormHeader"></h1>
+              <em class="text-muted">Fill up Test basic information</em>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-body">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-4 col-md-offset-4">
+              <div class="form-group">
+                <label for="employee">Employee</label>
+                <input type="text" class="form-control" id="employee" data-ng-value="currentEmployee.lastName" readonly>
+              </div>
+              <div class="form-group">
+                <label for="testId">Test Id</label>
+                <input type="text" class="form-control" id="testId" data-ng-model="currentTest.testId">
+              </div>
+              <div class="form-group">
+                <label for="lastName">Result</label>
+                <input type="text" class="form-control" id="lastName" data-ng-model="currentTest.result">
+              </div>              
+              <div class="form-group form-group-action">
+                <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#addTestSuccessModal" data-dismiss="modal" aria-label="Close" data-ng-click="saveTest()">Save</button>
+                <button class="btn btn-link" class="close" data-dismiss="modal" aria-label="Close">Cancel</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Delete Test Modal -->
+<div class="modal modal-owner fade" id="deleteTestModal" tabindex="-1" data-ng-controller="TestDetailsController">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+        <div class="container">
+          <div class="row">
+            <div class="col-md-4 col-md-offset-4">
+              <h1 class="sub-header" data-ng-bind="testFormHeader"></h1>
+              <em class="text-muted">Are you sure deleting this Test?</em>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-body">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-4 col-md-offset-4">                                         
+              <div class="form-group form-group-action">
+                <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#deleteTestSuccessModal" data-dismiss="modal" aria-label="Close" data-ng-click="deleteTest()">Delete</button>
+                <button class="btn btn-link" class="close" data-dismiss="modal" aria-label="Close">Cancel</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Add New Test Success Modal -->
+<div class="modal modal-owner fade" id="addTestSuccessModal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+        <div class="container">
+          <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+              <h1 class="sub-header">Test added successfully!</h1>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-body">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+              <div class="alert alert-success" role="alert">
+                Well done! You've successfully added a test.
+              </div>              
+              <div class="form-group form-group-action">
+              	<a href="#/clients" class="btn btn-primary">
+          			View Clients          	
+          		</a>                
+                <button class="btn btn-link" data-dismiss="modal" aria-label="Close">Close</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Edit Test Success Modal -->
+<div class="modal modal-owner fade" id="editTestSuccessModal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+        <div class="container">
+          <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+              <h1 class="sub-header">Test update successfully!</h1>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-body">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+              <div class="alert alert-success" role="alert">
+                Well done! You've successfully update a test.
+              </div>              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Delete Test Success Modal -->
+<div class="modal modal-owner fade" id="deleteTestSuccessModal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+        <div class="container">
+          <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+              <h1 class="sub-header">Test Deleted successfully!</h1>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-body">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+              <div class="alert alert-success" role="alert">
+                Well done! You've successfully Deleted Test.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

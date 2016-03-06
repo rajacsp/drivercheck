@@ -103,6 +103,60 @@ public class ClientServiceImpl implements ClientService, Const {
 		final Datastore datastore = morphia.createDatastore(mongo, MONGO_DB_NAME);
 
 		return datastore.createQuery(ClientMOM.class).field("employees.empId").equal(empId).asList();
+    }    
+    
+    @Override
+    @Transactional(readOnly = true)
+    public EmployeeMOM findEmployeeByEmpId(String empId) throws DataAccessException {
+    	
+    	final Morphia morphia = new Morphia();
+
+		morphia.mapPackage(MORPHIA_PACKAGE_BASE);
+
+		MongoClient mongo = new MongoClient("localhost", 27017);		
+		final Datastore datastore = morphia.createDatastore(mongo, MONGO_DB_NAME);
+
+		List<ClientMOM> clients = datastore.createQuery(ClientMOM.class).field("employees.empId").equal(empId).asList();
+		
+		
+		for (ClientMOM clientMOM : clients) {
+			List<EmployeeMOM> employees = clientMOM.getEmployees();
+			
+			for (EmployeeMOM employeeMOM : employees) {
+				if(employeeMOM.getEmpId().equals(empId))
+					return employeeMOM;
+			}
+		}
+		
+		return null;
+    }
+    
+    @Override
+    @Transactional(readOnly = true)
+    public List<EmployeeMOM> findEmployeeByEmployeeFirstName(String employeeFirstName) throws DataAccessException {
+    	final Morphia morphia = new Morphia();
+
+		morphia.mapPackage(MORPHIA_PACKAGE_BASE);
+
+		MongoClient mongo = new MongoClient("localhost", 27017);		
+		final Datastore datastore = morphia.createDatastore(mongo, MONGO_DB_NAME);
+
+		List<ClientMOM> clients = datastore.createQuery(ClientMOM.class).field("employees.firstName").equal(employeeFirstName).asList();	
+		
+		
+		
+		List<EmployeeMOM> employeeList = new LinkedList<EmployeeMOM>();
+		for (ClientMOM clientMOM : clients) {
+			List<EmployeeMOM> employees = clientMOM.getEmployees();
+			
+			for (EmployeeMOM employeeMOM : employees) {
+				if(employeeMOM.getFirstName().equalsIgnoreCase(employeeFirstName)){
+					employeeList.add(employeeMOM);
+				}					
+			}
+		}
+		
+		return employeeList;
     }
     
     @Override

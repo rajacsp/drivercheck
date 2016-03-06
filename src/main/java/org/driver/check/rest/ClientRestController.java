@@ -66,11 +66,29 @@ public class ClientRestController {
     
     /*
 	 * possible url:
-	 * 		http://localhost:3030/drivercheck/api/employees/{_id}
+	 * 		http://localhost:3030/drivercheck/api/clients/by/name/{clientName}
 	 */
     @RequestMapping(value = "/clients/by/name/{clientName}", method = RequestMethod.GET)
     public @ResponseBody List<ClientMOM> findClientByClientName(@PathVariable("clientName") String clientName) {
         return clientService.findByClientName(clientName);        
+    }
+    
+    /*
+	 * possible url:
+	 * 		http://localhost:3030/drivercheck/api/employees/{empId}
+	 */
+    @RequestMapping(value = "/employees/{empId}", method = RequestMethod.GET)
+    public @ResponseBody EmployeeMOM findEmployeeById(@PathVariable("empId") String empId) {
+        return clientService.findEmployeeByEmpId(empId);        
+    }
+    
+    /*
+	 * possible url:
+	 * 		http://localhost:3030/drivercheck/api/employees/{firstName}
+	 */
+    @RequestMapping(value = "/employees/firstname/{firstName}", method = RequestMethod.GET)
+    public @ResponseBody List<EmployeeMOM> findEmployeeByEmployeeFirstName(@PathVariable("firstName") String firstName) {
+        return clientService.findEmployeeByEmployeeFirstName(firstName);        
     }
     
     /*
@@ -80,6 +98,15 @@ public class ClientRestController {
     @RequestMapping(value = "/clients/by/employee/id/{empId}", method = RequestMethod.GET)
     public @ResponseBody List<ClientMOM> findClientByEmpId(@PathVariable("empId") String empId) {
         return clientService.findByEmployeeId(empId);        
+    }
+    
+    /*
+	 * possible url:
+	 * 		http://localhost:3030/drivercheck/api/clients/by/employee/id/{empId}
+	 */
+    @RequestMapping(value = "/employees", method = RequestMethod.GET)
+    public @ResponseBody EmployeeMOM findEmployeesByEmployeeId(@RequestParam(value = "empId") String empId) {
+        return clientService.findEmployeeByEmpId(empId);        
     }
     
     /*
