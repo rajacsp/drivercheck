@@ -74,7 +74,6 @@ public class Employee {
         this.telephone = telephone;
     }
     
-    /*
     private List<TestResult> tests;
     
     public List<TestResult> getTests(){
@@ -84,7 +83,6 @@ public class Employee {
 	public void setTests(List<TestResult> tests){
 		this.tests = tests;
 	}
-	*/
     
     public Employee() {
 	}
@@ -105,7 +103,7 @@ public class Employee {
     	this.address = address;
     	this.city = city;
     	this.telephone = telephone;
-    	//this.tests = tests;
+    	this.tests = tests;
     }
     
     @Override

@@ -73,6 +73,7 @@ public class ClientRestController {
     @RequestMapping(value = "/clients", method = RequestMethod.POST)
     public @ResponseBody Client createClient(@RequestBody Client client) {
     	if(client.get_id() == null){ //new client
+    		client.set_id(getUniqueId()); //may not be needed
     		clientService.saveClient(client);
     		return client;
     	}
@@ -136,6 +137,24 @@ public class ClientRestController {
     	_log.info("{deleteEmployee} _id : "+_id+", empId : "+empId);
     	
     	clientService.removeEmployee(_id, empId);
+    }
+    
+    /*
+     * POST (add/edit test)
+     * 
+	 * possible url:
+	 * 		http://localhost:3030/drivercheck/api/clients/{_id}/{empId}/
+	 */    
+    @RequestMapping(value = "/clients/{_id}/{empId}/tests", method = RequestMethod.POST)
+    public @ResponseBody void saveTest(
+    		@PathVariable("_id") String _id,
+    		@PathVariable("empId") String empId,
+    		@RequestBody TestResult test
+    	) {
+    	
+    	_log.info("{saveTest} _id : "+_id+", empId : "+empId);
+    	
+    	List<TestResult> tests = TestResult.getRandomTests();
     }
     
     /*

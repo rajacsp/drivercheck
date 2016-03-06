@@ -37,3 +37,13 @@ var EmployeeDetailsController = ['$scope','ClientEmployee',function($scope, Clie
 	};
 	
 }];
+
+var EmployeeDetailsController_One = ['$scope','$rootScope','$stateParams','Employee', function($scope, $rootScope, $stateParams, Employee) {	
+	
+	$scope.currentEmployee = Employee.get($stateParams);
+	
+	$scope.addTestResult = function() {
+		$scope.testResultFormHeader = "Add a new Test";
+		$scope.currentTestResult = {type:{}};
+	}
+}];

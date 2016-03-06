@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.driver.check.model.Client;
 import org.driver.check.model.Employee;
+import org.driver.check.model.TestResult;
 import org.springframework.dao.DataAccessException;
 
 public interface ClientService {
@@ -45,6 +46,8 @@ public interface ClientService {
     void removeEmployee(final String _id, final String empId);
     
     void updateClient(final String _id, final String name, final String address, final String city, final List<Employee> employees);
+    
+    void addTest(final String _id, final String empId, final TestResult test);
     
     <T> T findClientByEmployeeFirstName(String employeeName); //buggy
     

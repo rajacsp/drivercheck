@@ -23,6 +23,9 @@ public class RandomDC {
 	}
 	
 	public static String getUniqueId(){
-		return UUID.randomUUID().toString();
+		//return UUID.randomUUID().toString();
+		
+		// for testing use 1 - 500
+		return ""+getRandomInt(1, 500);
 	}
 }

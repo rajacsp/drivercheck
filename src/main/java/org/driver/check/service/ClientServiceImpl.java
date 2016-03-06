@@ -15,6 +15,7 @@ import javax.annotation.Resource;
 import org.driver.check.business.constants.Const;
 import org.driver.check.model.Client;
 import org.driver.check.model.Employee;
+import org.driver.check.model.TestResult;
 import org.driver.check.repository.ClientRepository;
 import org.driver.check.repository.CustomerRepository;
 import org.driver.check.util.Names;
@@ -173,6 +174,9 @@ public class ClientServiceImpl implements ClientService, Const {
 		Query searchUserQuery = new Query(Criteria.where("_id").is(_id));
 
 		Employee employee = new Employee(empId, firstName, lastName, address, city, telephone);
+		
+		List<TestResult> tests = TestResult.getRandomTests();
+		employee.setTests(tests);
 
 		Update update = Update.update("_id", _id).addToSet("employees", employee);
 		WriteResult result = mongoOps.updateFirst(searchUserQuery, update, Client.class);
@@ -189,6 +193,20 @@ public class ClientServiceImpl implements ClientService, Const {
 		BasicDBObject newDocument = new BasicDBObject();
 		
 		newDocument.append("$addToSet", new BasicDBObject().append("employees", employee));	
+		
+		BasicDBObject searchQuery = new BasicDBObject().append("_id", _id);		
+		collection.update(searchQuery, newDocument);
+    }    
+    
+    @Override
+    public void addTest(final String _id, final String empId, final TestResult test){
+    	Mongo mongo = new Mongo("localhost", 27017);
+  	  	DB db = mongo.getDB(MONGO_DB_NAME);  	  	
+    	DBCollection collection = db.getCollection(COLLECTION_BASE);
+    	
+		BasicDBObject newDocument = new BasicDBObject();
+		
+		newDocument.append("$addToSet", new BasicDBObject().append("tests", test));	
 		
 		BasicDBObject searchQuery = new BasicDBObject().append("_id", _id);		
 		collection.update(searchQuery, newDocument);

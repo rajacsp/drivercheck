@@ -47,6 +47,12 @@ app.config(['stateHelperProvider','$urlRouterProvider','$urlMatcherFactoryProvid
 		templateUrl: "components/clients/client_details.html",
 		controller: "ClientDetailsController",
 		data: {requireLogin : true}
+	}).state({
+		name: "employeeDetails",
+		url: "/employees/:empId",
+		templateUrl: "components/employees/employee_details.html",
+		controller: "EmployeeDetailsController_One",
+		data: {requireLogin : true}
 	});
 
 } ]);
@@ -54,13 +60,12 @@ app.config(['stateHelperProvider','$urlRouterProvider','$urlMatcherFactoryProvid
 /** Controllers **/
 app.controller('MainController', MainController);
 app.controller('DashboardController', DashboardController);
-
 app.controller('TestController', TestController);
 app.controller('EmployeeController', EmployeeController);
 app.controller('EmployeeDetailsController', EmployeeDetailsController);
+app.controller('EmployeeDetailsController_One', EmployeeDetailsController_One);
 app.controller('ClientController', ClientController);
 app.controller('ClientDetailsController', ClientDetailsController);
-
 app.controller('AddClientController', AddClientController);
 
 
