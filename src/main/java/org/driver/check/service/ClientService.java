@@ -6,7 +6,7 @@ import java.util.List;
 import org.driver.check.model.Client;
 import org.driver.check.model.Employee;
 import org.driver.check.model.TestResult;
-import org.driver.check.morphia.model.ClientMorphia;
+import org.driver.check.morphia.model.ClientMOM;
 import org.springframework.dao.DataAccessException;
 
 public interface ClientService {
@@ -17,7 +17,11 @@ public interface ClientService {
     
     Client findBy_id(String _id) throws DataAccessException;
     
-    List<ClientMorphia> findByClientName(String clientName);
+    List<ClientMOM> findByClientName(String clientName);
+    
+    List<ClientMOM> findByEmployeeFirstName(String employeeFirstName) throws DataAccessException;
+    
+    List<ClientMOM> findByEmployeeLastName(String employeeLastName) throws DataAccessException;
     
     void deleteClientBy_id(final String _id);
     
@@ -51,8 +55,6 @@ public interface ClientService {
     void updateClient(final String _id, final String name, final String address, final String city, final List<Employee> employees);
     
     void addTest(final String _id, final String empId, final TestResult test);
-    
-    <T> T findClientByEmployeeFirstName(String employeeName); //buggy
     
     // test method
     void addCustomer();

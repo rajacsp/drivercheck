@@ -10,7 +10,7 @@ import lombok.Data;
 
 @Entity("client")
 @Data
-public class Client {
+public class ClientMOM {
 
 	@Id
     private String id;
@@ -23,16 +23,16 @@ public class Client {
     
     private List<Employee> employees;    
     
-    public Client() {
+    public ClientMOM() {
 	}
     
-    public Client(final String _id, final String name, final String address, final String city) {
+    public ClientMOM(final String _id, final String name, final String address, final String city) {
     	this.name = name;
     	this.address = address;
     	this.city = city;
     }
     
-    public Client(final String _id, final String name, final String address, final String city, final List<Employee> employees) {
+    public ClientMOM(final String _id, final String name, final String address, final String city, final List<Employee> employees) {
     	this.name = name;
     	this.address = address;
     	this.city = city;

@@ -14,13 +14,14 @@ import java.util.Map;
 import org.driver.check.model.Client;
 import org.driver.check.model.Employee;
 import org.driver.check.model.TestResult;
-import org.driver.check.morphia.model.ClientMorphia;
+import org.driver.check.morphia.model.ClientMOM;
 import org.driver.check.morphia.model.EmployeeMOM;
 import org.driver.check.service.ClientService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -73,7 +74,7 @@ public class ClientRestController {
 	 * 		http://localhost:3030/drivercheck/api/employees/{_id}
 	 */
     @RequestMapping(value = "/clients1/{clientName}", method = RequestMethod.GET)
-    public @ResponseBody List<ClientMorphia> findClientByEmpId(@PathVariable("clientName") String clientName) {
+    public @ResponseBody List<ClientMOM> findClientByEmpId(@PathVariable("clientName") String clientName) {
         return clientService.findByClientName(clientName);        
     }
     
@@ -188,9 +189,22 @@ public class ClientRestController {
 	 */
     @RequestMapping(value = "/clients/find/by/employee/first_name", method = RequestMethod.GET)
     public @ResponseBody <T> T findClientByEmployeeFirstName(
-    		@RequestParam("name") String name
+    		@RequestParam("name") String employeeFirstName
     		) {
-        return clientService.findClientByEmployeeFirstName(name);
+        return (T) clientService.findByEmployeeFirstName(employeeFirstName);
+    }
+    
+    /*
+	 * possible url:
+	 * 		http://localhost:3030/drivercheck/api/clients/find/by/employee/last_name?name=Mathpal
+	 * 
+	 * note: buggy; has to be fixed
+	 */
+    @RequestMapping(value = "/clients/find/by/employee/last_name", method = RequestMethod.GET)
+    public @ResponseBody <T> T findClientByEmployeeLastName(
+    		@RequestParam("name") String employeeLastName
+    		) {
+        return (T) clientService.findByEmployeeLastName(employeeLastName);
     }
     
     /*
