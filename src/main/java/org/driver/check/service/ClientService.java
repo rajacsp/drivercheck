@@ -6,6 +6,7 @@ import java.util.List;
 import org.driver.check.model.Client;
 import org.driver.check.model.Employee;
 import org.driver.check.model.TestResult;
+import org.driver.check.morphia.model.ClientMorphia;
 import org.springframework.dao.DataAccessException;
 
 public interface ClientService {
@@ -15,6 +16,8 @@ public interface ClientService {
     Collection<Client> findByName(String name) throws DataAccessException;
     
     Client findBy_id(String _id) throws DataAccessException;
+    
+    List<ClientMorphia> findByClientName(String clientName);
     
     void deleteClientBy_id(final String _id);
     

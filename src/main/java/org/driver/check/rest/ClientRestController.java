@@ -14,6 +14,8 @@ import java.util.Map;
 import org.driver.check.model.Client;
 import org.driver.check.model.Employee;
 import org.driver.check.model.TestResult;
+import org.driver.check.morphia.model.ClientMorphia;
+import org.driver.check.morphia.model.EmployeeMOM;
 import org.driver.check.service.ClientService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -63,6 +65,16 @@ public class ClientRestController {
     @RequestMapping(value = "/clients/{_id}", method = RequestMethod.GET)
     public @ResponseBody Client findClientBy_id(@PathVariable("_id") String _id) {
         return clientService.findBy_id(_id);        
+    }
+    
+    /*
+	 * possible url:
+	 * 		http://localhost:3030/drivercheck/api/employees/{_id}
+	 * 		http://localhost:3030/drivercheck/api/employees/{_id}
+	 */
+    @RequestMapping(value = "/clients1/{clientName}", method = RequestMethod.GET)
+    public @ResponseBody List<ClientMorphia> findClientByEmpId(@PathVariable("clientName") String clientName) {
+        return clientService.findByClientName(clientName);        
     }
     
     /*

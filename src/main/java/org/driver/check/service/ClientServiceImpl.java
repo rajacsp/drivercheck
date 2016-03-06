@@ -1,10 +1,10 @@
 package org.driver.check.service;
 
 
+import static org.driver.check.util.RandomDC.getUniqueId;
 import static org.springframework.data.mongodb.core.query.Criteria.where;
 import static org.springframework.data.mongodb.core.query.Query.query;
 import static org.springframework.data.mongodb.core.query.Update.update;
-import static org.driver.check.util.RandomDC.getUniqueId;
 
 import java.util.Collection;
 import java.util.LinkedList;
@@ -16,10 +16,14 @@ import org.driver.check.business.constants.Const;
 import org.driver.check.model.Client;
 import org.driver.check.model.Employee;
 import org.driver.check.model.TestResult;
+import org.driver.check.morphia.model.ClientMorphia;
+import org.driver.check.morphia.model.EmployeeMOM;
 import org.driver.check.repository.ClientRepository;
 import org.driver.check.repository.CustomerRepository;
 import org.driver.check.util.Names;
 import org.driver.check.util.RandomDC;
+import org.mongodb.morphia.Datastore;
+import org.mongodb.morphia.Morphia;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataAccessException;
@@ -72,7 +76,39 @@ public class ClientServiceImpl implements ClientService, Const {
     @Transactional(readOnly = true)
     public Client findBy_id(String _id) throws DataAccessException{
     	return clientRepository.findBy_id(_id);
+    }    
+    
+    @Override
+    @Transactional(readOnly = true)
+    public List<ClientMorphia> findByClientName(String clientName) throws DataAccessException{
+    	
+    	final Morphia morphia = new Morphia();
+
+		morphia.mapPackage("org.driver.check.morphia.model");
+
+		// create the Datastore connecting to the default port on the local host
+		MongoClient mongo = new MongoClient("localhost", 27017);
+		String dbName = "test";
+		final Datastore datastore = morphia.createDatastore(mongo, dbName);
+		//datastore.ensureIndexes();
+		
+		return findByClientName(datastore, clientName);
     }
+    
+    // dummy method for testing
+    public List<org.driver.check.morphia.model.Employee>  selectCustom(Datastore datastore){
+    	List<org.driver.check.morphia.model.Employee> underpaid = datastore.createQuery(org.driver.check.morphia.model.Employee.class)
+                .field("salary").lessThanOrEq(60000)
+                .asList();
+		
+		return underpaid;
+	}
+    
+    public List<ClientMorphia>  findByClientName(Datastore datastore, String clientName){
+    	List<ClientMorphia> clients = datastore.createQuery(ClientMorphia.class)
+                .field("city").equal(clientName).asList();		
+		return clients;
+	}
     
     @Override
     public void deleteClientAll(){

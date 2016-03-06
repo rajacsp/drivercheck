@@ -384,6 +384,14 @@
 			<artifactId>lombok</artifactId>
 			<version>0.11.8</version>
 		</dependency>
+		
+		<!-- MongoDB Morphia Java Mapping (MOM) -->
+		<dependency>
+			<groupId>org.mongodb.morphia</groupId>
+			<artifactId>morphia</artifactId>
+			<version>1.1.1</version>
+		</dependency>
+		
 	</dependencies>
 
 	<dependencyManagement>
