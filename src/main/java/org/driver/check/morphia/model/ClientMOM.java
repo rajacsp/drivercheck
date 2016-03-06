@@ -2,7 +2,6 @@ package org.driver.check.morphia.model;
 
 import java.util.List;
 
-import org.driver.check.model.Employee;
 import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Id;
 
@@ -21,7 +20,7 @@ public class ClientMOM {
 
     private String city;
     
-    private List<Employee> employees;    
+    private List<EmployeeMOM> employees;    
     
     public ClientMOM() {
 	}
@@ -32,7 +31,7 @@ public class ClientMOM {
     	this.city = city;
     }
     
-    public ClientMOM(final String _id, final String name, final String address, final String city, final List<Employee> employees) {
+    public ClientMOM(final String _id, final String name, final String address, final String city, final List<EmployeeMOM> employees) {
     	this.name = name;
     	this.address = address;
     	this.city = city;

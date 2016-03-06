@@ -17,6 +17,7 @@ import org.driver.check.model.Client;
 import org.driver.check.model.Employee;
 import org.driver.check.model.TestResult;
 import org.driver.check.morphia.model.ClientMOM;
+import org.driver.check.morphia.model.EmployeeMOM;
 import org.driver.check.repository.ClientRepository;
 import org.driver.check.repository.CustomerRepository;
 import org.driver.check.util.Names;
@@ -41,7 +42,6 @@ import com.mongodb.DBCollection;
 import com.mongodb.DBObject;
 import com.mongodb.Mongo;
 import com.mongodb.MongoClient;
-import com.mongodb.QueryBuilder;
 import com.mongodb.WriteResult;
 
 @Service("clientService")
@@ -83,9 +83,8 @@ public class ClientServiceImpl implements ClientService, Const {
     	
     	final Morphia morphia = new Morphia();
 
-		morphia.mapPackage("org.driver.check.morphia.model");
+		morphia.mapPackage(MORPHIA_PACKAGE_BASE);
 
-		// create the Datastore connecting to the default port on the local host
 		MongoClient mongo = new MongoClient("localhost", 27017);		
 		final Datastore datastore = morphia.createDatastore(mongo, MONGO_DB_NAME);
 
@@ -94,13 +93,26 @@ public class ClientServiceImpl implements ClientService, Const {
     
     @Override
     @Transactional(readOnly = true)
+    public List<ClientMOM> findByEmployeeId(String empId) throws DataAccessException {
+    	
+    	final Morphia morphia = new Morphia();
+
+		morphia.mapPackage(MORPHIA_PACKAGE_BASE);
+
+		MongoClient mongo = new MongoClient("localhost", 27017);		
+		final Datastore datastore = morphia.createDatastore(mongo, MONGO_DB_NAME);
+
+		return datastore.createQuery(ClientMOM.class).field("employees.empId").equal(empId).asList();
+    }
+    
+    @Override
+    @Transactional(readOnly = true)
     public List<ClientMOM> findByEmployeeFirstName(String employeeFirstName) throws DataAccessException{
     	
     	final Morphia morphia = new Morphia();
 
-		morphia.mapPackage("org.driver.check.morphia.model");
+		morphia.mapPackage(MORPHIA_PACKAGE_BASE);
 
-		// create the Datastore connecting to the default port on the local host
 		MongoClient mongo = new MongoClient("localhost", 27017);		
 		final Datastore datastore = morphia.createDatastore(mongo, MONGO_DB_NAME);
 
@@ -109,22 +121,35 @@ public class ClientServiceImpl implements ClientService, Const {
     
     @Override
     @Transactional(readOnly = true)
-    public List<ClientMOM> findByEmployeeLastName(String employeeLastName) throws DataAccessException{
+    public List<ClientMOM> findByEmployeeLastName(String employeeLastName) throws DataAccessException {
     	
     	final Morphia morphia = new Morphia();
 
-		morphia.mapPackage("org.driver.check.morphia.model");
+		morphia.mapPackage(MORPHIA_PACKAGE_BASE);
 
-		// create the Datastore connecting to the default port on the local host
 		MongoClient mongo = new MongoClient("localhost", 27017);		
 		final Datastore datastore = morphia.createDatastore(mongo, MONGO_DB_NAME);
 
 		return datastore.createQuery(ClientMOM.class).field("employees.lastName").equal(employeeLastName).asList();
+    }    
+    
+    @Override
+    @Transactional(readOnly = true)
+    public List<EmployeeMOM> findByEmployeeCity(String employeeCity) throws DataAccessException {
+    	
+    	final Morphia morphia = new Morphia();
+
+		morphia.mapPackage(MORPHIA_PACKAGE_BASE);
+
+		MongoClient mongo = new MongoClient("localhost", 27017);		
+		final Datastore datastore = morphia.createDatastore(mongo, MONGO_DB_NAME);
+
+		return datastore.createQuery(EmployeeMOM.class).field("city").equal(employeeCity).asList();
     }
     
     public List<ClientMOM>  findByClientName(Datastore datastore, String clientName){
     	List<ClientMOM> clients = datastore.createQuery(ClientMOM.class)
-                .field("city").equal(clientName).asList();		
+                .field("name").equal(clientName).asList();		
 		return clients;
 	}
     

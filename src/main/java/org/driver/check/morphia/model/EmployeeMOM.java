@@ -1,37 +1,25 @@
 package org.driver.check.morphia.model;
 
-import org.bson.types.ObjectId;
-import org.mongodb.morphia.annotations.Entity;
-import org.mongodb.morphia.annotations.Field;
-import org.mongodb.morphia.annotations.Id;
-import org.mongodb.morphia.annotations.Index;
-import org.mongodb.morphia.annotations.Indexes;
-import org.mongodb.morphia.annotations.Property;
+import java.util.List;
+
+import org.driver.check.model.TestResult;
 
 import lombok.Data;
 
-
-@Entity("employees")
-@Indexes(
-    @Index(value = "salary", fields = @Field("salary"))
-)
 @Data
 public class EmployeeMOM {
+
+	private String empId;
 	
-	@Id
-    private ObjectId id;
-	
-    private String name;
+    private String firstName;
+
+    private String lastName;
     
-    @Property("wage")
-    private Double salary;
+    private String address;
+
+    private String city;
+
+    private String telephone;
     
-    public EmployeeMOM(String name, Double salary){
-    	this.name = name;
-    	this.salary = salary;
-    }
-    
-    public EmployeeMOM(){
-    	
-    }
+    private List<TestResult> tests;
 }

@@ -21,7 +21,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -41,7 +40,6 @@ public class ClientRestController {
     /*
 	 * possible url:
 	 * 		http://localhost:3030/drivercheck/api/client/
-	 * 		http://localhost:3030/drivercheck/api/client/
 	 */
     @Autowired
     public ClientRestController(ClientService clientService) {
@@ -50,7 +48,6 @@ public class ClientRestController {
 
     /*
 	 * possible url:
-	 * 		http://localhost:3030/drivercheck/api/clients/
 	 * 		http://localhost:3030/drivercheck/api/clients/
 	 */
     @RequestMapping(value = "/clients", method = RequestMethod.GET)
@@ -61,7 +58,6 @@ public class ClientRestController {
     /*
 	 * possible url:
 	 * 		http://localhost:3030/drivercheck/api/clients/{_id}
-	 * 		http://localhost:3030/drivercheck/api/clients/{_id}
 	 */
     @RequestMapping(value = "/clients/{_id}", method = RequestMethod.GET)
     public @ResponseBody Client findClientBy_id(@PathVariable("_id") String _id) {
@@ -71,16 +67,34 @@ public class ClientRestController {
     /*
 	 * possible url:
 	 * 		http://localhost:3030/drivercheck/api/employees/{_id}
-	 * 		http://localhost:3030/drivercheck/api/employees/{_id}
 	 */
-    @RequestMapping(value = "/clients1/{clientName}", method = RequestMethod.GET)
-    public @ResponseBody List<ClientMOM> findClientByEmpId(@PathVariable("clientName") String clientName) {
+    @RequestMapping(value = "/clients/by/name/{clientName}", method = RequestMethod.GET)
+    public @ResponseBody List<ClientMOM> findClientByClientName(@PathVariable("clientName") String clientName) {
         return clientService.findByClientName(clientName);        
     }
     
     /*
 	 * possible url:
-	 * 		http://localhost:3030/drivercheck/api/clients/{_id}/update
+	 * 		http://localhost:3030/drivercheck/api/clients/by/employee/id/{empId}
+	 */
+    @RequestMapping(value = "/clients/by/employee/id/{empId}", method = RequestMethod.GET)
+    public @ResponseBody List<ClientMOM> findClientByEmpId(@PathVariable("empId") String empId) {
+        return clientService.findByEmployeeId(empId);        
+    }
+    
+    /*
+	 * possible url:
+	 * 		http://localhost:3030/drivercheck/api/clients/by/employee/city/{city}
+	 * 
+	 * buggy because of EmployeeMOM implementation
+	 */
+    @RequestMapping(value = "/clients/by/employee/city/{city}", method = RequestMethod.GET)
+    public @ResponseBody List<EmployeeMOM> findByEmployeeCity(@PathVariable("city") String employeeCity) {
+        return clientService.findByEmployeeCity(employeeCity);       
+    }
+    
+    /*
+	 * possible url:
 	 * 		http://localhost:3030/drivercheck/api/clients/{_id}/update
 	 */
     @RequestMapping(value = "/clients", method = RequestMethod.POST)
@@ -212,7 +226,6 @@ public class ClientRestController {
 	 * 
 	 * possible url:
 	 * 		http://localhost:3030/drivercheck/api/client/
-	 * 		http://localhost:3030/drivercheck/api/client/
 	 */
     @RequestMapping(value = "/client/delete/{_id}", method = RequestMethod.GET)
     public @ResponseBody Map<String, String> deleteClientBy_id(@PathVariable("id") String _id) {
@@ -229,7 +242,6 @@ public class ClientRestController {
      * delete all
 	 * 
 	 * possible url:
-	 * 		http://localhost:3030/drivercheck/api/client/
 	 * 		http://localhost:3030/drivercheck/api/client/
 	 */
     @RequestMapping(value = "/client/delete/all", method = RequestMethod.GET)
@@ -248,7 +260,6 @@ public class ClientRestController {
      * delete [Method = DELETE]
 	 * 
 	 * possible url:
-	 * 		http://localhost:3030/drivercheck/api/client/
 	 * 		http://localhost:3030/drivercheck/api/client/
 	 */
     @RequestMapping(value = "/client/{_id}", method = RequestMethod.DELETE)
