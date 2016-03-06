@@ -42,7 +42,7 @@ public interface ClientService {
     
     void updateEmployees(final String _id, List<Employee> employees);
     
-    void removeEmployee(final String empId);
+    void removeEmployee(final String _id, final String empId);
     
     void updateClient(final String _id, final String name, final String address, final String city, final List<Employee> employees);
     

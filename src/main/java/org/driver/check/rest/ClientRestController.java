@@ -119,6 +119,23 @@ public class ClientRestController {
     	// assume the remaining action is 'EDIT'
     	_log.info("{saveEmployee} editing employee _id : "+_id+", employee : "+employee);
     	clientService.updateEmployee(_id, employee);    	
+    }    
+    
+    /*
+     * DELETE - delete client
+     * 
+	 * possible url:
+	 * 		http://localhost:3030/drivercheck/api/clients/{_id}/employees
+	 */
+    @RequestMapping(value = "/clients/{_id}/employees", method = RequestMethod.DELETE)
+    public @ResponseBody void deleteEmployee(
+    		@PathVariable("_id") String _id,
+    		@RequestParam(value="empId") String empId
+    	) {    	
+    	
+    	_log.info("{deleteEmployee} _id : "+_id+", empId : "+empId);
+    	
+    	clientService.removeEmployee(_id, empId);
     }
     
     /*
@@ -380,9 +397,9 @@ public class ClientRestController {
     		@RequestParam(value = "emp_id", required = false) String empId
     		) {
     	
-    	System.out.println("{removeEmployee} empId : "+empId);
+    	_log.info("{removeEmployee} empId : "+empId);
     	
-    	clientService.removeEmployee(empId);  	
+    	clientService.removeEmployee(_id, empId);  	
     	
     	Map<String, String> map = new LinkedHashMap<String, String>();
     	map.put("SUCCESS", "OK");

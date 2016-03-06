@@ -36,7 +36,7 @@
           	<span class="glyphicon glyphicon-edit" aria-hidden="true"></span> 
           	Edit Client
           </button>
-          <button class="btn btn-primary pull-right" data-toggle="modal" data-target="#deleteClientModal">
+          <button class="btn btn-primary pull-right" data-toggle="modal" data-target="#deleteClientModal" style="margin-right:10px;">
           	<span class="glyphicon glyphicon-edit" aria-hidden="true"></span> 
           	Delete Client
           </button>
@@ -72,7 +72,8 @@
     </div>
     <h2 class="sub-header">Client's Employees</h2>
     <div class="row thumbnail-wrapper">
-      <div data-ng-repeat="employee in currentClient.employees" class="col-md-3">
+      <div data-ng-repeat="employee in currentClient.employees" ng-show={{employee}} class="col-md-3">
+      	
         <div class="thumbnail">          
           <div class="caption">
             <h3 class="caption-heading" data-ng-bind="employee.firstName + ' ' + employee.lastName"></h3>            
@@ -83,9 +84,16 @@
             <p><span data-ng-bind="employee.telephone"></span></p>
           </div>
           <div class="action-bar">
-            <button class="btn btn-default" data-toggle="modal" data-target="#employeeModal" data-ng-click="editEmployee(employee.empId)">
-              <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Edit Employee
-            </button>            
+          	<span>
+            	<button class="btn btn-default" data-toggle="modal" data-target="#employeeModal" data-ng-click="editEmployee(employee.empId)" style="font-size: 8px;">
+              	<span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Edit Employee
+            	</button>
+            </span>
+            <span>
+            	<button class="btn btn-default" data-toggle="modal" data-target="#deleteEmployeeModal" data-ng-click="deleteEmployee(employee.empId)" style="font-size: 8px;">
+              	<span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Delete Employee
+            	</button>
+            </span>            
           </div>
         </div>
       </div>

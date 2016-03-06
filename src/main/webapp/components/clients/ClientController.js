@@ -42,6 +42,21 @@ var ClientDetailsController = ['$scope','$rootScope','$stateParams','Client', fu
 			}
 		}
 	};
+	
+	$scope.deleteEmployee = function(id) {		
+		$scope.employeeFormHeader = "Delete Employee";
+		for(i = 0;i < $scope.currentClient.employees.length; i++) {
+			
+			// ignore null
+			if($scope.currentClient.employees[i] == null)
+				continue;
+			
+			if($scope.currentClient.employees[i].empId == id) {
+				$scope.currentEmployee = $scope.currentClient.employees[i];
+				break;
+			}
+		}
+	};
 
 }];
 

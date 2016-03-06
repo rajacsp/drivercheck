@@ -16,8 +16,6 @@ var EmployeeDetailsController = ['$scope','ClientEmployee',function($scope, Clie
 		
 		current_id = $scope.currentClient._id;
 		
-		//alert(current_id);
-		
 		ClientEmployee.save({_id:current_id},$scope.currentEmployee,function(employee) {
 			var newEmployee = true;
 			for (i=0;i<$scope.currentClient.employees.length;i++) {
@@ -32,4 +30,10 @@ var EmployeeDetailsController = ['$scope','ClientEmployee',function($scope, Clie
 			}
 		});
 	};
+	
+	$scope.deleteEmployee = function(){		
+		//alert('cid : '+$scope.currentClient._id+', eid : '+$scope.currentEmployee.empId);				
+		ClientEmployee.remove({_id : $scope.currentClient._id, empId : $scope.currentEmployee.empId});
+	};
+	
 }];

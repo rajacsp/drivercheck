@@ -285,19 +285,15 @@ public class ClientServiceImpl implements ClientService, Const {
     }
   	
     @Override
-    public void removeEmployee(final String empId){
+    public void removeEmployee(final String _id, final String empId){
     	MongoClient mongo = new MongoClient("localhost", 27017);
         DB db = mongo.getDB(MONGO_DB_NAME);
          
         DBCollection collection = db.getCollection(COLLECTION_BASE);
          
-        //Update sub-document in a single document
-        // remove employee by name
-        DBObject query = new BasicDBObject("employees.empId", empId);
-        DBObject update = new BasicDBObject();
-        update.put("$unset", new BasicDBObject("employees.$",""));
-         
-        WriteResult result = collection.update(query, update);
+        BasicDBObject match = new BasicDBObject("employees.empId", empId); //to match your direct app document
+        BasicDBObject update2 = new BasicDBObject("empId", empId);
+        collection.update(match, new BasicDBObject("$pull", new BasicDBObject("employees", update2)));
          
         mongo.close();
     }

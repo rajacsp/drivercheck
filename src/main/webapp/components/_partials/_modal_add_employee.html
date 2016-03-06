@@ -55,6 +55,37 @@
   </div>
 </div>
 
+<!-- Delete Employee Modal -->
+<div class="modal modal-owner fade" id="deleteEmployeeModal" tabindex="-1" data-ng-controller="EmployeeDetailsController">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+        <div class="container">
+          <div class="row">
+            <div class="col-md-4 col-md-offset-4">
+              <h1 class="sub-header" data-ng-bind="employeeFormHeader"></h1>
+              <em class="text-muted">Are you sure deleting this Employee?</em>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-body">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-4 col-md-offset-4">                                         
+              <div class="form-group form-group-action">
+                <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#deleteEmployeeSuccessModal" data-dismiss="modal" aria-label="Close" data-ng-click="deleteEmployee()">Delete</button>
+                <button class="btn btn-link" class="close" data-dismiss="modal" aria-label="Close">Cancel</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- Add New Employee Success Modal -->
 <div class="modal modal-owner fade" id="addEmployeeSuccessModal" tabindex="-1">
   <div class="modal-dialog">
@@ -114,6 +145,36 @@
               <div class="form-group form-group-action">
                 <a href="owner_details.html" class="btn btn-primary">View owner's employees</a>
                 <button class="btn btn-link" data-dismiss="modal" aria-label="Close">Close</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Delete Employee Success Modal -->
+<div class="modal modal-owner fade" id="deleteEmployeeSuccessModal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+        <div class="container">
+          <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+              <h1 class="sub-header">Employee Deleted successfully!</h1>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-body">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+              <div class="alert alert-success" role="alert">
+                Well done! You've successfully Deleted employee.
               </div>
             </div>
           </div>
