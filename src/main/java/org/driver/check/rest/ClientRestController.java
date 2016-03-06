@@ -431,7 +431,7 @@ public class ClientRestController {
     		@RequestBody Employee employee
     		) {
     	
-    	_log.info("{updateEmployee1} _id : "+_id);
+    	_log.info("{updateEmployee} _id : "+_id);
 		
     	clientService.updateEmployee(_id, employee);    	
     	

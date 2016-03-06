@@ -35,19 +35,6 @@ public class EmployeeServiceImpl implements EmployeeService, Const {
     	return mongoOps.findAll(Employee.class);
     }
     
-    // dummy employees for data-fill up
-    private List<Employee> getDummyEmployees(){
-    	// id, first_name, last_name, street, city, phone
-    	Employee employee1 = new Employee(getUniqueId(), "Raja", "Raman", "Balliol Street", "Toronot", "3632636363");
-    	Employee employee2 = new Employee(getUniqueId(), "Chris", "Brown", "Hello Street", "Toronto", "474646464");
-    	
-    	List<Employee> employeeList = new LinkedList<Employee>();
-    	employeeList.add(employee1);
-    	employeeList.add(employee2);
-    	
-    	return employeeList;
-    }
-    
     @Override
     public void deleteEmployeeByEmpId(final int empId){
     	MongoOperations mongoOps = new MongoTemplate(new SimpleMongoDbFactory(new Mongo(), MONGO_DB_NAME));
