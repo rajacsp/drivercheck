@@ -97,9 +97,18 @@ public class ClientServiceImpl implements ClientService, Const {
     	clientRepository.save(client);		
     }
     
+    /*
+     * 
+     * (non-Javadoc)
+     * @see org.driver.check.service.ClientService#saveClient(org.driver.check.model.Client)
+     * 
+     * Note: As this method is clearing existing employees, this method call has to to be used only for add purposes, not for updating purposes
+     * 		
+     */
     @Override
     public void saveClient(final Client client){
     	
+    	// add dummy employee
     	Employee emp = new Employee(getUniqueId(), Names.getRandomFirstName(), Names.getRandomLasstName(), RandomDC.getRandomInt(400, 500)+" Street", "Toronto", Names.getRandomPhoneNumber());
     	
     	List<Employee> emps = new LinkedList<Employee>();
@@ -117,6 +126,26 @@ public class ClientServiceImpl implements ClientService, Const {
     	MongoOperations mongoOps = new MongoTemplate(new SimpleMongoDbFactory(new Mongo(), MONGO_DB_NAME));
     	Client p = new Client(_id, name, address, city, employees);
 		mongoOps.insert(p);	
+    }
+    
+    @Override
+    public void updateClient(final Client client){
+    	Mongo mongo = new Mongo("localhost", 27017);
+  	  	DB db = mongo.getDB(MONGO_DB_NAME);  	  	
+    	DBCollection collection = db.getCollection(COLLECTION_BASE);   		
+		
+		DBObject query = new BasicDBObject("_id", client.get_id());
+        DBObject update = new BasicDBObject();
+        BasicDBObject bObject = new BasicDBObject("_id", client.get_id());
+        
+    	bObject.append("name", client.getName());
+    	bObject.append("address", client.getAddress());        
+    	bObject.append("city", client.getCity());
+        		
+        update.put("$set", bObject);
+         
+        WriteResult result = collection.update(query, update);
+        _log.info("{updateClient} result : "+result);
     }
     
     /*
@@ -139,13 +168,14 @@ public class ClientServiceImpl implements ClientService, Const {
         DBObject update = new BasicDBObject();
         BasicDBObject bObject = new BasicDBObject("_id", _id);
         
-        	bObject.append("name", name);
-        	bObject.append("address", address);        
-        	bObject.append("city", city);
+    	bObject.append("name", name);
+    	bObject.append("address", address);        
+    	bObject.append("city", city);
         		
         update.put("$set", bObject);
          
-        WriteResult result = collection.update(query, update);  
+        WriteResult result = collection.update(query, update);
+        _log.info("{updateClient} result : "+result);
     }
     
     public void addEmployee(final String _id, final String empId, final String firstName, final String lastName, final String address, final String city, final String telephone) {

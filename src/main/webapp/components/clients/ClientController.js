@@ -28,10 +28,10 @@ var ClientDetailsController = ['$scope','$rootScope','$stateParams','Client', fu
 		$scope.currentEmployee = {type:{}};
 	}
 	
-	$scope.editEmployee = function(id) {
+	$scope.editEmployee = function(id) {		
 		$scope.employeeFormHeader = "Edit Employee";
-		for(i = 0;i < $scope.currentClient.employees.length; i++) {
-			if($scope.currentClient.employees[i].id == id) {
+		for(i = 0;i < $scope.currentClient.employees.length; i++) {			
+			if($scope.currentClient.employees[i].empId == id) {
 				$scope.currentEmployee = $scope.currentClient.employees[i];
 				break;
 			}

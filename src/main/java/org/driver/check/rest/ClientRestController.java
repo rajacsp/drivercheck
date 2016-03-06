@@ -15,7 +15,6 @@ import org.driver.check.model.Client;
 import org.driver.check.model.Employee;
 import org.driver.check.model.TestResult;
 import org.driver.check.service.ClientService;
-import org.driver.check.service.ClientServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
@@ -73,14 +72,16 @@ public class ClientRestController {
 	 */
     @RequestMapping(value = "/clients", method = RequestMethod.POST)
     public @ResponseBody Client createClient(@RequestBody Client client) {
-    	if(client.get_id() != null){
-    		_log.info("{create} editing client "+client.get_id());
-    		Client existingClient = clientService.findBy_id(client.get_id());    		  
-    		BeanUtils.copyProperties(client, existingClient, "_id");
+    	if(client.get_id() == null){ //new client
     		clientService.saveClient(client);
-    	} else{
-    		clientService.saveClient(client);
-    	}    	
+    		return client;
+    	}
+    	
+    	_log.info("{create} editing client "+client.get_id());
+    	Client existingClient = clientService.findBy_id(client.get_id());    		  
+    	BeanUtils.copyProperties(client, existingClient, "_id");
+    	clientService.updateClient(client);
+    	
     	return client;
     }    
     

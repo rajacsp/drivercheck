@@ -25,6 +25,8 @@ public interface ClientService {
     
     void addClient(final String _id, final String name, final String address, final String city, final List<Employee> employees);
     
+    void updateClient(final Client client);
+    
     void updateClient(final String _id, final String name, final String address, final String city);
     
     void addEmployee(final String _id,  final String empId, final String firstName, final String lastName, final String address, final String city, final String telephone);
