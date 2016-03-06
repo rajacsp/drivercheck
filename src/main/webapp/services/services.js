@@ -3,7 +3,7 @@ var Client = ['$resource','context', function($resource, context) {
 }];
 
 var ClientEmployee = ['$resource','context', function($resource, context) {
-	alert('test');
+	//alert('test');
 	return $resource(context + '/api/clients/:_id/employees', {_id : '@_id'});
 }];
 
@@ -15,9 +15,9 @@ var Test = ['$resource','context', function($resource, context) {
 	return $resource(context + '/api/tests/:testId');
 }];
 
-/*
+
 var EmployeeType = ['$resource','context', function($resource, context) {
 	return $resource(context + '/api/employees/types');
 }];
-*/
+
 

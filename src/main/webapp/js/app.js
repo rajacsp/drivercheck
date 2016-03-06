@@ -69,7 +69,7 @@ app.factory('Client', Client);
 app.factory('Employee', Employee);
 app.factory('ClientEmployee', ClientEmployee);
 app.factory('Test', Test);
-//app.factory('EmployeeType', EmployeeType);
+app.factory('EmployeeType', EmployeeType);
 
 /** Directives **/
 

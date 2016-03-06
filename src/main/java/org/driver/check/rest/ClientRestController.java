@@ -86,22 +86,30 @@ public class ClientRestController {
     
     
     /*
+     * POST (add/edit employee)
+     * 
 	 * possible url:
-	 * 		http://localhost:3030/drivercheck/api/clients/employees
-	 */
-    /*
-    @RequestMapping(value = "/clients/employees", method = RequestMethod.POST)
-    public @ResponseBody void saveEmployee(@RequestBody Employee employee) {
-    	if(employee.getEmpId() != null){
-    		_log.info("{saveEmployee} editing employee "+ employee.getEmpId() );
-    		Client existingClient = clientService.fin    		  
-    		BeanUtils.copyProperties(client, existingClient, "_id");
-    		clientService.saveClient(client);
-    	} else{
-    		clientService.saveClient(client);
+	 * 		http://localhost:3030/drivercheck/api/clients/{_id}/employees
+	 */    
+    @RequestMapping(value = "/clients/{_id}/employees", method = RequestMethod.POST)
+    public @ResponseBody void saveEmployee(
+    		@PathVariable("_id") String _id,
+    		@RequestBody Employee employee
+    	) {
+    	
+    	if(employee.getEmpId() == null){
+    		employee.setEmpId(getUniqueId());
+    		_log.info("{saveEmployee} adding employee _id : "+_id+", employee : "+employee);
+    		
+    		//clientService.addEmployee(_id, employee);   // not working; should be fixed later 		
+    		
+    		clientService.addEmployee(_id, employee.getEmpId(), employee.getFirstName(), employee.getLastName(), employee.getAddress(), employee.getCity(), employee.getTelephone());        	        	
     	}
+    	
+    	// assume the remaining action is 'EDIT'
+    	_log.info("{saveEmployee} editing employee _id : "+_id+", employee : "+employee);
+    	clientService.updateEmployee(_id, employee);    	
     }
-    */
     
     /*
 	 * possible url:

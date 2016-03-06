@@ -10,14 +10,13 @@ var EmployeeController = ['$scope', 'Employee', function($scope, Employee) {
 
 }];
 
-var EmployeeDetailsController = ['$scope','ClientEmployee',function($scope, ClientEmployee,Employee) {
-	
+var EmployeeDetailsController = ['$scope','ClientEmployee',function($scope, ClientEmployee,Employee) {	
 	
 	$scope.saveEmployee = function(){
 		
-		current_id = $scope.currentClient.id;
+		current_id = $scope.currentClient._id;
 		
-		alert(current_id);
+		//alert(current_id);
 		
 		ClientEmployee.save({_id:current_id},$scope.currentEmployee,function(employee) {
 			var newEmployee = true;

@@ -258,7 +258,8 @@ public class ClientServiceImpl implements ClientService, Const {
         		
         update.put("$set", bObject);
          
-        WriteResult result = collection.update(query, update);      
+        WriteResult result = collection.update(query, update);
+        _log.info("{updateEmployee} result : "+result);
          
         mongo.close();
     }
