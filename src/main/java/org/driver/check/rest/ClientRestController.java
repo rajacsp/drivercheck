@@ -3,6 +3,7 @@ package org.driver.check.rest;
 import static org.driver.check.util.Names.getRandomFirstName;
 import static org.driver.check.util.Names.getRandomPhoneNumber;
 import static org.driver.check.util.RandomDC.getRandomInt;
+import static org.driver.check.util.RandomDC.getUniqueId;
 
 import java.util.Collection;
 import java.util.LinkedHashMap;
@@ -14,6 +15,9 @@ import org.driver.check.model.Client;
 import org.driver.check.model.Employee;
 import org.driver.check.model.TestResult;
 import org.driver.check.service.ClientService;
+import org.driver.check.service.ClientServiceImpl;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,6 +31,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api")
 public class ClientRestController {
+	
+	private static Logger _log = LoggerFactory.getLogger(ClientRestController.class);
 
     private final ClientService clientService;
 
@@ -52,34 +58,50 @@ public class ClientRestController {
     
     /*
 	 * possible url:
-	 * 		http://localhost:3030/drivercheck/api/clients/
-	 * 		http://localhost:3030/drivercheck/api/clients/
+	 * 		http://localhost:3030/drivercheck/api/clients/{_id}
+	 * 		http://localhost:3030/drivercheck/api/clients/{_id}
 	 */
-    @RequestMapping(value = "/clients/{clientid}", method = RequestMethod.GET)
-    public @ResponseBody Client findClientByClientId(@PathVariable("clientid") int clientId) {
-        Collection<Client> collection = this.clientService.findByClientId(clientId);
-        if(collection != null && collection.size() > 0)
-        	return (Client) collection.toArray()[0];
-        return null;
+    @RequestMapping(value = "/clients/{_id}", method = RequestMethod.GET)
+    public @ResponseBody Client findClientBy_id(@PathVariable("_id") String _id) {
+        return clientService.findBy_id(_id);        
     }
     
     /*
 	 * possible url:
-	 * 		http://localhost:3030/drivercheck/api/clients/{clientid}/update
-	 * 		http://localhost:3030/drivercheck/api/clients/{clientid}/update
+	 * 		http://localhost:3030/drivercheck/api/clients/{_id}/update
+	 * 		http://localhost:3030/drivercheck/api/clients/{_id}/update
 	 */
     @RequestMapping(value = "/clients", method = RequestMethod.POST)
-    public @ResponseBody Client create(@RequestBody Client client) {
-    	if(client.getClientId() > 0){
-    		Collection<Client> clients = clientService.findByClientId(client.getClientId());
-    		Client existingClient =  (Client) clients.toArray()[0];
-    		BeanUtils.copyProperties(client, existingClient, "pets", "id");
-    		clientService.addClient(client);
+    public @ResponseBody Client createClient(@RequestBody Client client) {
+    	if(client.get_id() != null){
+    		_log.info("{create} editing client "+client.get_id());
+    		Client existingClient = clientService.findBy_id(client.get_id());    		  
+    		BeanUtils.copyProperties(client, existingClient, "_id");
+    		clientService.saveClient(client);
     	} else{
-    		clientService.addClient(client);
+    		clientService.saveClient(client);
     	}    	
     	return client;
+    }    
+    
+    
+    /*
+	 * possible url:
+	 * 		http://localhost:3030/drivercheck/api/clients/employees
+	 */
+    /*
+    @RequestMapping(value = "/clients/employees", method = RequestMethod.POST)
+    public @ResponseBody void saveEmployee(@RequestBody Employee employee) {
+    	if(employee.getEmpId() != null){
+    		_log.info("{saveEmployee} editing employee "+ employee.getEmpId() );
+    		Client existingClient = clientService.fin    		  
+    		BeanUtils.copyProperties(client, existingClient, "_id");
+    		clientService.saveClient(client);
+    	} else{
+    		clientService.saveClient(client);
+    	}
     }
+    */
     
     /*
 	 * possible url:
@@ -106,16 +128,16 @@ public class ClientRestController {
     }
     
     /*
-     * delete [Method = GET]
+     * delete [Method = GET] // should be moved to POST/DELETE
 	 * 
 	 * possible url:
 	 * 		http://localhost:3030/drivercheck/api/client/
 	 * 		http://localhost:3030/drivercheck/api/client/
 	 */
-    @RequestMapping(value = "/client/delete/{cid}", method = RequestMethod.GET)
-    public @ResponseBody Map<String, String> deleteClientByClientId(@PathVariable("cid") Integer clientId) {
+    @RequestMapping(value = "/client/delete/{_id}", method = RequestMethod.GET)
+    public @ResponseBody Map<String, String> deleteClientBy_id(@PathVariable("id") String _id) {
     	
-    	clientService.deleteClientByClientId(clientId);
+    	clientService.deleteClientBy_id(_id);
     	
     	Map<String, String> map = new LinkedHashMap<String, String>();
     	map.put("SUCCESS", "OK");
@@ -149,10 +171,10 @@ public class ClientRestController {
 	 * 		http://localhost:3030/drivercheck/api/client/
 	 * 		http://localhost:3030/drivercheck/api/client/
 	 */
-    @RequestMapping(value = "/client/{cid}", method = RequestMethod.DELETE)
-    public @ResponseBody Map<String, String> deleteClientByClientId1(@PathVariable("cid") Integer clientId) {
+    @RequestMapping(value = "/client/{_id}", method = RequestMethod.DELETE)
+    public @ResponseBody Map<String, String> deleteClientBy_id1(@PathVariable("_id") String _id) {
     	
-    	clientService.deleteClientByClientId(clientId);
+    	clientService.deleteClientBy_id(_id);
     	
     	Map<String, String> map = new LinkedHashMap<String, String>();
     	map.put("SUCCESS", "OK");
@@ -169,7 +191,7 @@ public class ClientRestController {
 	 */
     @RequestMapping(value = "/client/add", method = RequestMethod.GET)
     public @ResponseBody Map<String, String> addClient(    		
-    		@RequestParam("client_id") int clientId,
+    		@RequestParam("_id") String _id,
     		@RequestParam("name") String name,
     		@RequestParam("address") String address,
     		@RequestParam("city") String city,
@@ -180,7 +202,7 @@ public class ClientRestController {
     		// add client with or without employee
     		@RequestParam(value = "withEmployee", required = false, defaultValue="false") Boolean withEmployee,    		
     		
-    		@RequestParam(value = "emp_id", required = false) Integer empId,
+    		@RequestParam(value = "emp_id", required = false) String empId,
     		@RequestParam(value = "emp_firstname", required = false) String empFirstName,
     		@RequestParam(value = "emp_lastname", required = false) String empLasName,
     		@RequestParam(value = "emp_address", required = false) String EmployeeAddress,
@@ -195,7 +217,7 @@ public class ClientRestController {
     	
     	if(addDummyValues){    		
         	List<TestResult> tests = TestResult.getRandomTests();        	
-    		employee = new Employee(401, getRandomFirstName(), getRandomFirstName(), getRandomInt(1, 100)+", Street", "Toronto", getRandomPhoneNumber(), tests);
+    		employee = new Employee(getUniqueId(), getRandomFirstName(), getRandomFirstName(), getRandomInt(1, 100)+", Street", "Toronto", getRandomPhoneNumber(), tests);
     	}else{
     		/*
 	    	if(withTest){
@@ -215,9 +237,9 @@ public class ClientRestController {
     	if(employee != null){
      		List<Employee> employees = new LinkedList<Employee>();
      		employees.add(employee);    	
-     		clientService.addClient(clientId, name, address, city,employees);
+     		clientService.addClient(_id, name, address, city,employees);
      	} else{ //assume its plain call (witout employee,test) 
-     		clientService.addClient(clientId, name, address, city);
+     		clientService.addClient(_id, name, address, city);
      	}    	
     	
     	Map<String, String> map = new LinkedHashMap<String, String>();
@@ -236,13 +258,13 @@ public class ClientRestController {
 	 * 		http://localhost:3030/drivercheck/api/client/
 	 * 		
 	 */
-    @RequestMapping(value = "/client/{clientid}/add/employee", method = RequestMethod.GET)
+    @RequestMapping(value = "/client/{_id}/add/employee", method = RequestMethod.GET)
     public @ResponseBody Map<String, String> addEmployee(
-    		@PathVariable(value = "clientid") int clientId,
+    		@PathVariable(value = "_id") String _id,
     		@RequestParam(value = "dummy", required = false) boolean addDummyValues,
     		
     		// pass original values
-    		@RequestParam(value = "emp_id", required = false) Integer empId,
+    		@RequestParam(value = "emp_id", required = false) String empId,
     		@RequestParam(value = "first_name", required = false) String firstName,
     		@RequestParam(value = "last_name", required = false) String lastName,
     		@RequestParam(value = "address", required = false) String address,
@@ -252,14 +274,14 @@ public class ClientRestController {
     	
     	Employee employee = null;
     	if(addDummyValues){    		
-    		employee = new Employee(getRandomInt(401, 500), getRandomFirstName(), getRandomFirstName(), getRandomInt(1, 100)+", Street", "Toronto", getRandomPhoneNumber());
+    		employee = new Employee(getUniqueId(), getRandomFirstName(), getRandomFirstName(), getRandomInt(1, 100)+", Street", "Toronto", getRandomPhoneNumber());
     	} else {    	
     		employee = new Employee(empId, firstName, lastName, address, city, telephone);
     		List<Employee> employees = new LinkedList<Employee>();
     		employees.add(employee);
     	}
     	
-    	clientService.addEmployee(clientId, empId, firstName, lastName, address, city, telephone);    	
+    	clientService.addEmployee(_id, empId, firstName, lastName, address, city, telephone);    	
     	
     	Map<String, String> map = new LinkedHashMap<String, String>();
     	map.put("SUCCESS", "OK");
@@ -277,12 +299,12 @@ public class ClientRestController {
 	 * 		http://localhost:3030/drivercheck/api/client/
 	 * 		
 	 */
-    @RequestMapping(value = "/client/{clientid}/update/employee", method = RequestMethod.GET)
+    @RequestMapping(value = "/client/{_id}/update/employee/1", method = RequestMethod.GET)
     public @ResponseBody Map<String, String> updateEmployee(
-    		@PathVariable(value = "clientid") int clientId,
+    		@PathVariable(value = "_id") String _id,
     		
     		// pass original values
-    		@RequestParam(value = "emp_id", required = false) Integer empId,
+    		@RequestParam(value = "emp_id", required = false) String empId,
     		@RequestParam(value = "first_name", required = false) String firstName,
     		@RequestParam(value = "last_name", required = false) String lastName,
     		@RequestParam(value = "address", required = false) String address,
@@ -294,7 +316,7 @@ public class ClientRestController {
 		List<Employee> employees = new LinkedList<Employee>();
 		employees.add(employee);    	
     	
-    	clientService.updateEmployee(clientId, empId, firstName, lastName, address, city, telephone);    	
+    	clientService.updateEmployee(_id, empId, firstName, lastName, address, city, telephone);    	
     	
     	Map<String, String> map = new LinkedHashMap<String, String>();
     	map.put("SUCCESS", "OK");
@@ -303,15 +325,41 @@ public class ClientRestController {
     }
     
     /*
+     * update employee [Method = GET]
+     * 
+     * mongo plain query:
+     * 	db.clients.update({"_id": 2},  {$addToSet : { "employees" : [ {"name"  : "jay", "position" : "senior dev"}, {"name"  : "heejun", "position" : "manager"}] }});
 	 * 
 	 * possible url:
-	 * 		http://localhost:3030/drivercheck/api/client/{clientid}/remove/employee?empId={emp_id}
+	 * 		http://localhost:3030/drivercheck/api/client/
 	 * 		
 	 */
-    @RequestMapping(value = "/client/{clientid}/remove/employee", method = RequestMethod.GET)
+    @RequestMapping(value = "/client/{_id}/update/employee", method = RequestMethod.GET)
+    public @ResponseBody Map<String, String> updateEmployee1(
+    		@PathVariable(value = "_id") String _id,    		
+    		@RequestBody Employee employee
+    		) {
+    	
+    	_log.info("{updateEmployee1} _id : "+_id);
+		
+    	clientService.updateEmployee(_id, employee);    	
+    	
+    	Map<String, String> map = new LinkedHashMap<String, String>();
+    	map.put("SUCCESS", "OK");
+    	
+    	return map;
+    }    
+    
+    /*
+	 * 
+	 * possible url:
+	 * 		http://localhost:3030/drivercheck/api/client/{_id}/remove/employee?empId={emp_id}
+	 * 		
+	 */
+    @RequestMapping(value = "/client/{_id}/remove/employee", method = RequestMethod.GET)
     public @ResponseBody Map<String, String> removeEmployee(
-    		@PathVariable(value = "clientid") int clientId,
-    		@RequestParam(value = "emp_id", required = false) Integer empId
+    		@PathVariable(value = "_id") String _id,
+    		@RequestParam(value = "emp_id", required = false) String empId
     		) {
     	
     	System.out.println("{removeEmployee} empId : "+empId);
@@ -333,13 +381,13 @@ public class ClientRestController {
 	 */
     @RequestMapping(value = "/client/update", method = RequestMethod.GET)
     public @ResponseBody Map<String, String> updateClient(    		
-    		@RequestParam(value = "client_id") int clientId,
+    		@RequestParam(value = "_id") String _id,
     		@RequestParam(value = "name", required = false) String name,
     		@RequestParam(value = "address", required = false) String address,
     		@RequestParam(value = "city", required = false) String city
     		) {
     	
-    	clientService.updateClient(clientId, name, address, city);
+    	clientService.updateClient(_id, name, address, city);
     	
     	Map<String, String> map = new LinkedHashMap<String, String>();
     	map.put("SUCCESS", "OK");

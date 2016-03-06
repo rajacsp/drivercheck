@@ -8,6 +8,8 @@ import org.springframework.stereotype.Repository;
 
 @Repository("ClientRepository")
 public interface ClientRepository extends MongoRepository<Client, String> {
-	public Collection<Client> findByName(String name);
-	public Collection<Client> findByClientId(int clientId);
+	
+	public Client findBy_id(String _id);
+	
+	public Collection<Client> findByName(String name);	
 }	

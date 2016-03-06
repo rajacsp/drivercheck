@@ -9,7 +9,7 @@
         <div class="container">
           <div class="row">
             <div class="col-md-8 col-md-offset-2">
-              <h1 class="sub-header">Add An Client</h1>
+              <h1 class="sub-header">Add A Client</h1>
               <em class="text-muted">Fill up client basic information and contact details</em>
             </div>
           </div>
@@ -103,6 +103,7 @@
             <div class="col-md-4 col-md-offset-2">
               <div class="form-group">
                 <label for="firstName">Name</label>
+                <input type="hidden" class="form-control" id="_id" ng-model="currentClient._id">
                 <input type="text" class="form-control" id="firstName" ng-model="currentClient.name">
               </div>              
             </div>

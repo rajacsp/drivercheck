@@ -3,29 +3,28 @@ package org.driver.check.model;
 
 import java.util.List;
 
-import javax.persistence.Column;
-
-import org.hibernate.validator.constraints.NotEmpty;
-
 public class Employee {
 	
 	/*
 	 * empId
-	 * first_name
+	 * firstName
 	 * last_name
 	 * address
 	 * city
 	 * telephone
 	 */
 	
+	private String empId;
 	
-	@Column(name = "first_name")
-    @NotEmpty
-    protected String firstName;
+    private String firstName;
 
-    @Column(name = "last_name")
-    @NotEmpty
-    protected String lastName;
+    private String lastName;
+    
+    private String address;
+
+    private String city;
+
+    private String telephone;
 
 	public String getFirstName() {
         return this.firstName;
@@ -42,24 +41,12 @@ public class Employee {
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
-	
-	private int empId;
-	
-	private String address;
-
-    private String city;
-
-    private String telephone;
     
-    
-    
-    // client_id will be added later
-    
-    public int getEmpId(){
+    public String getEmpId(){
     	return empId;
     }
     
-    public void setEmpId(int empId){
+    public void setEmpId(String empId){
     	this.empId = empId;
     }
 
@@ -102,7 +89,7 @@ public class Employee {
     public Employee() {
 	}
     
-    public Employee(final int empId, final String firstName, final String lastName, final String address, final String city, final String telephone) {    	
+    public Employee(final String empId, final String firstName, final String lastName, final String address, final String city, final String telephone) {    	
     	this.empId = empId;
     	this.firstName = firstName;
     	this.lastName = lastName;
@@ -111,7 +98,7 @@ public class Employee {
     	this.telephone = telephone;
     }
     
-    public Employee(final int empId, final String firstName, final String lastName, final String address, final String city, final String telephone, final List<TestResult> tests) {    	
+    public Employee(final String empId, final String firstName, final String lastName, final String address, final String city, final String telephone, final List<TestResult> tests) {    	
     	this.empId = empId;
     	this.firstName = firstName;
     	this.lastName = lastName;

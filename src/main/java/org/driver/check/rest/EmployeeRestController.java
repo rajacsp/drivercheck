@@ -45,7 +45,7 @@ public class EmployeeRestController {
     
     // delete [Method = GET]
     @RequestMapping(value = "/employee/delete/{empId}", method = RequestMethod.GET)
-    public @ResponseBody Map<String, String> deleteClientByClientId(@PathVariable("empId") Integer empId) {
+    public @ResponseBody Map<String, String> deleteEmployeeByEmployeeId(@PathVariable("empId") Integer empId) {
     	
     	employeeService.deleteEmployeeByEmpId(empId);
     	
@@ -57,7 +57,7 @@ public class EmployeeRestController {
     
     // delete [Method = DELETE]
     @RequestMapping(value = "/employee/{empId}", method = RequestMethod.DELETE)
-    public @ResponseBody Map<String, String> deleteClientByClientId1(@PathVariable("empId") Integer empId) {
+    public @ResponseBody Map<String, String> deleteEmployeeByEmployeeId1(@PathVariable("empId") Integer empId) {
     	
     	employeeService.deleteEmployeeByEmpId(empId);
     	
@@ -70,7 +70,7 @@ public class EmployeeRestController {
     // add employee [Method = GET]
     @RequestMapping(value = "/employee/add", method = RequestMethod.GET)
     public @ResponseBody Map<String, String> addEmployee(    		
-    		@RequestParam("emp_id") int empId,
+    		@RequestParam("emp_id") String empId,
     		@RequestParam("first_name") String firstName,
     		@RequestParam("last_name") String lastName,
     		@RequestParam("address") String address,
@@ -89,7 +89,7 @@ public class EmployeeRestController {
     // updated employee[Method = GET]
     @RequestMapping(value = "/employee/update", method = RequestMethod.GET)
     public @ResponseBody Map<String, String> updateEmployee(    		
-    		@RequestParam("emp_id") int empId,
+    		@RequestParam("emp_id") String empId,
     		@RequestParam("first_name") String firstName,
     		@RequestParam("last_name") String lastName,
     		@RequestParam("address") String address,

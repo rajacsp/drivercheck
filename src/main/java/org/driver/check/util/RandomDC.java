@@ -1,6 +1,7 @@
 package org.driver.check.util;
 
 import java.util.Random;
+import java.util.UUID;
 
 public class RandomDC {
 	
@@ -19,5 +20,9 @@ public class RandomDC {
 		int min = 0;
 		int max = 1000;
 		return random.nextInt(max - min + 1) + min;
+	}
+	
+	public static String getUniqueId(){
+		return UUID.randomUUID().toString();
 	}
 }

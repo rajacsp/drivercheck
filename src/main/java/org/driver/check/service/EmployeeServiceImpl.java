@@ -3,6 +3,7 @@ package org.driver.check.service;
 import static org.springframework.data.mongodb.core.query.Criteria.where;
 import static org.springframework.data.mongodb.core.query.Query.query;
 import static org.springframework.data.mongodb.core.query.Update.update;
+import static org.driver.check.util.RandomDC.getUniqueId;
 
 import java.util.Collection;
 import java.util.LinkedList;
@@ -37,8 +38,8 @@ public class EmployeeServiceImpl implements EmployeeService, Const {
     // dummy employees for data-fill up
     private List<Employee> getDummyEmployees(){
     	// id, first_name, last_name, street, city, phone
-    	Employee employee1 = new Employee(1, "Raja", "Raman", "Balliol Street", "Toronot", "3632636363");
-    	Employee employee2 = new Employee(2, "Chris", "Brown", "Hello Street", "Toronto", "474646464");
+    	Employee employee1 = new Employee(getUniqueId(), "Raja", "Raman", "Balliol Street", "Toronot", "3632636363");
+    	Employee employee2 = new Employee(getUniqueId(), "Chris", "Brown", "Hello Street", "Toronto", "474646464");
     	
     	List<Employee> employeeList = new LinkedList<Employee>();
     	employeeList.add(employee1);
@@ -56,7 +57,7 @@ public class EmployeeServiceImpl implements EmployeeService, Const {
     }
     
     @Override
-    public void addEmployee(final int empId, final String firstName, final String lastName, final String address, final String city, final String telephone){
+    public void addEmployee(final String empId, final String firstName, final String lastName, final String address, final String city, final String telephone){
     	MongoOperations mongoOps = new MongoTemplate(new SimpleMongoDbFactory(new Mongo(), MONGO_DB_NAME));
     	Employee p = new Employee(empId, firstName, lastName, address, city, telephone);
 		mongoOps.insert(p);
@@ -64,7 +65,7 @@ public class EmployeeServiceImpl implements EmployeeService, Const {
     }
     
     @Override
-    public void updateEmployee(final int empId, final String firstName, final String lastName, final String address, final String city, final String telephone){
+    public void updateEmployee(final String empId, final String firstName, final String lastName, final String address, final String city, final String telephone){
     	MongoOperations mongoOps = new MongoTemplate(new SimpleMongoDbFactory(new Mongo(), MONGO_DB_NAME));
     	mongoOps.updateFirst(query(where("empId").is(empId)), update("firstName", firstName), Employee.class);
 		mongoOps.updateFirst(query(where("empId").is(empId)), update("lastName", lastName), Employee.class);

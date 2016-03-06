@@ -10,7 +10,7 @@ import org.springframework.data.annotation.Id;
 public class Client implements Serializable {
 	
 	/*
-	 * id
+	 * _id
 	 * client_id
 	 * name
 	 * address
@@ -20,13 +20,7 @@ public class Client implements Serializable {
 	private static final long serialVersionUID = -191439285713860309L;
 
 	@Id
-	protected String id;
-	
-	public String getId(){
-    	return id;
-    }
-	
-	private int clientId; //should be made as unique
+	protected String _id;
 	
     private String name;
     
@@ -34,16 +28,16 @@ public class Client implements Serializable {
 
     private String city;
     
-    private List<Employee> employees;    
+    private List<Employee> employees;   
     
-	public int getClientId(){
-		return clientId;
-	}
-	
-	public void setClientId(int clientId){
-		this.clientId = clientId;
+    public String get_id() {
+		return _id;
 	}
 
+	public void set_id(String _id) {
+		this._id = _id;
+	}
+    
 	public String getName() {
 		return name;
 	}
@@ -79,15 +73,13 @@ public class Client implements Serializable {
 	public Client() {
 	}
     
-    public Client(final int clientId, final String name, final String address, final String city) {
-    	this.clientId = clientId;
+    public Client(final String _id, final String name, final String address, final String city) {
     	this.name = name;
     	this.address = address;
     	this.city = city;
     }
     
-    public Client(final int clientId, final String name, final String address, final String city, final List<Employee> employees) {
-    	this.clientId = clientId;
+    public Client(final String _id, final String name, final String address, final String city, final List<Employee> employees) {
     	this.name = name;
     	this.address = address;
     	this.city = city;
@@ -96,7 +88,7 @@ public class Client implements Serializable {
     
     @Override
 	public String toString() {
-		return "Client [id=" + id + ", clientId=" + clientId + ", name=" + name + ", address=" + address + ", city="
+		return "Client [_id=" + _id + ", name=" + name + ", address=" + address + ", city="
 				+ city + ", employees=" + employees + "]";
 	}
 }

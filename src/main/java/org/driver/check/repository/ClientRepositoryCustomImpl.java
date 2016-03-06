@@ -16,7 +16,7 @@ public class ClientRepositoryCustomImpl implements ClientRepositoryCustom {
 	@Override	
 	public void pushMethod(String objectId, Object... employees) {
 		mongoTemplate.updateFirst(
-	            Query.query(Criteria.where("clientId").is(objectId)), 
+	            Query.query(Criteria.where("_id").is(objectId)), 
 	            new Update().pushAll("employees", employees), Client.class);		
 	}
 }

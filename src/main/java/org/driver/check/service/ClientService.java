@@ -13,32 +13,36 @@ public interface ClientService {
     
     Collection<Client> findByName(String name) throws DataAccessException;
     
-    Collection<Client> findByClientId(int clientId) throws DataAccessException;
+    Client findBy_id(String _id) throws DataAccessException;
     
-    void deleteClientByClientId(final int clientId);
+    void deleteClientBy_id(final String _id);
     
     void deleteClientAll();
     
-    void addClient(final int clientId, final String name, final String address, final String city);
+    void addClient(final String _id, final String name, final String address, final String city);
     
-    void addClient(final Client client);
+    void saveClient(final Client client);
     
-    void addClient(final int clientId, final String name, final String address, final String city, final List<Employee> employees);
+    void addClient(final String _id, final String name, final String address, final String city, final List<Employee> employees);
     
-    void updateClient(final int clientId, final String name, final String address, final String city);
+    void updateClient(final String _id, final String name, final String address, final String city);
     
-    void addEmployee(final int clientId,  final Integer empId, final String firstName, final String lastName, final String address, final String city, final String telephone);
+    void addEmployee(final String _id,  final String empId, final String firstName, final String lastName, final String address, final String city, final String telephone);
     
-    void addEmployee(final int clientId, final Employee employee);
+    void addEmployee(final String _id, final Employee employee);
     
-    void updateEmployee(final int clientId, final Integer empId, final String firstName, final String lastName, 
+    void saveEmployee(final String _id, final Employee employee);
+    
+    void updateEmployee(final String _id, final String empId, final String firstName, final String lastName, 
   			final String address, final String city, final String telephone);
     
-    void updateEmployees(final int clientId, List<Employee> employees);
+    void updateEmployee(final String _id, final Employee employee);
     
-    void removeEmployee(final int empId);
+    void updateEmployees(final String _id, List<Employee> employees);
     
-    void updateClient(final int clientId, final String name, final String address, final String city, final List<Employee> employees);
+    void removeEmployee(final String empId);
+    
+    void updateClient(final String _id, final String name, final String address, final String city, final List<Employee> employees);
     
     <T> T findClientByEmployeeFirstName(String employeeName); //buggy
     

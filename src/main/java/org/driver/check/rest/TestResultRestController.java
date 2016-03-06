@@ -35,7 +35,7 @@ public class TestResultRestController {
     
     // delete [Method = GET]
     @RequestMapping(value = "/test/delete/{tid}", method = RequestMethod.GET)
-    public @ResponseBody Map<String, String> deleteClientByClientId(@PathVariable("tid") Integer testId) {
+    public @ResponseBody Map<String, String> deleteTestByTestId(@PathVariable("tid") Integer testId) {
     	
     	testResultService.deleteTestByTestId(testId);
     	
@@ -47,7 +47,7 @@ public class TestResultRestController {
     
     // delete [Method = DELETE]
     @RequestMapping(value = "/test/delete/{tid}", method = RequestMethod.DELETE)
-    public @ResponseBody Map<String, String> deleteClientByClientId1(@PathVariable("tid") Integer testId) {
+    public @ResponseBody Map<String, String> deleteTestByTestId1(@PathVariable("tid") Integer testId) {
     	
     	testResultService.deleteTestByTestId(testId);
     	
