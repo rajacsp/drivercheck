@@ -106,18 +106,8 @@ public class ClientServiceImpl implements ClientService, Const {
      * 		
      */
     @Override
-    public void saveClient(final Client client){
-    	
-    	// add dummy employee
-    	Employee emp = new Employee(getUniqueId(), Names.getRandomFirstName(), Names.getRandomLasstName(), RandomDC.getRandomInt(400, 500)+" Street", "Toronto", Names.getRandomPhoneNumber());
-    	
-    	List<Employee> emps = new LinkedList<Employee>();
-    	emps.add(emp);
-    	
-    	client.setEmployees(emps);
-    	
-    	_log.info("{addClient} client : "+client);
-    	
+    public void saveClient(final Client client){    	
+    	_log.info("{addClient} client : "+client);    	
     	clientRepository.save(client);		
     }
     
