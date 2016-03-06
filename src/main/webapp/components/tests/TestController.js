@@ -9,3 +9,31 @@ var TestController = ['$scope','$http','Test', function ($scope, $http, Test) {
 	$scope.tests = Test.query();
 	
 }];
+
+var TestDetailsController = ['$scope','EmployeeTest',function($scope, EmployeeTest, Employee) {	
+	
+	$scope.saveEmployee = function(){
+		
+		current_id = $scope.currentEmployee.empId;
+		
+		EmployeeTest.save({empId:current_id},$scope.currentTest,function(test) {
+			var newTest = true;
+			for (i=0;i<$scope.currentEmployee.tests.length;i++) {
+				if($scope.currentEmployee.tests[i].id == test.id) {
+					$scope.currentEmployee.tests[i] == test;
+					newTest = false;
+					break;
+				}
+			}
+			if(newTest) {
+				$scope.currentEmployee.tests.push(test);
+			}
+		});
+	};
+	
+	$scope.deleteTest = function(){		
+		//alert('cid : '+$scope.currentClient._id+', eid : '+$scope.currentEmployee.empId);				
+		EmployeeTest.remove({empId : $scope.currentEmployee.empId, testId : $scope.currentTest.testId});
+	};
+	
+}];

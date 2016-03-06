@@ -66,6 +66,7 @@ app.controller('EmployeeDetailsController', EmployeeDetailsController);
 app.controller('EmployeeDetailsController_One', EmployeeDetailsController_One);
 app.controller('ClientController', ClientController);
 app.controller('ClientDetailsController', ClientDetailsController);
+app.controller('TestDetailsController', TestDetailsController);
 app.controller('AddClientController', AddClientController);
 
 
@@ -73,6 +74,7 @@ app.controller('AddClientController', AddClientController);
 app.factory('Client', Client);
 app.factory('Employee', Employee);
 app.factory('ClientEmployee', ClientEmployee);
+app.factory('EmployeeTest', EmployeeTest);
 app.factory('Test', Test);
 app.factory('EmployeeType', EmployeeType);
 
