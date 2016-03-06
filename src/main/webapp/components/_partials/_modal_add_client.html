@@ -130,6 +130,37 @@
   </div>
 </div>
 
+<!-- Delete Client Modal -->
+<div class="modal modal-client fade" id="deleteClientModal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+        <div class="container">
+          <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+              <h1 class="sub-header">Delete Client</h1>
+              <em class="text-muted">Are you sure deleing the client?</em>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-body">
+        <div class="container">
+          <div class="row">            
+            <div class="col-md-8 col-md-offset-2">
+              <div class="form-group form-group-action">
+                <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#deleteClientSuccessModal" data-dismiss="modal" aria-label="Close" ng-click="deleteClient()">Delete Client</button>
+                <button class="btn btn-link" class="close" data-dismiss="modal" aria-label="Close">Cancel</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- Edit Client Success Modal -->
 <div class="modal modal-client fade" id="editClientSuccessModal" tabindex="-1">
   <div class="modal-dialog">
@@ -164,3 +195,38 @@
     </div>
   </div>
 </div>
+
+
+<!-- Delete Client Success Modal -->
+<div class="modal modal-client fade" id="deleteClientSuccessModal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+        <div class="container">
+          <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+              <h1 class="sub-header">Client deleted successfully!</h1>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-body">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+              <div class="alert alert-success" role="alert">
+                Well done! You've successfully deleted the client.
+              </div>
+              <div class="form-group form-group-action">
+              	<a href="#/clients" class="btn btn-primary">
+          			View Clients          	
+          		</a>                
+                <button class="btn btn-link" data-dismiss="modal" aria-label="Close">Close</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

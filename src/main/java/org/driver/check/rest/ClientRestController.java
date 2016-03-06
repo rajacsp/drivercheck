@@ -83,7 +83,17 @@ public class ClientRestController {
     	clientService.updateClient(client);
     	
     	return client;
-    }    
+    }
+    
+    /*
+	 * possible url:
+	 * 		http://localhost:3030/drivercheck/api/clients/{_id}/update
+	 * 		http://localhost:3030/drivercheck/api/clients/{_id}/update
+	 */
+    @RequestMapping(value = "/clients", method = RequestMethod.DELETE)
+    public @ResponseBody void deleteClient(@RequestBody Client client) {
+    	_log.info("{deleteClient} method");    	
+    }
     
     
     /*
