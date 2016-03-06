@@ -24,9 +24,9 @@ var ClientDetailsController = ['$scope','$rootScope','$stateParams','Client', fu
 	}
 	
 	$scope.deleteClient = function(){
-		client = $scope.currentClient;
-		Client.remove(client);
-	}
+		client = $scope.currentClient;		
+		Client.remove({_id : $scope.currentClient._id});
+	}	
 	
 	$scope.addEmployee = function() {
 		$scope.employeeFormHeader = "Add a new Employee";

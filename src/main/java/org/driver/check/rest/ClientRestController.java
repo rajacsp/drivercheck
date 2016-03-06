@@ -87,14 +87,13 @@ public class ClientRestController {
     
     /*
 	 * possible url:
-	 * 		http://localhost:3030/drivercheck/api/clients/{_id}/update
-	 * 		http://localhost:3030/drivercheck/api/clients/{_id}/update
+	 * 		http://localhost:3030/drivercheck/api/clients/
 	 */
     @RequestMapping(value = "/clients", method = RequestMethod.DELETE)
-    public @ResponseBody void deleteClient(@RequestBody Client client) {
+    public @ResponseBody void deleteClient(@RequestParam(value="_id") String _id) {
+    	clientService.deleteClientBy_id(_id);
     	_log.info("{deleteClient} method");    	
-    }
-    
+    }    
     
     /*
      * POST (add/edit employee)
