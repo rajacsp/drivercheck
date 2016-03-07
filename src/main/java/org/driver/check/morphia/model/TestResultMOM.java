@@ -1,13 +1,19 @@
-package org.driver.check.model;
+package org.driver.check.morphia.model;
 
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.driver.check.model.TestResultType;
 import org.driver.check.util.RandomDC;
+import org.mongodb.morphia.annotations.Embedded;
 import org.springframework.core.style.ToStringCreator;
 
-public class TestResult{
+import lombok.Data;
+
+@Embedded
+@Data
+public class TestResultMOM{
 	
 	/*
 	 * 
@@ -24,50 +30,26 @@ public class TestResult{
     
     private TestResultType result;
     
-    public TestResultType getResult(){
-    	return this.result;
-    }
-    
-    public void setResult(TestResultType result){
-    	this.result = result;
-    }
-    
-	public Date getTestTakenDate(){
-		return testTakenDate;
-	}
-
-	public void setTestTakenDate(Date testTakenDate) {
-		this.testTakenDate = testTakenDate;
-	}
-	
-	public int getTestId(){
-		return testId;
-	}
-
-	public void setTestId(int testId) {
-		this.testId = testId;
+    public TestResultMOM() {
 	}
     
-    public TestResult() {
-	}
-    
-    public TestResult(final int testId, final Date testTakenDate) {
+    public TestResultMOM(final int testId, final Date testTakenDate) {
     	this.testId = testId;
     	this.testTakenDate = testTakenDate;
     }
     
-    public TestResult(final int testId, final Date testTakenDate, TestResultType result) {
+    public TestResultMOM(final int testId, final Date testTakenDate, TestResultType result) {
     	this.testId = testId;
     	this.testTakenDate = testTakenDate;
     	this.result = result;
     }
     
-    public static List<TestResult> getRandomTests(){
+    public static List<TestResultMOM> getRandomTests(){
     	int max = RandomDC.getRandomInt(1, 5);
     	max = 2;
-    	List<TestResult> tests = new LinkedList<TestResult>();
+    	List<TestResultMOM> tests = new LinkedList<TestResultMOM>();
     	for(int i = 0;i< max; i++){
-    		tests.add(new TestResult(RandomDC.getRandomInt(), new Date(), TestResultType.PASS));
+    		tests.add(new TestResultMOM(RandomDC.getRandomInt(), new Date(), TestResultType.PASS));
     	}
     	return tests;
     }

@@ -16,11 +16,11 @@
           <div class="caption">                       
             
             <p>
-            	Passed Tests : {{ getTestDetails()[0] }}            	
+            	Passed Tests : {{ getTestDetails()[1] }}            	
             	<br>            	
-            	Total Tests : {{ getTestDetails()[1] }}            	
+            	Total Tests : {{ getTestDetails()[0] }}            	
             	<br>            	
-            	Pass % : {{  (getTestDetails()[0] / getTestDetails()[1] ) * 100   }}            	            	
+            	Pass % : {{  (getTestDetails()[1] / getTestDetails()[0] ) * 100   }}            	            	
             </p>
             
           </div>

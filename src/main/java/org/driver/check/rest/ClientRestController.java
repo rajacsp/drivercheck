@@ -16,6 +16,7 @@ import org.driver.check.model.Employee;
 import org.driver.check.model.TestResult;
 import org.driver.check.morphia.model.ClientMOM;
 import org.driver.check.morphia.model.EmployeeMOM;
+import org.driver.check.morphia.service.ClientMorphiaService;
 import org.driver.check.service.ClientService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,17 +36,12 @@ public class ClientRestController {
 	
 	private static Logger _log = LoggerFactory.getLogger(ClientRestController.class);
 
-    private final ClientService clientService;
-
-    /*
-	 * possible url:
-	 * 		http://localhost:3030/drivercheck/api/client/
-	 */
-    @Autowired
-    public ClientRestController(ClientService clientService) {
-        this.clientService = clientService;
-    }
-
+	@Autowired
+    private ClientService clientService;
+    
+	@Autowired
+    private ClientMorphiaService clientMorphiaService;
+   
     /*
 	 * possible url:
 	 * 		http://localhost:3030/drivercheck/api/clients/
@@ -217,7 +213,28 @@ public class ClientRestController {
     	
     	_log.info("{saveTest} empId : "+empId+", test : "+test);
     	
-    	clientService.updateTest(empId, test);
+    	clientMorphiaService.addTest("1", empId, test);
+    }
+    
+    /*
+     * GET (add/edit test)
+     * 
+	 * possible url:
+	 * 		http://localhost:3030/drivercheck/api/clients/employees/{empId}/tests
+	 */    
+    @RequestMapping(value = "/clients/employees/{empId}/tests", method = RequestMethod.GET)
+    public @ResponseBody void saveTestByGet(    		
+    		@PathVariable("empId") String empId,
+    		@RequestBody TestResult test
+    	) {
+    	
+    	_log.info("{saveTest} empId : "+empId+", test : "+test);
+    	
+    	//clientService.updateTest(empId, test);
+    	
+    	clientMorphiaService.addTest("1", empId, test);		
+		
+		//System.out.println(results);
     }
     
     /*

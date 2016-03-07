@@ -2,6 +2,7 @@ package org.driver.check.morphia.model;
 
 import java.util.List;
 
+import org.mongodb.morphia.annotations.Embedded;
 import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Id;
 
@@ -20,6 +21,7 @@ public class ClientMOM {
 
     private String city;
     
+    @Embedded
     private List<EmployeeMOM> employees;    
     
     public ClientMOM() {

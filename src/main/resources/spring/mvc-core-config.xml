@@ -19,7 +19,7 @@
         - POJOs labeled with the @Controller and @Service annotations are auto-detected.
     -->
     <context:component-scan
-            base-package="org.driver.check.rest"/>
+            base-package="org.driver.check"/>
 
 
 	<bean id="objectMapper" class="org.springframework.http.converter.json.Jackson2ObjectMapperFactoryBean" 

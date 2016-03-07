@@ -18,12 +18,15 @@ import org.driver.check.model.Employee;
 import org.driver.check.model.TestResult;
 import org.driver.check.morphia.model.ClientMOM;
 import org.driver.check.morphia.model.EmployeeMOM;
+import org.driver.check.morphia.model.TestResultMOM;
 import org.driver.check.repository.ClientRepository;
 import org.driver.check.repository.CustomerRepository;
 import org.driver.check.util.Names;
 import org.driver.check.util.RandomDC;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.Morphia;
+import org.mongodb.morphia.query.UpdateOperations;
+import org.mongodb.morphia.query.UpdateResults;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataAccessException;
@@ -44,6 +47,7 @@ import com.mongodb.Mongo;
 import com.mongodb.MongoClient;
 import com.mongodb.WriteResult;
 
+
 @Service("clientService")
 public class ClientServiceImpl implements ClientService, Const {
 	
@@ -55,10 +59,6 @@ public class ClientServiceImpl implements ClientService, Const {
 	@Resource
 	private ClientRepository clientRepository;
 	
-	//@Autowired //not working because of missing bean
-	//@Qualifier("ClientRepositoryCustomImpl")
-	//private ClientRepositoryCustom clientRepositoryCustom;
-    
     @Override
     @Transactional(readOnly = true)
     public Collection<Client> findAll() throws DataAccessException {    	
@@ -333,6 +333,7 @@ public class ClientServiceImpl implements ClientService, Const {
     
     @Override
     public void addTest(final String _id, final String empId, final TestResult test){
+    	/*
     	Mongo mongo = new Mongo("localhost", 27017);
   	  	DB db = mongo.getDB(MONGO_DB_NAME);  	  	
     	DBCollection collection = db.getCollection(COLLECTION_BASE);
@@ -343,6 +344,7 @@ public class ClientServiceImpl implements ClientService, Const {
 		
 		BasicDBObject searchQuery = new BasicDBObject().append("_id", _id);		
 		collection.update(searchQuery, newDocument);
+		*/    	
     }
     
     // update test is not working

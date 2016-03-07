@@ -55,17 +55,22 @@ var TestPassController = ['$scope','$rootScope','$stateParams','Client', functio
 	    			continue;
 	    		
 	    		totalTests += employee.tests.length;
+	    		
+	    		//console.log('trap : '+totalTests);
 	        
 	    		for(var j=0; j<employee.tests.length;j++){
 	    			var test = employee.tests[j];
 	    			var testResult = test.result;        	
 	        	
-	    			if(testResult == true){
-	    				totalTestPassed ++;
+	    			if(testResult ==  'PASS'){
+	    				totalTestPassed++;
 	    			}
-	    		}	        
+	    		}
 	    	}
 	    }	   		   	
+	    
+	    //console.log('totalTests : '+totalTests+', totalTestPassed  : '+totalTestPassed);
+	    
 	   	var tests = [totalTests, totalTestPassed];
 	   	return tests;
 	}	

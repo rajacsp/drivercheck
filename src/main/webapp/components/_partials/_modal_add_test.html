@@ -28,8 +28,11 @@
                 <input type="text" class="form-control" id="testId" data-ng-model="currentTest.testId">
               </div>
               <div class="form-group">
-                <label for="lastName">Result</label>
-                <input type="text" class="form-control" id="lastName" data-ng-model="currentTest.result">
+                <label for="result">Result</label>                
+                <select class="form-control" id="result" data-ng-model="currentTest.result">
+                	<option value="FAIL">FAIL</option>
+                	<option value="PASS">PASS</option>
+                </select>
               </div>              
               <div class="form-group form-group-action">
                 <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#addTestSuccessModal" data-dismiss="modal" aria-label="Close" data-ng-click="saveTest()">Save</button>
