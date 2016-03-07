@@ -59,6 +59,12 @@ app.config(['stateHelperProvider','$urlRouterProvider','$urlMatcherFactoryProvid
 		templateUrl: "components/tests/test_results.html",
 		controller: "TestPassController",
 		data: { requireLogin : true }
+	}).state({
+		name: "testsAll",
+		url: "/tests/all",
+		templateUrl: "components/tests/test_results.html",
+		controller: "TestsAllController",
+		data: { requireLogin : true }
 	});
 
 } ]);
@@ -75,6 +81,7 @@ app.controller('ClientController', ClientController);
 app.controller('TestDetailsController', TestDetailsController);
 app.controller('AddClientController', AddClientController);
 app.controller('TestPassController', TestPassController);
+app.controller('TestsAllController', TestsAllController);
 
 
 /** Services **/

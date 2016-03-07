@@ -573,4 +573,27 @@ public class ClientRestController {
     	
     	return map;
     }
+    
+    /*
+     * show all tests
+     * 
+     */
+    @RequestMapping(value = "/tests/all", method = RequestMethod.GET)
+    public @ResponseBody Collection<TestResult> showAllTests() {
+    	Collection<Client> clients = this.clientService.findAll();
+    	
+    	List<TestResult> testAll = new LinkedList<TestResult>();
+    	for (Client client : clients) {
+			List<Employee> employees = client.getEmployees();
+			
+			for (Employee employee : employees) {
+				List<TestResult> tests = employee.getTests();
+				testAll.addAll(tests);				
+			}
+		}
+    	
+    	return testAll;
+    	
+        //return this.clientService.findAll();
+    }
 }

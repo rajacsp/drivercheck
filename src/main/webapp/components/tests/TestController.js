@@ -71,7 +71,14 @@ var TestPassController = ['$scope','$rootScope','$stateParams','Client', functio
 	    
 	    //console.log('totalTests : '+totalTests+', totalTestPassed  : '+totalTestPassed);
 	    
-	   	var tests = [totalTests, totalTestPassed];
+	   	var tests = {"total" : totalTests, "passed" : totalTestPassed};
 	   	return tests;
 	}	
+}];
+
+
+var TestsAllController = ['$scope','$rootScope','$stateParams','Client', function($scope, $rootScope, $stateParams, Client) {
+	var currentId = $stateParams.id;
+	$scope.currentClient = Client.get($stateParams);	
+	
 }];
