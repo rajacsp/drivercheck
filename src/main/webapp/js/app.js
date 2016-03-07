@@ -51,7 +51,7 @@ app.config(['stateHelperProvider','$urlRouterProvider','$urlMatcherFactoryProvid
 		name: "employeeDetails",
 		url: "/employees/:empId",
 		templateUrl: "components/employees/employee_details.html",
-		controller: "EmployeeDetailsController_One",
+		controller: "EmployeeDetailsController",
 		data: {requireLogin : true}
 	});
 
@@ -63,8 +63,8 @@ app.controller('DashboardController', DashboardController);
 app.controller('ClientDetailsController', ClientDetailsController);
 app.controller('TestController', TestController);
 app.controller('EmployeeController', EmployeeController);
-app.controller('EmployeeDetailsController', EmployeeDetailsController);
-app.controller('EmployeeDetailsController_One', EmployeeDetailsController_One);
+app.controller('EmployeeSaveController', EmployeeSaveController); // to save employee (add/edit/delete)
+app.controller('EmployeeDetailsController', EmployeeDetailsController); // to manipulate test prefilled details
 app.controller('ClientController', ClientController);
 app.controller('TestDetailsController', TestDetailsController);
 app.controller('AddClientController', AddClientController);

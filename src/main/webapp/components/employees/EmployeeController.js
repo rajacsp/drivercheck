@@ -10,12 +10,11 @@ var EmployeeController = ['$scope', 'Employee', function($scope, Employee) {
 
 }];
 
-var EmployeeDetailsController = ['$scope','ClientEmployee',function($scope, ClientEmployee,Employee) {	
+var EmployeeSaveController = ['$scope','ClientEmployee',function($scope, ClientEmployee,Employee) {	
 	
-	$scope.saveEmployee = function(){
-		
-		current_id = $scope.currentClient._id;
-		
+	// save employee [AFTER-SAVE]
+	$scope.saveEmployee = function(){		
+		current_id = $scope.currentClient._id;		
 		ClientEmployee.save({_id:current_id},$scope.currentEmployee,function(employee) {
 			var newEmployee = true;
 			for (i=0;i<$scope.currentClient.employees.length;i++) {
@@ -31,6 +30,7 @@ var EmployeeDetailsController = ['$scope','ClientEmployee',function($scope, Clie
 		});
 	};
 	
+	// delete employee [AFTER-SAVE]
 	$scope.deleteEmployee = function(){		
 		//alert('cid : '+$scope.currentClient._id+', eid : '+$scope.currentEmployee.empId);				
 		ClientEmployee.remove({_id : $scope.currentClient._id, empId : $scope.currentEmployee.empId});
@@ -38,12 +38,51 @@ var EmployeeDetailsController = ['$scope','ClientEmployee',function($scope, Clie
 	
 }];
 
-var EmployeeDetailsController_One = ['$scope','$rootScope','$stateParams','Employee', function($scope, $rootScope, $stateParams, Employee) {	
+/*
+ * Client Controller will act as as PRE-FILLED CONTAINER for test and AFTER-SAVE CONTAINER for employee
+ * 
+ * PRE FILLED CONTAINER:
+ * 		manipulate data
+ * 
+ * AFTER SAVE CONTAINTER:
+ * 		action after add/edit/delete
+ * 
+ */
+var EmployeeDetailsController = ['$scope','$rootScope','$stateParams','Employee', function($scope, $rootScope, $stateParams, Employee) {	
 	
+	var currentId = $stateParams.id;
 	$scope.currentEmployee = Employee.get($stateParams);
 	
-	$scope.addTestResult = function() {
-		$scope.testResultFormHeader = "Add a new Test";
+	// add test [PRE-FILLED MANIPULATOR]
+	$scope.addTest = function() {
+		$scope.testFormHeader = "Add a new Test";
 		$scope.currentTestResult = {type:{}};
 	}
+	
+	// edit test [PRE-FILLED MANIPULATOR]
+	$scope.editTest = function(id) {		
+		$scope.testFormHeader = "Edit Test";
+		for(i = 0;i < $scope.currentEmployee.tests.length; i++) {			
+			if($scope.currentEmployee.tests[i].testId == id) {
+				$scope.currentTest = $scope.currentEmployee.tests[i];
+				break;
+			}
+		}
+	};
+	
+	// delete test [PRE-FILLED MANIPULATOR]
+	$scope.deleteTest = function(id) {		
+		$scope.testFormHeader = "Delete Test";
+		for(i = 0;i < $scope.currentEmployee.tests.length; i++) {
+			
+			// ignore null
+			if($scope.currentEmployee.tests[i] == null)
+				continue;
+			
+			if($scope.currentEmployee.tests[i].testId == id) {
+				$scope.currentTest = $scope.currentEmployee.tests[i];
+				break;
+			}
+		}
+	};
 }];
