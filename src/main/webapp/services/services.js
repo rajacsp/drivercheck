@@ -19,8 +19,4 @@ var Test = ['$resource','context', function($resource, context) {
 }];
 
 
-var EmployeeType = ['$resource','context', function($resource, context) {
-	return $resource(context + '/api/employees/types');
-}];
-
 
