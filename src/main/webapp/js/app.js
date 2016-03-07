@@ -60,12 +60,12 @@ app.config(['stateHelperProvider','$urlRouterProvider','$urlMatcherFactoryProvid
 /** Controllers **/
 app.controller('MainController', MainController);
 app.controller('DashboardController', DashboardController);
+app.controller('ClientDetailsController', ClientDetailsController);
 app.controller('TestController', TestController);
 app.controller('EmployeeController', EmployeeController);
 app.controller('EmployeeDetailsController', EmployeeDetailsController);
 app.controller('EmployeeDetailsController_One', EmployeeDetailsController_One);
 app.controller('ClientController', ClientController);
-app.controller('ClientDetailsController', ClientDetailsController);
 app.controller('TestDetailsController', TestDetailsController);
 app.controller('AddClientController', AddClientController);
 
