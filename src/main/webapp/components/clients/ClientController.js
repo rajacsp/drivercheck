@@ -18,7 +18,7 @@ var ClientController = ['$scope','$state','Client',function($scope,$state,Client
  * 		action after add/edit/delete
  * 
  */
-var ClientDetailsController = ['$scope','$rootScope','$stateParams','Client', function($scope,$rootScope,$stateParams,Client) {
+var ClientDetailsController = ['$scope','$rootScope','$stateParams','Client', function($scope, $rootScope, $stateParams, Client) {
 
 	var currentId = $stateParams.id;
 	var nextId = parseInt($stateParams.id) + 1;
@@ -27,6 +27,8 @@ var ClientDetailsController = ['$scope','$rootScope','$stateParams','Client', fu
 	$scope.prevClient = Client.get({id:prevId});
 	$scope.nextClient = Client.get({id:nextId});
 	$scope.currentClient = Client.get($stateParams);
+	
+	
 
 	// save client [AFTER-SAVE]
 	$scope.saveClient = function(){
@@ -71,7 +73,22 @@ var ClientDetailsController = ['$scope','$rootScope','$stateParams','Client', fu
 				break;
 			}
 		}
-	};
+	};	
+	
+	$scope.getTotalTests = function(){
+	    var totalTests = 0;
+	    if(typeof $scope.currentClient.employees != "undefined"){
+	    	for(var i = 0; i < $scope.currentClient.employees.length; i++){
+	    		var employee = $scope.currentClient.employees[i];
+	        
+	    		if(employee == null || employee.tests == null)
+	    			continue;
+	    		
+	    		totalTests += employee.tests.length;	        
+	    	}
+	    }
+	   	return totalTests;
+	}
 
 }];
 

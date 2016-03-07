@@ -8,7 +8,7 @@
         <div class="pull-right stats stats-md">
           <ul>
             <li>{{currentClient.employees.length || 0}}<span>Employees</span></li>
-            <li>{{currentClient.tests.length || 0}}<span>Tests</span></li>
+            <li>{{getTotalTests() || 0}}<span>Tests</span></li>
           </ul>
         </div>
         <h1 class="h3" data-ng-bind="currentClient.name"></h1>
