@@ -38,3 +38,42 @@ var TestDetailsController = ['$scope','EmployeeTest',function($scope, EmployeeTe
 	};
 	
 }];
+
+
+var TestPassController = ['$scope','$rootScope','$stateParams','Client', function($scope,$rootScope,$stateParams,Client) {
+	var currentId = $stateParams.id;
+	$scope.currentClient = Client.get($stateParams);
+	
+	$scope.getPassedTests = function(){	    
+	    var totalTestPassed = 0;
+	    for(var i = 0; i < $scope.currentClient.employees.length; i++){
+	        var employee = $scope.currentClient.employees[i];
+	        
+	        if(employee == null || employee.tests == null)
+	        	continue;
+	        
+	        for(var j=0; j<employee.tests.length;j++){
+	        	var test = employee.tests[j];
+	        	var testResult = test.result;        	
+	        	
+	        	if(testResult == true){
+	        		totalTestPassed ++;
+	        	}
+	        }	        
+	    }
+	    return totalTestPassed;
+	}
+	
+	$scope.getTotalTests = function(){	    
+	    var totalTests = 0;
+	    for(var i = 0; i < $scope.currentClient.employees.length; i++){
+	        var employee = $scope.currentClient.employees[i];
+	        
+	        if(employee == null || employee.tests == null)
+	        	continue;
+	        
+	        totalTests += employee.tests.length;	        
+	    }
+	    return totalTests;
+	}	
+}];

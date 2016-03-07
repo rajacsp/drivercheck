@@ -53,6 +53,12 @@ app.config(['stateHelperProvider','$urlRouterProvider','$urlMatcherFactoryProvid
 		templateUrl: "components/employees/employee_details.html",
 		controller: "EmployeeDetailsController",
 		data: {requireLogin : true}
+	}).state({
+		name: "findPassingRates",
+		url: "/testresults/:id",
+		templateUrl: "components/tests/test_results.html",
+		controller: "TestPassController",
+		data: { requireLogin : true }
 	});
 
 } ]);
@@ -68,6 +74,7 @@ app.controller('EmployeeDetailsController', EmployeeDetailsController); // to ma
 app.controller('ClientController', ClientController);
 app.controller('TestDetailsController', TestDetailsController);
 app.controller('AddClientController', AddClientController);
+app.controller('TestPassController', TestPassController);
 
 
 /** Services **/

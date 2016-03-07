@@ -82,6 +82,16 @@ public class ClientRestController {
         return clientService.findEmployeeByEmpId(empId);        
     }
     
+    
+    /*
+	 * possible url:
+	 * 		http://localhost:3030/drivercheck/api/testresults/{_id}
+	 */
+    @RequestMapping(value = "/testresults/{_id}", method = RequestMethod.GET)
+    public @ResponseBody Client findTestResults(@PathVariable("_id") String _id) {
+        return clientService.findBy_id(_id);        
+    }    
+    
     /*
 	 * possible url:
 	 * 		http://localhost:3030/drivercheck/api/employees/{firstName}

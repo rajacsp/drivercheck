@@ -1,0 +1,36 @@
+
+
+<!-- Employees -->
+<section id="employees" class="sections sections-narrow">
+  <div class="container">
+    <div class="action-wrappers pull-right">
+      <button class="btn btn-primary pull-right action-item" data-toggle="modal" data-target="#employeeModal" data-ng-click="addEmployee()">
+        <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> Add New Employee
+      </button>      
+    </div>
+    <h2 class="sub-header" data-ng-bind="currentClient.name + '\'s Test Results '"></h2>
+    <div class="row thumbnail-wrapper">
+      <div data-ng-repeat="employee in currentClient.employees" ng-show={{employee}} class="col-md-3">
+      	
+        <div class="thumbnail">          
+          <div class="caption">                       
+            
+            <p>
+            	Passed Tests : {{ getPassedTests() }}
+            	
+            	<br>
+            	
+            	Total Tests : {{ getTotalTests() }}
+            	
+            	<br>
+            	
+            	Pass % : {{ (getPassedTests() / getTotalTests()) * 100  }}            	            	
+            </p>
+            
+          </div>          
+          
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
