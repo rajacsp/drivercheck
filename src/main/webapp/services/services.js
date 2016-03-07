@@ -3,7 +3,6 @@ var Client = ['$resource','context', function($resource, context) {
 }];
 
 var ClientEmployee = ['$resource','context', function($resource, context) {
-	//alert('test');
 	return $resource(context + '/api/clients/:_id/employees', {_id : '@_id'});
 }];
 
@@ -12,8 +11,7 @@ var Employee = ['$resource','context', function($resource, context) {
 }];
 
 var EmployeeTest = ['$resource','context', function($resource, context) {
-	//alert('test');
-	return $resource(context + '/api/clients/:_id/employees/:empId/tests', {_id : '@_id', empId : '@empId'});
+	return $resource(context + '/api/clients/employees/:empId/tests', {empId : '@empId'});
 }];
 
 var Test = ['$resource','context', function($resource, context) {

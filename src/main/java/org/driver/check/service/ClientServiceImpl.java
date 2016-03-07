@@ -345,6 +345,23 @@ public class ClientServiceImpl implements ClientService, Const {
 		collection.update(searchQuery, newDocument);
     }
     
+    // update test is not working
+    @Override
+    public void updateTest(final String empId, final TestResult test){
+    	Mongo mongo = new Mongo("localhost", 27017);
+  	  	DB db = mongo.getDB(MONGO_DB_NAME);  	  	
+    	DBCollection collection = db.getCollection(COLLECTION_BASE);
+    	
+		BasicDBObject newDocument = new BasicDBObject();
+		
+		newDocument.append("$addToSet", new BasicDBObject().append("tests", test));	
+		
+		BasicDBObject searchQuery = new BasicDBObject().append("employee.empId", empId);		
+		WriteResult result = collection.update(searchQuery, newDocument);
+		
+		_log.info("{updateTest} result : "+result);
+    }    
+    
     @Override
     public void saveEmployee(final String _id, final Employee employee){
     	Mongo mongo = new Mongo("localhost", 27017);

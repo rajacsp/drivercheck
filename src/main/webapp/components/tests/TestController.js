@@ -12,8 +12,8 @@ var TestController = ['$scope','$http','Test', function ($scope, $http, Test) {
 
 var TestDetailsController = ['$scope','EmployeeTest',function($scope, EmployeeTest, Employee) {	
 	
-	$scope.saveEmployee = function(){
-		
+	// save test [AFTER-SAVE]
+	$scope.saveTest = function(){		
 		current_id = $scope.currentEmployee.empId;
 		
 		EmployeeTest.save({empId:current_id},$scope.currentTest,function(test) {
@@ -31,8 +31,9 @@ var TestDetailsController = ['$scope','EmployeeTest',function($scope, EmployeeTe
 		});
 	};
 	
+	// delete employee [AFTER-SAVE]
 	$scope.deleteTest = function(){		
-		//alert('cid : '+$scope.currentClient._id+', eid : '+$scope.currentEmployee.empId);				
+		alert('empId : '+$scope.currentEmployee.empId+', testId : '+$scope.currentTest.testId);				
 		EmployeeTest.remove({empId : $scope.currentEmployee.empId, testId : $scope.currentTest.testId});
 	};
 	

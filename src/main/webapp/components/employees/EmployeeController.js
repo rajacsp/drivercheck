@@ -10,6 +10,13 @@ var EmployeeController = ['$scope', 'Employee', function($scope, Employee) {
 
 }];
 
+/*
+ * EmployeeSaveController will act as AFTER-SAVE CONTAINER for employee
+ * 
+ * AFTER SAVE CONTAINTER:
+ * 		action after add/edit/delete
+ * 
+ */
 var EmployeeSaveController = ['$scope','ClientEmployee',function($scope, ClientEmployee,Employee) {	
 	
 	// save employee [AFTER-SAVE]
@@ -39,13 +46,10 @@ var EmployeeSaveController = ['$scope','ClientEmployee',function($scope, ClientE
 }];
 
 /*
- * Client Controller will act as as PRE-FILLED CONTAINER for test and AFTER-SAVE CONTAINER for employee
+ * EmployeeDetailsController will act as PRE-FILLED CONTAINER for test
  * 
  * PRE FILLED CONTAINER:
  * 		manipulate data
- * 
- * AFTER SAVE CONTAINTER:
- * 		action after add/edit/delete
  * 
  */
 var EmployeeDetailsController = ['$scope','$rootScope','$stateParams','Employee', function($scope, $rootScope, $stateParams, Employee) {	

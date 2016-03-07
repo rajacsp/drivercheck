@@ -197,18 +197,17 @@ public class ClientRestController {
      * POST (add/edit test)
      * 
 	 * possible url:
-	 * 		http://localhost:3030/drivercheck/api/clients/{_id}/{empId}/
+	 * 		http://localhost:3030/drivercheck/api/clients/employees/{empId}/tests
 	 */    
-    @RequestMapping(value = "/clients/{_id}/{empId}/tests", method = RequestMethod.POST)
-    public @ResponseBody void saveTest(
-    		@PathVariable("_id") String _id,
+    @RequestMapping(value = "/clients/employees/{empId}/tests", method = RequestMethod.POST)
+    public @ResponseBody void saveTest(    		
     		@PathVariable("empId") String empId,
     		@RequestBody TestResult test
     	) {
     	
-    	_log.info("{saveTest} _id : "+_id+", empId : "+empId);
+    	_log.info("{saveTest} empId : "+empId+", test : "+test);
     	
-    	List<TestResult> tests = TestResult.getRandomTests();
+    	clientService.updateTest(empId, test);
     }
     
     /*

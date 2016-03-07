@@ -65,6 +65,8 @@ public interface ClientService {
     
     void addTest(final String _id, final String empId, final TestResult test);
     
+    void updateTest(final String empId, final TestResult test);
+    
     // test method
     void addCustomer();
 }
