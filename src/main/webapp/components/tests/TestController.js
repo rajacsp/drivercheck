@@ -44,36 +44,29 @@ var TestPassController = ['$scope','$rootScope','$stateParams','Client', functio
 	var currentId = $stateParams.id;
 	$scope.currentClient = Client.get($stateParams);
 	
-	$scope.getPassedTests = function(){	    
+	$scope.getTestDetails = function(){		
 	    var totalTestPassed = 0;
-	    for(var i = 0; i < $scope.currentClient.employees.length; i++){
-	        var employee = $scope.currentClient.employees[i];
-	        
-	        if(employee == null || employee.tests == null)
-	        	continue;
-	        
-	        for(var j=0; j<employee.tests.length;j++){
-	        	var test = employee.tests[j];
-	        	var testResult = test.result;        	
-	        	
-	        	if(testResult == true){
-	        		totalTestPassed ++;
-	        	}
-	        }	        
-	    }
-	    return totalTestPassed;
-	}
-	
-	$scope.getTotalTests = function(){	    
 	    var totalTests = 0;
-	    for(var i = 0; i < $scope.currentClient.employees.length; i++){
-	        var employee = $scope.currentClient.employees[i];
+	    if(typeof $scope.currentClient.employees != "undefined"){
+	    	for(var i = 0; i < $scope.currentClient.employees.length; i++){
+	    		var employee = $scope.currentClient.employees[i];
 	        
-	        if(employee == null || employee.tests == null)
-	        	continue;
+	    		if(employee == null || employee.tests == null)
+	    			continue;
+	    		
+	    		totalTests += employee.tests.length;
 	        
-	        totalTests += employee.tests.length;	        
-	    }
-	    return totalTests;
+	    		for(var j=0; j<employee.tests.length;j++){
+	    			var test = employee.tests[j];
+	    			var testResult = test.result;        	
+	        	
+	    			if(testResult == true){
+	    				totalTestPassed ++;
+	    			}
+	    		}	        
+	    	}
+	    }	   		   	
+	   	var tests = [totalTests, totalTestPassed];
+	   	return tests;
 	}	
 }];

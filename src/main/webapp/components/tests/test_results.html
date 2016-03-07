@@ -10,25 +10,20 @@
     </div>
     <h2 class="sub-header" data-ng-bind="currentClient.name + '\'s Test Results '"></h2>
     <div class="row thumbnail-wrapper">
-      <div data-ng-repeat="employee in currentClient.employees" ng-show={{employee}} class="col-md-3">
+      <div class="col-md-3">
       	
         <div class="thumbnail">          
           <div class="caption">                       
             
             <p>
-            	Passed Tests : {{ getPassedTests() }}
-            	
-            	<br>
-            	
-            	Total Tests : {{ getTotalTests() }}
-            	
-            	<br>
-            	
-            	Pass % : {{ (getPassedTests() / getTotalTests()) * 100  }}            	            	
+            	Passed Tests : {{ getTestDetails()[0] }}            	
+            	<br>            	
+            	Total Tests : {{ getTestDetails()[1] }}            	
+            	<br>            	
+            	Pass % : {{  (getTestDetails()[0] / getTestDetails()[1] ) * 100   }}            	            	
             </p>
             
-          </div>          
-          
+          </div>
         </div>
       </div>
     </div>
