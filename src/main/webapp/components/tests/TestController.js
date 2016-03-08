@@ -77,8 +77,14 @@ var TestPassController = ['$scope','$rootScope','$stateParams','Client', functio
 }];
 
 
-var TestsAllController = ['$scope','$rootScope','$stateParams','Client', function($scope, $rootScope, $stateParams, Client) {
-	var currentId = $stateParams.id;
-	$scope.currentClient = Client.get($stateParams);	
+var TestsAllController = ['$scope', 'Test',function($scope, Test) {
 	
+	$scope.tests = Test.query();
+	
+	$scope.predicate = 'testId';
+	$scope.reverse = true;
+	$scope.order = function(predicate) {
+	    $scope.reverse = ($scope.predicate === predicate) ? !$scope.reverse : false;
+	    $scope.predicate = predicate;
+	};
 }];

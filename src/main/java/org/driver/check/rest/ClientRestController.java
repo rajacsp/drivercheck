@@ -578,7 +578,7 @@ public class ClientRestController {
      * show all tests
      * 
      */
-    @RequestMapping(value = "/tests/all", method = RequestMethod.GET)
+    @RequestMapping(value = "/tests", method = RequestMethod.GET)
     public @ResponseBody Collection<TestResult> showAllTests() {
     	Collection<Client> clients = this.clientService.findAll();
     	
@@ -591,9 +591,6 @@ public class ClientRestController {
 				testAll.addAll(tests);				
 			}
 		}
-    	
     	return testAll;
-    	
-        //return this.clientService.findAll();
     }
 }

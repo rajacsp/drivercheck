@@ -62,7 +62,7 @@ app.config(['stateHelperProvider','$urlRouterProvider','$urlMatcherFactoryProvid
 	}).state({
 		name: "testsAll",
 		url: "/tests/all",
-		templateUrl: "components/tests/test_results.html",
+		templateUrl: "components/tests/test_all.html",
 		controller: "TestsAllController",
 		data: { requireLogin : true }
 	});

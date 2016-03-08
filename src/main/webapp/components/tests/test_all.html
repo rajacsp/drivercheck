@@ -1,23 +1,55 @@
 
+<style>
+.sortorder:after {
+  content: '\25b2';
+}
+.sortorder.reverse:after {
+  content: '\25bc';
+}
+</style>
 
 <!-- Employees -->
 <section id="employees" class="sections sections-narrow">
   <div class="container">
     <div class="action-wrappers pull-right">            
     </div>
-    <h2 class="sub-header" data-ng-bind="currentClient.name + '\'s Tests '"></h2>
-    <div class="row thumbnail-wrapper">
-      <div class="col-md-3">
+    <h2 class="sub-header" data-ng-bind=""></h2>
+    <div class="row">
+      <div >
       	
-        <div class="thumbnail">          
-          <div class="caption">                       
-            
-            <p>
-            	      	            	
-            </p>
-            
-          </div>
-        </div>
+      	<h3>Tests</h3>
+      	
+      	<!-- 
+      	<div class="action-item">
+        	Sort by
+        	<div class="btn-group">
+          	<a href="#" class="btn btn-default"><span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span></a>
+          	<a href="#" class="btn btn-default"><span class="glyphicon glyphicon-arrow-down" aria-hidden="true"></span></a>
+        	</div>
+      	</div>
+      	 -->
+      	
+      	<a style="width:150px;" href="#" data-ng-click="order('testTakenDate')"  class="btn btn-primary ">
+	    	Sort By Date
+	    	<span aria-hidden="true" class="glyphicon glyphicon-chevron-right"></span>
+    	</a>
+    	<span class="sortorder" data-ng-show="predicate === 'testTakenDate'" data-ng-class="{reverse:reverse}"></span>
+      	
+      	<br><br>
+      	<table data-ng-repeat="test in tests | orderBy:predicate:reverse">      		
+      		<tr>
+      			<td data-ng-bind="test.testId">
+      				test
+      			</td>
+      			<td>
+      				{{test.testTakenDate | date:'yyyy-MM-dd HH:mm:ss'}}
+      			</td>
+				<td data-ng-bind="test.result">
+      				test
+      			</td>
+      		</tr>
+      	</table>
+        
       </div>
     </div>
   </div>

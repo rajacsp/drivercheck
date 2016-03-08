@@ -1,0 +1,18 @@
+*, *::after, *::before {
+    box-sizing: border-box;
+}
+*, *::after, *::before {
+    box-sizing: border-box;
+}
+tbody tr:nth-child(2n-1) {
+    background-color: #f5f5f5;
+    transition: all 0.125s ease-in-out 0s;
+}
+*, *::after, *::before {
+    box-sizing: border-box;
+}
+
+body {
+    color: #7c8d87;
+    font-family: "Lato",Arial,sans-serif;
+}						
