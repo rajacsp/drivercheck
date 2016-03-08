@@ -24,6 +24,8 @@ public interface ClientService {
     
     EmployeeMOM findEmployeeByEmpId(String empId) throws DataAccessException;
     
+    List<EmployeeMOM> findEmployees() throws DataAccessException;
+    
     List<EmployeeMOM> findEmployeeByEmployeeFirstName(String empId) throws DataAccessException;
     
     List<ClientMOM> findByEmployeeFirstName(String employeeFirstName) throws DataAccessException;

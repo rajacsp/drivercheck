@@ -133,6 +133,26 @@ public class ClientServiceImpl implements ClientService, Const {
     
     @Override
     @Transactional(readOnly = true)
+    public List<EmployeeMOM> findEmployees() throws DataAccessException {
+    	final Morphia morphia = new Morphia();
+
+		morphia.mapPackage(MORPHIA_PACKAGE_BASE);
+
+		MongoClient mongo = new MongoClient("localhost", 27017);		
+		final Datastore datastore = morphia.createDatastore(mongo, MONGO_DB_NAME);
+
+		List<ClientMOM> clients = datastore.createQuery(ClientMOM.class).asList();		
+		
+		List<EmployeeMOM> employeeList = new LinkedList<EmployeeMOM>();
+		for (ClientMOM clientMOM : clients) {
+			employeeList.addAll(clientMOM.getEmployees());			
+		}
+		
+		return employeeList;
+    }
+    
+    @Override
+    @Transactional(readOnly = true)
     public List<EmployeeMOM> findEmployeeByEmployeeFirstName(String employeeFirstName) throws DataAccessException {
     	final Morphia morphia = new Morphia();
 

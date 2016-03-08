@@ -7,6 +7,14 @@ var EmployeeController = ['$scope', 'Employee', function($scope, Employee) {
 	});
 
 	$scope.employees = Employee.query();
+	
+	// Sorting
+	$scope.predicate = 'firstName';
+	$scope.reverse = false;
+	$scope.order = function(predicate) {
+	    $scope.reverse = ($scope.predicate === predicate) ? !$scope.reverse : false;
+	    $scope.predicate = predicate;
+	};
 
 }];
 

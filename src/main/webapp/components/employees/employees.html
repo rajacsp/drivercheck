@@ -1,28 +1,34 @@
 <section id="employees" class="sections sections-narrow">
   <div class="container">
     <div class="action-items pull-right">
-      <div class="action-item pull-right">
-        
-      </div>
-      <div class="action-item pull-right">
-        Sort by
-        <div class="btn-group">
-          <a href="#" class="btn btn-default"><span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span></a>
-          <a href="#" class="btn btn-default"><span class="glyphicon glyphicon-arrow-down" aria-hidden="true"></span></a>
-        </div>
+      
+      <div class="action-item pull-right">        
+      	<a style="width:250px;" href="#" class="btn btn-primary" data-ng-click="order('firstName')">
+	    	Sort By Employee First Name
+	    	<span aria-hidden="true" class="glyphicon glyphicon-chevron-right" ></span>
+    	</a>
+    	<span class="sortorder" style="width:20px;" data-ng-show="predicate === 'firstName'" data-ng-class="{reverse:reverse}"></span>
       </div>
     </div>
+    
     <h2 class="sub-header">Employees</h2>
+    <label>Search: <input data-ng-model="searchFirstName" placeholder="Employee First Name"></label>
+    
     <div class="row">
-      <div class="col-md-3" data-ng-repeat="employee in employees | filter:search">
+      <div class="col-md-3" data-ng-repeat="employee in employees | orderBy:predicate:reverse | filter: searchFirstName">
         <div class="thumbnail">
-          <a href="#"><img data-ng-src="images/employees/employee{{employee.id % 10 + 1}}.jpg" alt="Generic placeholder image" class="img-circle"></a>
+          <a data-ui-sref="clientDetails({id: client._id})">
+          	{{employee.name}}          		        		
+          </a>
           <div class="caption">
-            <h3 class="caption-heading"><a href="#" data-ng-bind="employee.name"></a></h3>
-            <p data-ng-bind="employee.type.name"></p>
+            <h3 class="caption-heading"><a href="show.html" data-ng-bind="employee.firstName + ' ' +employee.lastName"></a></h3>            
+            <p data-ng-bin="employee.address"></p>
+            <p data-ng-bind="employee.city"></p>
+            <p data-ng-bind="employee.telephone"></p>
           </div>
         </div>
       </div>
+      
     </div>
   </div>
 </section>

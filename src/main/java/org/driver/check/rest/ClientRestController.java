@@ -105,6 +105,7 @@ public class ClientRestController {
      */
     @RequestMapping(value = "/employees/{empId}", method = RequestMethod.GET)
     public @ResponseBody EmployeeMOM findEmployeeById(@PathVariable("empId") String empId) {
+    	_log.info("{findEmployeeById} empId "+empId);
         return clientService.findEmployeeByEmpId(empId);        
     }
     
@@ -173,8 +174,13 @@ public class ClientRestController {
 	 * 		http://localhost:3030/drivercheck/api/clients/by/employee/id/{empId}
      */
     @RequestMapping(value = "/employees", method = RequestMethod.GET)
-    public @ResponseBody EmployeeMOM findEmployeesByEmployeeId(@RequestParam(value = "empId") String empId) {
-        return clientService.findEmployeeByEmpId(empId);        
+    public @ResponseBody <T> T findEmployeesByEmployeeId(@RequestParam(value = "empId", defaultValue="empty") String empId) {
+    	
+    	if(empId.equalsIgnoreCase("empty")){
+    		return (T) clientService.findEmployees();
+    	}
+    	
+        return (T) clientService.findEmployeeByEmpId(empId);        
     }
     
     /**

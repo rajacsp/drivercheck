@@ -7,6 +7,7 @@ var ClientController = ['$scope','$state','Client',function($scope,$state,Client
 
 	$scope.clients = Client.query();
 	
+	// Sorting
 	$scope.predicate = 'name';
 	$scope.reverse = false;
 	$scope.order = function(predicate) {
