@@ -24,8 +24,6 @@
     		<span class="sortorder" data-ng-show="predicate === 'testTakenDate'" data-ng-class="{reverse:reverse}"></span>	
       	</div>
       	
-    	
-      	
       	<br><br>
       	<table data-ng-repeat="test in tests | orderBy:predicate:reverse | filter:dateFrom:dateTo">      		
       		<tr>

@@ -12,10 +12,10 @@
     </div>
     
     <h2 class="sub-header">Employees</h2>
-    <label>Search: <input data-ng-model="searchFirstName" placeholder="Employee First Name"></label>
+    <label>Search: <input data-ng-model="search.firstName" placeholder="Employee First Name"></label>
     
     <div class="row">
-      <div class="col-md-3" data-ng-repeat="employee in employees | orderBy:predicate:reverse | filter: searchFirstName">
+      <div class="col-md-3" data-ng-repeat="employee in employees | orderBy:predicate:reverse | filter: search">
         <div class="thumbnail">
           <a data-ui-sref="clientDetails({id: client._id})">
           	{{employee.name}}          		        		
