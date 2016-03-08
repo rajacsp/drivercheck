@@ -42,7 +42,14 @@ public class ClientRestController {
 	@Autowired
     private ClientMorphiaService clientMorphiaService;
    
-    /*
+	/**
+	 * 
+	 * Find All Clients
+	 * 
+	 * [HTTP Method : GET]
+	 * 
+	 * @return
+	 * 
 	 * possible url:
 	 * 		http://localhost:3030/drivercheck/api/clients/
 	 */
@@ -51,85 +58,157 @@ public class ClientRestController {
         return this.clientService.findAll();
     }
     
-    /*
-	 * possible url:
+    /**
+     * Find Client by Id
+     * 
+     * [HTTP Method : GET]
+     * 
+     * @param _id
+     * @return
+     * 
+     * possible url:
 	 * 		http://localhost:3030/drivercheck/api/clients/{_id}
-	 */
+     */
     @RequestMapping(value = "/clients/{_id}", method = RequestMethod.GET)
     public @ResponseBody Client findClientBy_id(@PathVariable("_id") String _id) {
         return clientService.findBy_id(_id);        
     }
     
-    /*
-	 * possible url:
+    /**
+     * 
+     * Find Client by Name
+     * 
+     * [HTTP Method : GET]
+     * 
+     * @param clientName
+     * @return
+     * 
+     * possible url:
 	 * 		http://localhost:3030/drivercheck/api/clients/by/name/{clientName}
-	 */
+     */
     @RequestMapping(value = "/clients/by/name/{clientName}", method = RequestMethod.GET)
     public @ResponseBody List<ClientMOM> findClientByClientName(@PathVariable("clientName") String clientName) {
         return clientService.findByClientName(clientName);        
     }
     
-    /*
-	 * possible url:
+    /**
+     * 
+     * Find Employee by EmpId
+     * 
+     * [HTTP Method : GET]
+     * 
+     * @param empId
+     * @return
+     * 
+     * possible url:
 	 * 		http://localhost:3030/drivercheck/api/employees/{empId}
-	 */
+     */
     @RequestMapping(value = "/employees/{empId}", method = RequestMethod.GET)
     public @ResponseBody EmployeeMOM findEmployeeById(@PathVariable("empId") String empId) {
         return clientService.findEmployeeByEmpId(empId);        
     }
     
     
-    /*
-	 * possible url:
+    /**
+     * 
+     * Find Tests by id
+     * 
+     * [HTTP Method : GET]
+     * 
+     * @param _id
+     * @return
+     * 
+     * possible url:
 	 * 		http://localhost:3030/drivercheck/api/testresults/{_id}
-	 */
+     */
     @RequestMapping(value = "/testresults/{_id}", method = RequestMethod.GET)
     public @ResponseBody Client findTestResults(@PathVariable("_id") String _id) {
         return clientService.findBy_id(_id);        
     }    
     
-    /*
-	 * possible url:
+    /**
+     * 
+     * Find Employees By Employee First Name
+     * 
+     * [HTTP Method : GET]
+     * 
+     * @param firstName
+     * @return
+     * 
+     * possible url:
 	 * 		http://localhost:3030/drivercheck/api/employees/{firstName}
-	 */
+     */
     @RequestMapping(value = "/employees/firstname/{firstName}", method = RequestMethod.GET)
     public @ResponseBody List<EmployeeMOM> findEmployeeByEmployeeFirstName(@PathVariable("firstName") String firstName) {
         return clientService.findEmployeeByEmployeeFirstName(firstName);        
     }
     
-    /*
-	 * possible url:
+    /**
+     * 
+     * Find Clients By EmpId
+     * 
+     * [HTTP Method : GET]
+     * 
+     * @param empId
+     * @return
+     * 
+     * possible url:
 	 * 		http://localhost:3030/drivercheck/api/clients/by/employee/id/{empId}
-	 */
+     */
     @RequestMapping(value = "/clients/by/employee/id/{empId}", method = RequestMethod.GET)
     public @ResponseBody List<ClientMOM> findClientByEmpId(@PathVariable("empId") String empId) {
         return clientService.findByEmployeeId(empId);        
     }
     
-    /*
-	 * possible url:
+    /**
+     * 
+     * Find Employee by empId
+     * 
+     * [HTTP Method : GET]
+     * 
+     * @param empId
+     * @return
+     * 
+     * possible url:
 	 * 		http://localhost:3030/drivercheck/api/clients/by/employee/id/{empId}
-	 */
+     */
     @RequestMapping(value = "/employees", method = RequestMethod.GET)
     public @ResponseBody EmployeeMOM findEmployeesByEmployeeId(@RequestParam(value = "empId") String empId) {
         return clientService.findEmployeeByEmpId(empId);        
     }
     
-    /*
-	 * possible url:
+    /**
+     * 
+     * Find Employee By Employee City
+     * 
+     * [HTTP Method : GET]
+     * 
+     * @param employeeCity
+     * @return
+     * 
+     * possible url:
 	 * 		http://localhost:3030/drivercheck/api/clients/by/employee/city/{city}
 	 * 
-	 * buggy because of EmployeeMOM implementation
-	 */
+	 * note:
+	 * 	buggy because of EmployeeMOM implementation
+     */
     @RequestMapping(value = "/clients/by/employee/city/{city}", method = RequestMethod.GET)
     public @ResponseBody List<EmployeeMOM> findByEmployeeCity(@PathVariable("city") String employeeCity) {
         return clientService.findByEmployeeCity(employeeCity);       
     }
     
-    /*
-	 * possible url:
+    /**
+     * 
+     * Update Client
+     * 
+     * [HTTP Method : POST]
+     * 
+     * @param client
+     * @return
+     * 
+     * possible url:
 	 * 		http://localhost:3030/drivercheck/api/clients/{_id}/update
-	 */
+     */
     @RequestMapping(value = "/clients", method = RequestMethod.POST)
     public @ResponseBody Client createClient(@RequestBody Client client) {
     	if(client.get_id() == null){ //new client
@@ -146,22 +225,35 @@ public class ClientRestController {
     	return client;
     }
     
-    /*
-	 * possible url:
+    /**
+     * 
+     * Delete Client by Id
+     * 
+     * [HTTP Method : DELETE]
+     * 
+     * @param _id
+     * 
+     * possible url:
 	 * 		http://localhost:3030/drivercheck/api/clients/
-	 */
+     */
     @RequestMapping(value = "/clients", method = RequestMethod.DELETE)
     public @ResponseBody void deleteClient(@RequestParam(value="_id") String _id) {
     	clientService.deleteClientBy_id(_id);
     	_log.info("{deleteClient} method");    	
     }    
     
-    /*
-     * POST (add/edit employee)
+    /**
      * 
-	 * possible url:
+     * Add / Edit Employee Under a specific client
+     * 
+     * [HTTP Method : POST]
+     * 
+     * @param _id
+     * @param employee
+     * 
+     * possible url:
 	 * 		http://localhost:3030/drivercheck/api/clients/{_id}/employees
-	 */    
+     */
     @RequestMapping(value = "/clients/{_id}/employees", method = RequestMethod.POST)
     public @ResponseBody void saveEmployee(
     		@PathVariable("_id") String _id,
@@ -182,12 +274,18 @@ public class ClientRestController {
     	clientService.updateEmployee(_id, employee);    	
     }    
     
-    /*
-     * DELETE - delete client
+    /**
      * 
-	 * possible url:
+     * Delete Employee under a specific Client
+     * 
+     * [HTTP Method : DELETE]
+     * 
+     * @param _id
+     * @param empId
+     * 
+     * possible url:
 	 * 		http://localhost:3030/drivercheck/api/clients/{_id}/employees
-	 */
+     */
     @RequestMapping(value = "/clients/{_id}/employees", method = RequestMethod.DELETE)
     public @ResponseBody void deleteEmployee(
     		@PathVariable("_id") String _id,
@@ -199,12 +297,18 @@ public class ClientRestController {
     	clientService.removeEmployee(_id, empId);
     }
     
-    /*
-     * POST (add/edit test)
+    /**
      * 
-	 * possible url:
+     * Add / Edit Test under a specific Test
+     * 
+     * [HTTP Method : POST]
+     * 
+     * @param empId
+     * @param test
+     * 
+     * possible url:
 	 * 		http://localhost:3030/drivercheck/api/clients/employees/{empId}/tests
-	 */    
+     */
     @RequestMapping(value = "/clients/employees/{empId}/tests", method = RequestMethod.POST)
     public @ResponseBody void saveTest(    		
     		@PathVariable("empId") String empId,
@@ -216,12 +320,18 @@ public class ClientRestController {
     	clientMorphiaService.addTest("1", empId, test);
     }
     
-    /*
-     * GET (add/edit test)
+    /**
      * 
-	 * possible url:
+     * Add / Edit Test under a specific Employee
+     * 
+     * [HTTP Method : GET]
+     * 
+     * @param empId
+     * @param test
+     * 
+     * possible url:
 	 * 		http://localhost:3030/drivercheck/api/clients/employees/{empId}/tests
-	 */    
+     */
     @RequestMapping(value = "/clients/employees/{empId}/tests", method = RequestMethod.GET)
     public @ResponseBody void saveTestByGet(    		
     		@PathVariable("empId") String empId,
@@ -237,10 +347,17 @@ public class ClientRestController {
 		//System.out.println(results);
     }
     
-    /*
-	 * possible url:
+    /**
+     * Find Clients by Name
+     * 
+     * [HTTP Method : GET]
+     * 
+     * @param name
+     * @return
+     * 
+     * possible url:
 	 * 		http://localhost:3030/drivercheck/api/clients/find/by/name?name={name}
-	 */
+     */
     @RequestMapping(value = "/clients/find/by/name", method = RequestMethod.GET)
     public @ResponseBody Collection<Client> findByName(
     		@RequestParam("name") String name
@@ -248,12 +365,20 @@ public class ClientRestController {
         return clientService.findByName(name);
     }
     
-    /*
-	 * possible url:
+    /**
+     * 
+     * Find Clients by Employee First Name
+     * 
+     * [HTTP Method : GET]
+     * 
+     * @param employeeFirstName
+     * @return
+     * 
+     * possible url:
 	 * 		http://localhost:3030/drivercheck/api/clients/find/by/employee/first_name?name=Heejun
 	 * 
 	 * note: buggy; has to be fixed
-	 */
+     */
     @RequestMapping(value = "/clients/find/by/employee/first_name", method = RequestMethod.GET)
     public @ResponseBody <T> T findClientByEmployeeFirstName(
     		@RequestParam("name") String employeeFirstName
@@ -261,12 +386,20 @@ public class ClientRestController {
         return (T) clientService.findByEmployeeFirstName(employeeFirstName);
     }
     
-    /*
-	 * possible url:
+    /**
+     * 
+     * Find Clients by Employee Last Name
+     * 
+     * [HTTP Method : GET]
+     * 
+     * @param employeeLastName
+     * @return
+     * 
+     * possible url:
 	 * 		http://localhost:3030/drivercheck/api/clients/find/by/employee/last_name?name=Mathpal
 	 * 
 	 * note: buggy; has to be fixed
-	 */
+     */
     @RequestMapping(value = "/clients/find/by/employee/last_name", method = RequestMethod.GET)
     public @ResponseBody <T> T findClientByEmployeeLastName(
     		@RequestParam("name") String employeeLastName
@@ -274,12 +407,18 @@ public class ClientRestController {
         return (T) clientService.findByEmployeeLastName(employeeLastName);
     }
     
-    /*
-     * delete [Method = GET] // should be moved to POST/DELETE
-	 * 
-	 * possible url:
+    /**
+     * 
+     * Delete Client by id
+     * 
+     * [HTTP Method : GET]
+     * 
+     * @param _id
+     * @return
+     * 
+     * possible url:
 	 * 		http://localhost:3030/drivercheck/api/client/
-	 */
+     */
     @RequestMapping(value = "/client/delete/{_id}", method = RequestMethod.GET)
     public @ResponseBody Map<String, String> deleteClientBy_id(@PathVariable("id") String _id) {
     	
@@ -291,12 +430,17 @@ public class ClientRestController {
     	return map;
     }
     
-    /*
-     * delete all
-	 * 
-	 * possible url:
+    /**
+     * 
+     * Delete All Clients
+     * 
+     * [HTTP Method : GET]
+     * 
+     * @return
+     * 
+     * possible url:
 	 * 		http://localhost:3030/drivercheck/api/client/
-	 */
+     */
     @RequestMapping(value = "/client/delete/all", method = RequestMethod.GET)
     public @ResponseBody Map<String, String> deleteAllClients() {
     	
@@ -309,12 +453,18 @@ public class ClientRestController {
     	return map;
     }
     
-    /*
-     * delete [Method = DELETE]
-	 * 
-	 * possible url:
+    /**
+     * 
+     * Delete Client by id
+     * 
+     * [HTTP Method : DELETE]
+     * 
+     * @param _id
+     * @return
+     * 
+     * possible url:
 	 * 		http://localhost:3030/drivercheck/api/client/
-	 */
+     */
     @RequestMapping(value = "/client/{_id}", method = RequestMethod.DELETE)
     public @ResponseBody Map<String, String> deleteClientBy_id1(@PathVariable("_id") String _id) {
     	
@@ -326,13 +476,32 @@ public class ClientRestController {
     	return map;
     }
 
-    /*
-     * add client [Method = GET]
-	 * 
-	 * possible url:
+    /**
+     * 
+     * Add Client
+     * 
+     * [HTTP Method : GET]
+     * 
+     * @param _id
+     * @param name
+     * @param address
+     * @param city
+     * @param addDummyValues
+     * @param withEmployee
+     * @param empId
+     * @param empFirstName
+     * @param empLasName
+     * @param EmployeeAddress
+     * @param employeeCity
+     * @param telephone
+     * @param withTest
+     * @param testId
+     * @return
+     * 
+     * possible url:
 	 * 		http://localhost:3030/drivercheck/api/client/add
 	 * 		http://localhost:3030/drivercheck/api/client/add?client_id=103&name=AV&address=13_street&city=Toronto
-	 */
+     */
     @RequestMapping(value = "/client/add", method = RequestMethod.GET)
     public @ResponseBody Map<String, String> addClient(    		
     		@RequestParam("_id") String _id,
@@ -392,16 +561,28 @@ public class ClientRestController {
     	return map;
     }
 
-    /*
-     * update client; add employee [Method = GET]
+    /**
+     * 
+     * Update Client	(add employee under client)
+     * 
+     * [HTTP Method = GET]			
+     * 
+     * @param _id
+     * @param addDummyValues
+     * @param empId
+     * @param firstName
+     * @param lastName
+     * @param address
+     * @param city
+     * @param telephone
+     * @return
      * 
      * mongo plain query:
      * 	db.clients.update({"_id": 2},  {$addToSet : { "employees" : [ {"name"  : "jay", "position" : "senior dev"}, {"name"  : "heejun", "position" : "manager"}] }});
 	 * 
 	 * possible url:
 	 * 		http://localhost:3030/drivercheck/api/client/
-	 * 		
-	 */
+     */
     @RequestMapping(value = "/client/{_id}/add/employee", method = RequestMethod.GET)
     public @ResponseBody Map<String, String> addEmployee(
     		@PathVariable(value = "_id") String _id,
@@ -433,16 +614,27 @@ public class ClientRestController {
     	return map;
     }
     
-    /*
-     * update employee [Method = GET]
+    /**
+     * 
+     * Update Employee under a specific Client
+     * 
+     * [HTTP Method = GET]
+     * 
+     * @param _id
+     * @param empId
+     * @param firstName
+     * @param lastName
+     * @param address
+     * @param city
+     * @param telephone
+     * @return
      * 
      * mongo plain query:
      * 	db.clients.update({"_id": 2},  {$addToSet : { "employees" : [ {"name"  : "jay", "position" : "senior dev"}, {"name"  : "heejun", "position" : "manager"}] }});
 	 * 
 	 * possible url:
 	 * 		http://localhost:3030/drivercheck/api/client/
-	 * 		
-	 */
+     */
     @RequestMapping(value = "/client/{_id}/update/employee/1", method = RequestMethod.GET)
     public @ResponseBody Map<String, String> updateEmployee(
     		@PathVariable(value = "_id") String _id,
@@ -468,16 +660,22 @@ public class ClientRestController {
     	return map;
     }
     
-    /*
-     * update employee [Method = GET]
+    /**
+     * 
+     * Update Employee under a specific Client
+     * 
+     * [HTTP Method : GET]
+     * 
+     * @param _id
+     * @param employee
+     * @return
      * 
      * mongo plain query:
      * 	db.clients.update({"_id": 2},  {$addToSet : { "employees" : [ {"name"  : "jay", "position" : "senior dev"}, {"name"  : "heejun", "position" : "manager"}] }});
 	 * 
 	 * possible url:
 	 * 		http://localhost:3030/drivercheck/api/client/
-	 * 		
-	 */
+     */
     @RequestMapping(value = "/client/{_id}/update/employee", method = RequestMethod.GET)
     public @ResponseBody Map<String, String> updateEmployee1(
     		@PathVariable(value = "_id") String _id,    		
@@ -494,12 +692,19 @@ public class ClientRestController {
     	return map;
     }    
     
-    /*
-	 * 
-	 * possible url:
+    /**
+     * 
+     * Delete Employee under a specific Client
+     * 
+     * [HTTP Method : GET]
+     * 
+     * @param _id
+     * @param empId
+     * @return
+     * 
+     * possible url:
 	 * 		http://localhost:3030/drivercheck/api/client/{_id}/remove/employee?empId={emp_id}
-	 * 		
-	 */
+     */
     @RequestMapping(value = "/client/{_id}/remove/employee", method = RequestMethod.GET)
     public @ResponseBody Map<String, String> removeEmployee(
     		@PathVariable(value = "_id") String _id,
@@ -516,13 +721,21 @@ public class ClientRestController {
     	return map;
     }
     
-    /*
-     * update client [Method = GET]
-	 * 
-	 * possible url:
+    /**
+     * 
+     * Update Client by id
+     * 
+     * [HTTP Method : GET]
+     * 
+     * @param _id
+     * @param name
+     * @param address
+     * @param city
+     * @return
+     * 
+     * possible url:
 	 * 		http://localhost:3030/drivercheck/api/client/update
-	 * 		
-	 */
+     */
     @RequestMapping(value = "/client/update", method = RequestMethod.GET)
     public @ResponseBody Map<String, String> updateClient(    		
     		@RequestParam(value = "_id") String _id,
@@ -539,13 +752,16 @@ public class ClientRestController {
     	return map;
     }
     
-    /*
+    /**
      * test API
-	 * 
-	 * possible url:
+     * 
+     * [HTTP Method : GET]
+     * 
+     * @return
+     * 
+     * possible url:
 	 * 		http://localhost:3030/drivercheck/api/client/
-	 * 		
-	 */
+     */
     @RequestMapping(value = "/client/test", method = RequestMethod.GET)
     public @ResponseBody Map<String, String> testAPI() {
     	
@@ -557,26 +773,12 @@ public class ClientRestController {
     	return map;
     }
     
-    /*
-	 * 
-	 * possible url:
-	 * 		http://localhost:3030/drivercheck/api/client/
-	 * 		
-	 */
-    @RequestMapping(value = "/client/customer/add", method = RequestMethod.GET)
-    public @ResponseBody Map<String, String> addCustomer() {
-	
-    	clientService.addCustomer();
-    	
-    	Map<String, String> map = new LinkedHashMap<String, String>();
-    	map.put("SUCCESS", "OK");
-    	
-    	return map;
-    }
-    
-    /*
-     * show all tests
+    /**
+     * Show All Tests
      * 
+     * [HTTP Method : GET]
+     * 
+     * @return
      */
     @RequestMapping(value = "/tests", method = RequestMethod.GET)
     public @ResponseBody Collection<TestResult> showAllTests() {
