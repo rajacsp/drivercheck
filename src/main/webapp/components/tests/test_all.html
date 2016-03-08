@@ -11,6 +11,11 @@
       	
       	<h3>Tests</h3>
       	
+      	<div>
+      		<label>From: <input data-ng-model="dateFrom" placeholder="2016-03-07 09:21:32"></label>
+      		<label>To: <input data-ng-model="dateTo" placeholder="2016-03-07 10:21:32"></label>
+      	</div>
+      	
       	<div class="pull-right">
       		<a style="width:150px;" href="#" data-ng-click="order('testTakenDate')"  class="btn btn-primary">
 	    		Sort By Date
@@ -22,7 +27,7 @@
     	
       	
       	<br><br>
-      	<table data-ng-repeat="test in tests | orderBy:predicate:reverse">      		
+      	<table data-ng-repeat="test in tests | orderBy:predicate:reverse | filter:dateFrom:dateTo">      		
       		<tr>
       			<td data-ng-bind="test.testId">
       				test
