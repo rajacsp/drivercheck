@@ -16,10 +16,13 @@
     <h2 class="sub-header">clients</h2>
     <div class="row thumbnail-wrapper">
       <div class="col-md-3" data-ng-repeat="client in clients | limitTo : 8">
-        <div class="thumbnail">        	
-          <a data-ui-sref="clientDetails({id: client._id})">
-          	Details          	
-          </a>
+        <div class="thumbnail">      
+        	<div style="border:1px solid red">
+        		<a data-ui-sref="clientDetails({id: client._id})">
+          		Details          	
+          		</a>
+        	</div>  	
+          
           <div class="caption">
             <h3 class="caption-heading">
             	<a data-ui-sref="clientDetails({id: client._id})" data-ng-bind="client.name"></a>
