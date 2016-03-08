@@ -5,16 +5,18 @@
         
       </div>
       <div class="action-item pull-right">
-        Sort by
-        <div class="btn-group">
-          <a href="#" class="btn btn-default"><span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span></a>
-          <a href="#" class="btn btn-default"><span class="glyphicon glyphicon-arrow-down" aria-hidden="true"></span></a>
-        </div>
+        
+      	<a style="width:180px;" href="#" class="btn btn-primary" data-ng-click="order('name')">
+	    	Sort By Client Name
+	    	<span aria-hidden="true" class="glyphicon glyphicon-chevron-right" ></span>
+    	</a>
+    	<span class="sortorder" style="width:20px;" data-ng-show="predicate === 'name'" data-ng-class="{reverse:reverse}"></span>	
+      	
       </div>
     </div>
     <h2 class="sub-header">clients</h2>
     <div class="row">
-      <div class="col-md-3" data-ng-repeat="client in clients">
+      <div class="col-md-3" data-ng-repeat="client in clients | orderBy:predicate:reverse">
         <div class="thumbnail">
           <a data-ui-sref="clientDetails({id: client._id})">
           	{{client.name}}          		        		

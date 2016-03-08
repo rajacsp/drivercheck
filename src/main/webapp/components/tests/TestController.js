@@ -32,8 +32,7 @@ var TestDetailsController = ['$scope','EmployeeTest',function($scope, EmployeeTe
 	};
 	
 	// delete employee [AFTER-SAVE]
-	$scope.deleteTest = function(){		
-		alert('empId : '+$scope.currentEmployee.empId+', testId : '+$scope.currentTest.testId);				
+	$scope.deleteTest = function(){
 		EmployeeTest.remove({empId : $scope.currentEmployee.empId, testId : $scope.currentTest.testId});
 	};
 	
@@ -67,10 +66,7 @@ var TestPassController = ['$scope','$rootScope','$stateParams','Client', functio
 	    			}
 	    		}
 	    	}
-	    }	   		   	
-	    
-	    //console.log('totalTests : '+totalTests+', totalTestPassed  : '+totalTestPassed);
-	    
+	    }
 	   	var tests = {"total" : totalTests, "passed" : totalTestPassed};
 	   	return tests;
 	}	
@@ -81,8 +77,8 @@ var TestsAllController = ['$scope', 'Test',function($scope, Test) {
 	
 	$scope.tests = Test.query();
 	
-	$scope.predicate = 'testId';
-	$scope.reverse = true;
+	$scope.predicate = 'testTakenDate';
+	$scope.reverse = false;
 	$scope.order = function(predicate) {
 	    $scope.reverse = ($scope.predicate === predicate) ? !$scope.reverse : false;
 	    $scope.predicate = predicate;

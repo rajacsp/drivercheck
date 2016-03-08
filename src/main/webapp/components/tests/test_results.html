@@ -17,7 +17,7 @@
             	<br>            	
             	Total Tests : {{ getTestDetails().total }}            	
             	<br>            	
-            	Pass % : {{  ( getTestDetails().passed / getTestDetails().total ) * 100   }}            	            	
+            	Pass % : {{  (( getTestDetails().passed / getTestDetails().total ) * 100) | number : 2  }}            	            	
             </p>
             
           </div>

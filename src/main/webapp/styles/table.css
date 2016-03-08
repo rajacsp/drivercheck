@@ -16,3 +16,10 @@ body {
     color: #7c8d87;
     font-family: "Lato",Arial,sans-serif;
 }						
+
+.sortorder:after {
+  content: '\25b2';
+}
+.sortorder.reverse:after {
+  content: '\25bc';
+}

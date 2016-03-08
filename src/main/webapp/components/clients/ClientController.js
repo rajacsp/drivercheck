@@ -6,6 +6,13 @@ var ClientController = ['$scope','$state','Client',function($scope,$state,Client
 	});
 
 	$scope.clients = Client.query();
+	
+	$scope.predicate = 'name';
+	$scope.reverse = false;
+	$scope.order = function(predicate) {
+	    $scope.reverse = ($scope.predicate === predicate) ? !$scope.reverse : false;
+	    $scope.predicate = predicate;
+	};
 }];
 
 /*
