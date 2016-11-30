@@ -145,7 +145,8 @@ public class ClientServiceImpl implements ClientService, Const {
 		
 		List<EmployeeMOM> employeeList = new LinkedList<EmployeeMOM>();
 		for (ClientMOM clientMOM : clients) {
-			employeeList.addAll(clientMOM.getEmployees());			
+			if(clientMOM.getEmployees() != null)
+				employeeList.addAll(clientMOM.getEmployees());			
 		}
 		
 		return employeeList;
